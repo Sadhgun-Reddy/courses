@@ -12,7 +12,7 @@
 
 :root {
   /* Elementor Global Colors */
-  --e-global-color-primary: #1A2D4D;
+  --e-global-color-primary: #111FA2;
   --e-global-color-secondary: #EF2807;
   --e-global-color-text: #454545;
   --e-global-color-accent: #111111;
@@ -21,7 +21,7 @@
   --e-global-color-712aaaa: #FFCC00;
 
   /* Theme variables */
-  --arrow-body_primary_color: #1A2D4D;
+  --arrow-body_primary_color: #111FA2;
   --arrow-body_primary_color_hover: #FE5224;
   --arrow-font_body-font-family: 'Outfit', sans-serif;
   --arrow-font_title-font-family: 'Outfit', sans-serif;
@@ -94,7 +94,7 @@ p {
 }
 
 a {
-  color: var(--primary-color, #1A2D4D);
+  color: var(--primary-color, #111FA2);
   text-decoration: none;
   transition: color var(--transition-base);
 }
@@ -168,7 +168,7 @@ button {
 
 /* Focus Management */
 :focus-visible {
-  outline: 2px solid var(--primary-color, #1A2D4D);
+  outline: 2px solid var(--primary-color, #111FA2);
   outline-offset: 2px;
 }
 
@@ -177,7 +177,7 @@ button {
   position: absolute;
   top: -40px;
   left: 0;
-  background: var(--primary-color, #1A2D4D);
+  background: var(--primary-color, #111FA2);
   color: white;
   padding: 8px 16px;
   text-decoration: none;

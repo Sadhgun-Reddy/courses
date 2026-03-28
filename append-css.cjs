@@ -35,7 +35,7 @@ const cssToAppend = `
   transition: all 0.3s ease;
   z-index: 101;
   padding: 20px;
-  border-top: 3px solid #1A2D4D;
+  border-top: 3px solid #111FA2;
 }
 
 .nav-menu li.has-dropdown:hover .dropdown-menu {
@@ -64,7 +64,7 @@ const cssToAppend = `
 }
 
 .dropdown-item:hover {
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
   background-color: #f9f9f9;
 }
 
@@ -105,7 +105,7 @@ const cssToAppend = `
 .plugin-item::after { display: none !important; }
 .plugin-item:last-child { border-bottom: none; }
 .plugin-item:hover { background-color: #fafafa; }
-.plugin-item:hover .plugin-title { color: #1A2D4D; }
+.plugin-item:hover .plugin-title { color: #111FA2; }
 
 .plugin-icon {
   width: 45px;
@@ -220,7 +220,7 @@ const cssToAppend = `
 
 .mega-link {
   font-size: 14px;
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
   font-weight: 500 !important;
   text-decoration: underline !important;
   padding: 0 !important;

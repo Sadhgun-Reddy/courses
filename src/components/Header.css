@@ -3,7 +3,13 @@
    ============================================================ */
 
 .thim-ekit__header {
-  background-color: #111FA2;
+  /* background: linear-gradient(to right, #ffffff 0%, #111FA2 40%); */
+  background: linear-gradient(to right, 
+    #ffffff 0%, 
+    #ffffff 15%, 
+    #0753d6 23%, 
+    #111FA2 45%
+  );
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.18);
   position: sticky;
   top: 0;
@@ -35,8 +41,7 @@
   background-color: #FFFFFF;
   border-radius: 6px;
   /* Positive margin on all sides so blue shows around the white card */
-  margin: 10px 60px 10px -10px;
-  padding: 6px 7px;
+  margin: 10px 15px 10px -10px;
   z-index: 2;
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
@@ -227,7 +232,7 @@
   /* Position relative to .thim-ekit__header__inner via the static parent trick */
   position: absolute;
   top: calc(100% + 14px);
-  left: 50%;
+  left: 40%;
   transform: translateX(-50%) translateY(12px);
   width: calc(100vw - 40px);
   max-width: 1290px;

@@ -40,17 +40,24 @@ const Header = () => {
         <div className="header-container">
 
           {/* Logo — white floating card inside blue header */}
-          <div className="header-logo">
-            <Link to="/" className="site-logo">
-              <img
-                src="/logo.jpg"
-                alt="VOLTEDZ Logo"
-                width={308}
-                height={50}
-                className="logo-img"
-                loading="lazy"
-              />
-            </Link>
+          <div style={{marginRight : "7px", backgroundColor: "#fff"  , borderRadius: "20px"
+           }}
+    
+>
+
+          
+            <div className="header-logo">
+              <Link to="/" className="site-logo">
+                <img
+                  src="/logo2.png"
+                  alt="VOLTEDZ Logo"
+                  width={308}
+                  height={50}
+                  className="logo-img"
+                  loading="lazy"
+                />
+              </Link>
+            </div>
           </div>
 
           {/* Nav links — sit directly on blue background */}

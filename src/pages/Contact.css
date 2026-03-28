@@ -57,7 +57,7 @@
 }
 
 .contact-top-heading .breadcrumbs a:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 .contact-top-heading .page-title {
@@ -186,12 +186,12 @@
 }
 
 .contact-location-details a:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 .contact-support-link {
   font-size: 14px;
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
   text-decoration: underline !important;
   font-weight: 400;
 }
@@ -317,7 +317,7 @@
 
 .cf7-wrap input:focus,
 .cf7-wrap textarea:focus {
-  border-color: #1A2D4D;
+  border-color: #111FA2;
   box-shadow: 0 0 0 2px rgba(209, 33, 4, 0.08);
 }
 
@@ -330,7 +330,7 @@
 .cf7-submit {
   display: block;
   margin: 0 auto;
-  background: #1A2D4D;
+  background: #111FA2;
   color: #fff;
   border: none;
   padding: 12px 30px;

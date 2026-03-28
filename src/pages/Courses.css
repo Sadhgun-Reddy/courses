@@ -58,7 +58,7 @@
 }
 
 .lp-archive-courses .breadcrumbs a:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 .lp-archive-courses .page-title {
@@ -144,7 +144,7 @@
 .lp-archive-courses .lp-course-filter__field input[type="radio"] {
   width: 15px;
   height: 15px;
-  accent-color: #1A2D4D;
+  accent-color: #111FA2;
   cursor: pointer;
   flex-shrink: 0;
   margin: 0;
@@ -176,7 +176,7 @@
 }
 
 .lp-archive-courses .course-filter-submit {
-  background: #1A2D4D;
+  background: #111FA2;
   color: #fff;
   border: none;
   padding: 6px 15px;
@@ -205,8 +205,8 @@
 }
 
 .lp-archive-courses .course-filter-reset:hover {
-  border-color: #1A2D4D;
-  color: #1A2D4D;
+  border-color: #111FA2;
+  color: #111FA2;
 }
 
 /* ---- Main Content ---- */
@@ -257,7 +257,7 @@
 }
 
 .lp-archive-courses .lp-course-filter-search-input:focus {
-  border-color: #1A2D4D;
+  border-color: #111FA2;
 }
 
 .lp-archive-courses .courses-order-by {
@@ -295,8 +295,8 @@
 
 .lp-archive-courses .switch-btn.active,
 .lp-archive-courses .switch-btn:hover {
-  background: #1A2D4D;
-  border-color: #1A2D4D;
+  background: #111FA2;
+  border-color: #111FA2;
   color: #fff;
 }
 
@@ -413,7 +413,7 @@
 }
 
 .lp-archive-courses .lp-button-wishlist-action:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 /* ---- Course Content ---- */
@@ -505,7 +505,7 @@
 }
 
 .lp-archive-courses .course-permalink:hover .course-title {
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
 }
 
 /* Description */
@@ -616,8 +616,8 @@
 
 .lp-archive-courses .btn-view-course {
   background: transparent;
-  border: 1.5px solid #1A2D4D;
-  /* color: #1A2D4D !important; */
+  border: 1.5px solid #111FA2;
+  /* color: #111FA2 !important; */
   padding: 6px 14px;
   border-radius: 50px;
   font-size: 12px;
@@ -630,12 +630,12 @@
 }
 
 .lp-archive-courses .btn-view-course:hover {
-  background: #1A2D4D;
+  background: #111FA2;
   color: #fff !important;
 }
 
 .lp-archive-courses .btn-view-course.btn-paid {
-  background: #1A2D4D;
+  background: #111FA2;
   color: #fff !important;
 }
 
@@ -686,13 +686,13 @@
 }
 
 .lp-archive-courses .page-numbers li button:hover {
-  border-color: #1A2D4D;
-  color: #1A2D4D;
+  border-color: #111FA2;
+  color: #111FA2;
 }
 
 .lp-archive-courses .page-numbers li span.current {
-  background: #1A2D4D;
-  border-color: #1A2D4D;
+  background: #111FA2;
+  border-color: #111FA2;
   color: #fff;
   cursor: default;
 }

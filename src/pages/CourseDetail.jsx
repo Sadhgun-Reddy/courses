@@ -6,7 +6,7 @@ import { URLS } from '../Url';
 const courseData = {
   id: 1,
   title: 'Industrial Automation',
-  instructor: 'Mr. Amit Rao Perka',
+  instructor: 'Mr. Amit Rao Perka (L&D)',
   instructorSlug: 'amit-rao-perka',
   instructorBio: 'VOLTEDZ\nNational Technical Head\n\nLeading the technical direction and ensuring top-level engineering training standards.',
   instructorAvatar: '/instructors/Amit Rao Perka.jpeg',

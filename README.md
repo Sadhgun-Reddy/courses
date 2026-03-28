@@ -69,7 +69,7 @@ The project uses a comprehensive CSS variable system for consistent theming:
 
 ```css
 :root {
-  --primary-color: #1A2D4D;
+  --primary-color: #111FA2;
   --secondary-color: #FFCC00;
   --accent-color: #4CAF50;
   --text-primary: #1a1a1a;

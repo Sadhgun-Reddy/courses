@@ -46,7 +46,7 @@
 }
 
 .cd-breadcrumbs a:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 .cd-breadcrumbs span {
@@ -107,7 +107,7 @@
 }
 
 .cd-instructor-name:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 .cd-featured-img-wrap {
@@ -159,7 +159,7 @@
 .cd-program-heading {
   font-size: 22px !important;
   font-weight: 700 !important;
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
   margin: 0 0 16px !important;
   line-height: 1.3 !important;
 }
@@ -200,7 +200,7 @@
   content: '•';
   position: absolute;
   left: 4px;
-  color: #1A2D4D;
+  color: #111FA2;
   font-size: 16px;
   line-height: 1.3;
 }
@@ -227,11 +227,11 @@
 .cd-module-heading {
   font-size: 19px !important;
   font-weight: 700 !important;
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
   margin: 0 0 14px !important;
   padding: 10px 16px !important;
   background: #f4f7fb !important;
-  border-left: 4px solid #1A2D4D !important;
+  border-left: 4px solid #111FA2 !important;
   border-radius: 0 6px 6px 0 !important;
 }
 
@@ -262,7 +262,7 @@
   content: '›';
   position: absolute;
   left: 14px;
-  color: #1A2D4D;
+  color: #111FA2;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.4;
@@ -311,7 +311,7 @@
 }
 
 .cd-instructor-title a:hover {
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 .cd-instructor-bio p {
@@ -391,7 +391,7 @@
 
 .cd-rating-bar-fill {
   height: 100%;
-  background: #1A2D4D;
+  background: #111FA2;
   border-radius: 4px;
   transition: width 0.3s;
 }
@@ -499,7 +499,7 @@
 /* Meta card */
 .cd-sidebar-meta {
   padding: 20px 24px;
-  background: #1A2D4D;
+  background: #111FA2;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -545,7 +545,7 @@
 .cd-sidebar-heading {
   font-size: 15px !important;
   font-weight: 700 !important;
-  color: #1A2D4D !important;
+  color: #111FA2 !important;
   margin: 0 0 12px !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
@@ -595,7 +595,7 @@
   content: '–';
   position: absolute;
   left: 0;
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 /* CTA buttons */
@@ -639,7 +639,7 @@
 }
 
 .cd-cta-phone {
-  background: #1A2D4D;
+  background: #111FA2;
   color: #fff;
 }
 
@@ -666,7 +666,7 @@
   content: '•';
   position: absolute;
   left: 0;
-  color: #1A2D4D;
+  color: #111FA2;
 }
 
 /* Cert badges */
@@ -679,7 +679,7 @@
 .cd-cert-badge {
   font-size: 14px;
   font-weight: 600;
-  color: #1A2D4D;
+  color: #111FA2;
   background: #eef2f9;
   border: 1px solid #cdd6e8;
   border-radius: 4px;
@@ -712,7 +712,7 @@
 
 .cd-contact-form input:focus,
 .cd-contact-form textarea:focus {
-  border-color: #1A2D4D;
+  border-color: #111FA2;
   background: #fff;
 }
 
@@ -730,7 +730,7 @@
 
 .cd-submit-btn {
   width: 100%;
-  background: linear-gradient(90deg, #1A2D4D, #2a4a7f);
+  background: linear-gradient(90deg, #111FA2, #2a4a7f);
   color: #fff;
   border: none;
   padding: 12px;
