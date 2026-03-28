@@ -172,7 +172,7 @@
 }
 
 .cd-modules-label {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
   color: #111;
   margin-bottom: 10px !important;
@@ -188,7 +188,7 @@
 }
 
 .cd-modules-preview li {
-  font-size: 19px;
+  font-size: 18px;
   color: #454545;
   padding-left: 18px;
   position: relative;
@@ -245,7 +245,7 @@
 }
 
 .cd-module-topics li {
-  font-size: 19px;
+  font-size: 17px;
   color: #454545;
   padding: 0px 14px 9px 32px;
   position: relative;
@@ -614,7 +614,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 16px;
+  padding: 12px 16px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
@@ -622,6 +622,7 @@
   border: none;
   transition: opacity 0.2s, transform 0.15s;
   font-family: inherit;
+  min-height: 44px;
 }
 
 .cd-cta-whatsapp:hover,
@@ -732,13 +733,14 @@
   background: linear-gradient(90deg, #1A2D4D, #2a4a7f);
   color: #fff;
   border: none;
-  padding: 11px;
+  padding: 12px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
   transition: opacity 0.2s;
+  min-height: 44px;
 }
 
 .cd-submit-btn:hover {
@@ -754,6 +756,7 @@
   .cd-sidebar {
     width: 100%;
     position: static;
+    top: auto;
   }
 
   .cd-sidebar-meta {
@@ -786,7 +789,133 @@
     gap: 20px;
   }
 
+  .cd-sidebar {
+    width: 100%;
+    position: static;
+    top: auto;
+    margin-top: 30px;
+  }
+
   .cd-sidebar-meta {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .cd-layout {
+    padding: 16px 12px 30px;
+  }
+
+  .cd-title {
+    font-size: 20px !important;
+  }
+
+  .cd-header-top {
+    padding: 20px 12px 0;
+  }
+
+  .cd-tech-subtitle {
+    font-size: 13px !important;
+  }
+
+  .cd-section-title {
+    font-size: 18px !important;
+  }
+
+  .cd-overview-text p {
+    font-size: 16px;
+  }
+
+  .cd-program-desc {
+    font-size: 16px;
+  }
+
+  .cd-modules-label {
+    font-size: 16px;
+  }
+
+  .cd-modules-preview li {
+    font-size: 16px;
+  }
+
+  .cd-module-heading {
+    font-size: 16px !important;
+    padding: 8px 12px !important;
+  }
+
+  .cd-module-topics li {
+    font-size: 16px;
+    padding: 0px 12px 8px 24px;
+  }
+
+  .cd-instructor-card {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .cd-instructor-avatar {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .cd-instructor-title {
+    font-size: 16px !important;
+  }
+
+  .cd-instructor-bio p {
+    font-size: 13px;
+  }
+
+  .cd-rating-summary {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .cd-rating-value {
+    font-size: 36px;
+  }
+
+  .cd-sidebar {
+    margin-top: 20px;
+  }
+
+  .cd-sidebar-inner {
+    border-radius: 8px;
+  }
+
+  .cd-sidebar-meta {
+    padding: 16px 20px;
+    flex-direction: column;
+  }
+
+  .cd-sidebar-section {
+    padding: 14px 20px;
+  }
+
+  .cd-sidebar-heading {
+    font-size: 13px !important;
+  }
+
+  .cd-sidebar-text {
+    font-size: 13px;
+  }
+
+  .cd-cta-whatsapp,
+  .cd-cta-phone {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .cd-features-list li {
+    font-size: 13px;
+  }
+
+  .cd-batch-label {
+    font-size: 13px;
+  }
+
+  .cd-batch-list li {
+    font-size: 13px;
   }
 }

@@ -33,7 +33,7 @@ const newIndexHtml = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     ${headContent}
   </head>
-  <body class="home wp-singular page-template page-template-elementor_header_footer page page-id-35321 wp-embed-responsive wp-theme-akademic elementor-default elementor-template-full-width elementor-kit-19 elementor-page elementor-page-35321">
+  <body class="home wp-singular page-template page-template-elementor_header_footer page page-id-35321 wp-embed-responsive wp-theme-Voltedz elementor-default elementor-template-full-width elementor-kit-19 elementor-page elementor-page-35321">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -1,4 +1,4 @@
-# Akademic - Optimized React Application
+# Voltedz - Optimized React Application
 
 This project has been optimized following industry best practices for performance, maintainability, and code quality.
 

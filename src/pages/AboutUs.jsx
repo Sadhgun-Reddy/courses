@@ -138,7 +138,7 @@ export default function AboutUs() {
 
             {/* Left – text */}
             <div className="mission-text">
-              <span className="sub-label">The mission of Akademic</span>
+              <span className="sub-label">The mission of Voltedz</span>
               <h2>
                 Bringing an advanced, flexible, and technology-powered learning
                 environment
@@ -209,7 +209,7 @@ export default function AboutUs() {
 
             {/* Right – text */}
             <div className="story-text">
-              <span className="sub-label">The Story of Akademic</span>
+              <span className="sub-label">The Story of Voltedz</span>
               <h2>Our story</h2>
               <p>
                 VOLTEDZwas founded in 2023 with a vision to bring high-quality,

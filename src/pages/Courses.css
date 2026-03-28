@@ -281,7 +281,7 @@
   background: #f6f6f6;
   border: 1px solid #e7e7e7;
   border-radius: 6px;
-  padding: 7px 9px;
+  padding: 8px 10px;
   cursor: pointer;
   color: #aaa;
   display: flex;
@@ -289,6 +289,8 @@
   justify-content: center;
   transition: all 0.2s;
   line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .lp-archive-courses .switch-btn.active,
@@ -702,10 +704,9 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .lp-archive-courses .lp-content-area {
-    flex-direction: column;
-    padding: 20px 16px 40px;
+    padding: 16px 12px 30px;
   }
 
   .lp-archive-courses .lp-archive-courses-sidebar {
@@ -713,33 +714,87 @@
     min-width: unset;
   }
 
-  .lp-archive-courses .learn-press-courses {
-    grid-template-columns: 1fr !important;
+  .lp-archive-courses .widget_course_filter .widget-title {
+    font-size: 14px !important;
   }
 
-  .lp-archive-courses .banner-column {
+  .lp-archive-courses .lp-form-course-filter__title {
+    font-size: 12px;
+  }
+
+  .lp-archive-courses .lp-course-filter__field {
+    font-size: 12px;
+  }
+
+  .lp-archive-courses .lp-course-filter__field label {
+    font-size: 12px;
+  }
+
+  .lp-archive-courses .lp-courses-bar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+  }
+
+  .lp-archive-courses .right-bar {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .lp-archive-courses .lp-course-filter-search-input,
+  .lp-archive-courses .courses-order-by {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .lp-archive-courses .page-title {
+    font-size: 20px !important;
+  }
+
+  .lp-archive-courses .page-excerpt {
+    font-size: 12px;
   }
 
   .lp-archive-courses .banner-image {
     display: none;
   }
 
-  .lp-archive-courses .page-title {
-    font-size: 26px !important;
+  .lp-archive-courses .learn-press-courses {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
   }
 
-  .lp-archive-courses .lp-courses-bar {
-    flex-direction: column;
-    align-items: flex-start;
+  .lp-archive-courses .course-content {
+    padding: 12px 14px 14px;
   }
 
-  .lp-archive-courses .right-bar {
-    width: 100%;
+  .lp-archive-courses .course-title {
+    font-size: 13px !important;
   }
 
-  .lp-archive-courses .lp-course-filter-search-input {
-    width: 100%;
+  .lp-archive-courses .course-short-description {
+    font-size: 11px !important;
+  }
+
+  .lp-archive-courses .course-duration,
+  .lp-archive-courses .course-count-item,
+  .lp-archive-courses .course-address {
+    font-size: 10px !important;
+    padding: 2px 7px;
+  }
+
+  .lp-archive-courses .course-price {
+    font-size: 12px;
+  }
+
+  .lp-archive-courses .btn-view-course {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+
+  .lp-archive-courses .page-numbers li button,
+  .lp-archive-courses .page-numbers li span {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
   }
 }

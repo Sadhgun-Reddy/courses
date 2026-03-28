@@ -9,9 +9,9 @@ const courseData = {
   instructor: 'Mr. Dhanunjay',
   instructorSlug: 'dhanunjay',
   instructorBio: 'VOLTEDZ\nSr. BMS & CCTV Expert\n\nSpecialist in Building Management Systems, CCTV, Fire Alarms, and Access Control with extensive hands-on industrial knowledge and on-site implementation experience.',
-  instructorAvatar: '/wp-content/uploads/2025/11/custom-ava1.jpg',
+  instructorAvatar: '/instructors/Dhanunjay.jpeg',
   coInstructors: [],
-  featuredImage: '/courses/Building Management Systems.png',
+  featuredImage: '/courses/CCTV.png',
   price: 'paid',
   priceDisplay: '₹20,000',
   breadcrumbs: [
@@ -25,7 +25,7 @@ const courseData = {
   structure: {
     duration: '8 Weeks',
     level: 'All levels',
-    lessons: 30,
+    lessons: '15+',
     quizzes: 6,
     students: 95,
   },
@@ -254,15 +254,15 @@ function CourseSidebar({ course }) {
           <div className="cd-batch-group">
             <p className="cd-batch-label">Regular Batches: Mon – Fri</p>
             <ul className="cd-batch-list">
-              <li>Morning: 9:00 AM – 1:00 PM</li>
-              <li>Afternoon: 1:30 PM – 5:30 PM</li>
-              <li>Evening: 5:30 PM – 7:30 PM</li>
+              <li>Morning: 9:00 AM – 12:00 PM</li>
+              <li>Afternoon: 1:00 PM – 4:00 PM</li>
+              <li>Evening: 4:00 PM – 7:30 PM</li>
             </ul>
           </div>
           <div className="cd-batch-group">
             <p className="cd-batch-label">Weekend Batches: Sat &amp; Sun</p>
             <ul className="cd-batch-list">
-              <li>Full Day: 9:30 AM – 5:30 PM</li>
+              <li>Half Day: 9:00 AM – 1:00 PM</li>
             </ul>
           </div>
         </div>

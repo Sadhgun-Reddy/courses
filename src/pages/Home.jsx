@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css'; 
+import './Home.css';
+
 
 /* ── counter hook ── */
 function useCountUp(target, duration = 2000, start = false, startFrom = 0) {
@@ -21,6 +22,7 @@ function useCountUp(target, duration = 2000, start = false, startFrom = 0) {
   return count;
 }
 
+
 /* ── slider hook ── */
 function useSlider(total, auto = 4000) {
   const [idx, setIdx] = useState(0);
@@ -35,12 +37,13 @@ function useSlider(total, auto = 4000) {
   return { idx, prev, next, setIdx };
 }
 
+
 /* ────────────────── DATA ────────────────── */
 const courses = [
-  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, DCS, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '24 Modules', quizzes: '4 Quizzes', price: '₹25,000', link: '/courses' },
-  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '20 Modules', quizzes: '3 Quizzes', price: '₹20,000', link: '/courses' },
-  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '28 Modules', quizzes: '5 Quizzes', price: '₹30,000', priceOld: '₹35,000', link: '/courses' },
-  { id: 4, img: '/courses/Data Science & AI.png', title: 'Data Science & AI', desc: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.', duration: '16 Weeks', lessons: '32 Modules', quizzes: '6 Quizzes', price: '₹40,000', link: '/courses' },
+  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '15+ Modules', quizzes: '4 Quizzes', price: '₹25,000', link: '/courses' },
+  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '15+ Modules', quizzes: '3 Quizzes', price: '₹20,000', link: '/courses' },
+  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '15+ Modules', quizzes: '5 Quizzes', price: '₹30,000', priceOld: '₹35,000', link: '/courses' },
+  { id: 4, img: '/courses/Data Science & AI.png', title: 'Data Science & AI', desc: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.', duration: '16 Weeks', lessons: '15+ Modules', quizzes: '6 Quizzes', price: '₹40,000', link: '/courses' },
 ];
 
 const featureItems = [
@@ -84,7 +87,7 @@ const blogPosts = [
   { id: 4, img: '/wp-content/uploads/2025/08/blog-a3-768x512.jpg', category: 'Corporate', title: 'The Role of Upskilling in Transforming Corporate Teams', author: 'Alex King', date: 'August 19, 2025', link: '/blog' },
 ];
 
-const tags = ['#Course', '#Online learning', '#Programs', '#Research', '#SEO', '#WordPress'];
+const tags = ['#Course', '#Online learning', '#Programs', '#Research', '#SEO'];
 
 const tickerItems = [
   'Industrial Automation', 'BMS & CCTV', 'Embedded Systems & IoT', 'Data Science',
@@ -120,8 +123,8 @@ const IoTIcon = () => (
 
 const categoryButtons = [
   { label: 'Automation', link: '/course-category/automation', Icon: AutomationIcon },
-  { label: 'IT Courses',  link: '/course-category/it-courses',  Icon: ITIcon },
-  { label: 'BMS & CCTV', link: '/course-category/bms-cctv',    Icon: BMSIcon },
+  { label: 'IT Courses', link: '/course-category/it-courses', Icon: ITIcon },
+  { label: 'BMS & CCTV', link: '/course-category/bms-cctv', Icon: BMSIcon },
   { label: 'Embedded & IoT', link: '/course-category/embedded-iot', Icon: IoTIcon },
 ];
 
@@ -129,7 +132,7 @@ const categoryButtons = [
 const CourseCard = ({ course }) => (
   <div className="course-card">
     <div className="course-thumbnail">
-      <Link  to={course.link}><img src={course.img} alt={course.title} /></Link>
+      <Link to={course.link}><img src={course.img} alt={course.title} /></Link>
     </div>
     <div className="course-content">
       <div className="course-rating">
@@ -141,7 +144,7 @@ const CourseCard = ({ course }) => (
         <span className="rating-score">5.0</span>
         <span className="rating-count">( 1 Review )</span>
       </div>
-      <Link  to={course.link}><h3 className="course-title">{course.title}</h3></Link>
+      <Link to={course.link}><h3 className="course-title">{course.title}</h3></Link>
       <p className="course-desc">{course.desc}</p>
       <div className="course-meta">
         <span>⏱ {course.duration}</span>
@@ -153,7 +156,7 @@ const CourseCard = ({ course }) => (
           {course.priceOld && <span className="course-price-origin">{course.priceOld}</span>}
           <span className="price">{course.price}</span>
         </span>
-        <Link  to={course.link} className="btn-enroll">Enroll now</Link>
+        <Link to={course.link} className="btn-enroll">Enroll now</Link>
       </div>
     </div>
   </div>
@@ -162,27 +165,25 @@ const CourseCard = ({ course }) => (
 /* ─── Instructor Card ─── */
 const InstructorCard = ({ instr }) => (
   <div className="instructor-card" style={{ '--card-decor': instr.decorColor }}>
-    {/* Photo layer (hidden on hover) */}
     <div className="instr-photo-layer">
       <img src={instr.img} alt={instr.name} />
     </div>
-    {/* Name bar always at bottom (fades on hover) */}
     <div className="instr-name-bar">
-      <h4 className="instr-name-title"><Link  to={instr.link}>{instr.name}</Link></h4>
+      <h4 className="instr-name-title"><Link to={instr.link}>{instr.name}</Link></h4>
       <p className="instr-school-line">{instr.school}<br />Education: {instr.edu}</p>
     </div>
-    {/* Content layer (revealed on hover) */}
     <div className="instr-content-layer">
-      <h4 className="instr-name-title hover-name"><Link  to={instr.link}>{instr.name}</Link></h4>
+      <h4 className="instr-name-title hover-name"><Link to={instr.link}>{instr.name}</Link></h4>
       <div className="instr-school-block">
         <p>{instr.school}</p>
         <p>Education: {instr.edu}</p>
       </div>
       <p className="instr-bio-text">{instr.bio}</p>
-      <Link  to={instr.link} className="instr-more-link">More info</Link>
+      <Link to={instr.link} className="instr-more-link">More info</Link>
     </div>
   </div>
 );
+
 
 /* ─────────────────── MAIN COMPONENT ─────────────────── */
 const Home = () => {
@@ -199,18 +200,18 @@ const Home = () => {
   }, []);
 
   const stat1 = useCountUp(12000, 2000, statsVisible, 0);
-  const stat2 = useCountUp(980,   2000, statsVisible, 0);
-  const stat3 = useCountUp(85,    2000, statsVisible, 0);
-  const stat4 = useCountUp(98,    2000, statsVisible, 0);
+  const stat2 = useCountUp(980, 2000, statsVisible, 0);
+  const stat3 = useCountUp(85, 2000, statsVisible, 0);
+  const stat4 = useCountUp(98, 2000, statsVisible, 0);
 
-  /* Features carousel – auto-advance every 5 s */
+  /* Features carousel – auto-advance every 5s */
   const [carIdx, setCarIdx] = useState(0);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress(p => {
-        const newP = p + 2; // 2% every 100ms, reaches 100% in 5s
+        const newP = p + 2;
         if (newP >= 100) {
           setCarIdx(i => (i + 1) % carouselImages.length);
           return 0;
@@ -241,15 +242,13 @@ const Home = () => {
       <div className="elementor elementor-35321">
 
         {/* ═══════════ HERO ═══════════ */}
-        <section className="hero-section elementor-element-d13dea6 e-flex  e-parent"  >
-          <div className="e-con-inner e-con-boxed  e-con">
-            <div style={{display: 'flex'}}>
+        <section className="hero-section elementor-element-d13dea6 e-flex e-parent">
+          <div className="e-con-inner e-con-boxed e-con">
+            <div style={{ display: 'flex' }}>
               <div className="elementor-element-29aab34 e-con-full e-flex e-con e-child">
-                {/* <img loading="lazy" width={97} height={115} src="/wp-content/uploads/2025/11/start-s.png" alt="" className="hero-decor hero-decor-star" /> */}
-                {/* <img loading="lazy" width={106} height={106} src="/wp-content/uploads/2025/11/tube-2.png" alt="" className="hero-decor hero-decor-tube" /> */}
                 <div className="thim-ekits-heading thim-ekit__heading">
-                  <h1 className="title">Empowering Individuals    Through Quality Training.</h1>
-                  <div className="desc"><p>Deliver innovative and practical training solutions that help individuals and businesses   thrive in today's competitive environment.</p></div>
+                  <h1 className="title">Empowering Individuals Through Quality Training.</h1>
+                  <div className="desc"><p>Deliver innovative and practical training solutions that help individuals and businesses thrive in today's competitive environment.</p></div>
                 </div>
                 <div className="hero-cta-row">
                   <Link className="hero-btn-primary elementor-button" to="/courses">Apply for Admission</Link>
@@ -258,7 +257,7 @@ const Home = () => {
               </div>
               <div className="elementor-element-6e900ac e-con-full e-flex e-con e-child">
                 <img loading="lazy" width={167} height={167} src="/wp-content/uploads/2025/11/half-circle-decor.png" alt="" className="hero-decor hero-decor-circle" />
-                <img loading="lazy"   src="/wp-content/uploads/2025/11/study-abroad.png" alt="Student" className="hero-main-img" />
+                <img loading="lazy" src="/wp-content/uploads/2025/11/study-abroad.png" alt="Student" className="hero-main-img" />
               </div>
             </div>
           </div>
@@ -288,7 +287,6 @@ const Home = () => {
               <h2 className="title">Why Choose VOLTEDZ</h2>
             </div>
             <div className="features-body">
-              {/* Left: vertical feature list */}
               <div className="features-left-col">
                 {featureItems.map((f, i) => (
                   <div key={f.id} className="feature-item">
@@ -299,7 +297,6 @@ const Home = () => {
                 ))}
                 <Link to="/courses" className="feature-discover-btn">Discover All Programs</Link>
               </div>
-              {/* Right: rotating carousel */}
               <div className="features-right-col">
                 <div className="features-carousel-rotating">
                   {carouselImages.map((img, i) => (
@@ -364,7 +361,8 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            {/* Bottom: image + text */}
+
+            {/* ── Bottom: girl + morphing blob ── */}
             <div className="stats-bottom-row">
               <div className="stats-girl-wrap">
                 <img
@@ -373,10 +371,16 @@ const Home = () => {
                   className="stats-girl-img"
                 />
               </div>
-              <div className="stats-text-box">
-                <p>VOLTEDZ empowers individuals worldwide through flexible, high-quality training — bridging knowledge and real-world skills to shape confident, future-ready professionals.</p>
+              {/* ↓ CHANGED: blob wrapper + inner text */}
+              <div className="stats-blob-wrap">
+                <div className="stats-blob">
+                  <p className="stats-blob-text">
+                    VOLTEDZ empowers individuals worldwide through flexible, high-quality training — bridging knowledge and real-world skills to shape confident, future-ready professionals.
+                  </p>
+                </div>
               </div>
             </div>
+
           </div>
         </section>
 
@@ -387,21 +391,6 @@ const Home = () => {
               <p className="sub-heading">Featured Online Courses</p>
               <h2 className="title">Explore Top-Rated Courses</h2>
             </div>
-
-            {/* Category filter */}
-            {/* <div className="courses-filter-row">
-              <span className="filter-label">Explore categories</span>
-              <div className="filter-btns">
-                {categoryButtons.map((cat, i) => (
-                  <Link key={i} className="cat-filter-btn" to={cat.link}>
-                    <cat.Icon />
-                    <span>{cat.label}</span>
-                  </Link>
-                ))}
-              </div>
-            </div> */}
-
-            {/* Slider nav */}
             <div className="courses-slider-nav-row">
               <button className="slider-nav-btn" onClick={() => setCourseIdx(i => Math.max(0, i - 1))} disabled={courseIdx === 0} aria-label="Previous">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6" /></svg>
@@ -410,7 +399,6 @@ const Home = () => {
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
               </button>
             </div>
-
             <div className="courses-slider-viewport">
               <div
                 className="courses-slider-track"
@@ -423,7 +411,6 @@ const Home = () => {
                 ))}
               </div>
             </div>
-
             <div className="courses-cta-row">
               <Link className="cta-dark-btn" to="/courses">Browse All Courses</Link>
             </div>
@@ -438,9 +425,7 @@ const Home = () => {
                 <p className="sub-heading">Study according to your progress</p>
                 <h2 className="title">Meet Our World-Class Faculty</h2>
               </div>
-              {/* <Link className="btn-see-all" to="/instructors">See All Faculties</Link> */}
             </div>
-
             <div className="instructors-slider-viewport">
               <div
                 className="instructors-track"
@@ -452,12 +437,6 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="instructors-dots">
-              {instructors.map((_, i) => (
-                <button key={i} className={`dot${instrIdx === i ? ' active' : ''}`} onClick={() => setInstrIdx(i)} aria-label={`Instructor ${i + 1}`} />
-              ))}
             </div>
           </div>
         </section>
@@ -501,11 +480,9 @@ const Home = () => {
         {/* ═══════════ BLOG ═══════════ */}
         <section className="blog-section">
           <div className="e-con-boxed blog-inner">
-            {/* Left: posts */}
             <div className="blog-posts-col">
               <p className="sub-heading blog-sub">RESEARCH &amp; ACADEMIC INSIGHTS</p>
               <h2 className="title blog-title-h2">Insights That Inspire Learning</h2>
-
               <div className="blog-slider-nav-row">
                 <button className="blog-nav-btn" onClick={() => setBlogIdx(i => Math.max(0, i - 1))} disabled={blogIdx === 0} aria-label="Previous">
                   <svg viewBox="0 0 448 512" width="14" height="14"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" fill="currentColor" /></svg>
@@ -514,18 +491,17 @@ const Home = () => {
                   <svg viewBox="0 0 448 512" width="14" height="14"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" fill="currentColor" /></svg>
                 </button>
               </div>
-
               <div className="blog-slider-viewport">
                 <div className="blog-slider-track" style={{ transform: `translateX(-${blogIdx * 50}%)` }}>
                   {blogPosts.map(post => (
                     <div key={post.id} className="blog-slide">
                       <div className="blog-card">
                         <div className="blog-card-thumb">
-                          <Link  to={post.link}><img src={post.img} alt={post.title} /></Link>
+                          <Link to={post.link}><img src={post.img} alt={post.title} /></Link>
                         </div>
                         <div className="blog-card-body">
                           <span className="blog-cat-tag">{post.category}</span>
-                          <h5 className="blog-post-title"><Link  to={post.link}>{post.title}</Link></h5>
+                          <h5 className="blog-post-title"><Link to={post.link}>{post.title}</Link></h5>
                           <div className="blog-post-meta">
                             <span>
                               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'relative', top: 2, marginRight: 4 }}>
@@ -546,18 +522,15 @@ const Home = () => {
                   ))}
                 </div>
               </div>
-
               <div style={{ marginTop: '2rem' }}>
-                <Link  to="/blog" className="btn-white-outline-blog">Read More Insights</Link>
+                <Link to="/blog" className="btn-white-outline-blog">Read More Insights</Link>
               </div>
             </div>
-
-            {/* Right: tags sidebar */}
             <div className="blog-tags-col">
               <h5 className="tags-heading">Popular tags</h5>
               <div className="tagcloud">
                 {tags.map((t, i) => (
-                  <Link  key={i} to="/blog" className="tag-cloud-link">{t}</Link>
+                  <Link key={i} to="/blog" className="tag-cloud-link">{t}</Link>
                 ))}
               </div>
               <div className="blog-decor-img">
