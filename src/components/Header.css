@@ -6,9 +6,9 @@
   /* background: linear-gradient(to right, #ffffff 0%, #111FA2 40%); */
   background: linear-gradient(to right, 
     #ffffff 0%, 
-    #ffffff 15%, 
-    #0753d6 23%, 
-    #111FA2 45%
+    #ffffff 10%, 
+    #30488a 23%, 
+    #162346 45%
   );
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.18);
   position: sticky;

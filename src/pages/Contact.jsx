@@ -118,12 +118,12 @@ export default function Contact() {
                     <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter phone number" required />
                   </span>
                 </div>
-                <div className="cf7-col">
+                {/* <div className="cf7-col">
                   <div className="cf7-label"><p>Website</p></div>
                   <span className="cf7-wrap">
                     <input type="text" name="website" value={formData.website} onChange={handleChange} placeholder="Enter website" />
                   </span>
-                </div>
+                </div> */}
                 <div className="cf7-col cf7-col--full">
                   <div className="cf7-label"><p>Message</p></div>
                   <span className="cf7-wrap">
