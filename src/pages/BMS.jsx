@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './CourseDetail.css';
 import { URLS } from '../Url';
 
+
 const courseData = {
   id: "",
   title: 'Building Management Systems (BMS)',
@@ -10,7 +11,14 @@ const courseData = {
   instructorSlug: 'dhanunjay',
   instructorBio: 'VOLTEDZ\nSr. BMS & CCTV Expert\n\nSpecialist in Building Management Systems, CCTV, Fire Alarms, and Access Control with extensive hands-on industrial knowledge and on-site implementation experience.',
   instructorAvatar: '/instructors/Dhanunjay.jpeg',
-  coInstructors: [],
+  coInstructors: [
+    {
+      name: 'Mr. Amit Rao Perka (L&D)',
+      slug: 'amit-rao-perka',
+      bio: 'VOLTEDZ\nNational Technical Head\n\nLeading the technical direction and ensuring top-level engineering training standards.',
+      avatar: '/instructors/Amit Rao Perka.jpeg',
+    },
+  ],
   featuredImage: '/courses/Building Management Systems.png',
   price: 'paid',
   priceDisplay: '₹20,000',
@@ -118,7 +126,7 @@ const courseData = {
     },
     {
       id: 7,
-      title: 'Module 7: Micro Controllers',
+      title: 'Module 7: Basic Micro Controllers',
       count: 5,
       items: [
         { id: 701, type: 'lesson', title: 'Programming Basics of Microcontrollers', locked: true },
@@ -147,6 +155,20 @@ const courseData = {
         { id: 812, type: 'quiz', title: 'Module 8 BMS Configuration Final Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
       ],
     },
+    {
+      id: 9,
+      title: 'Module 9: Intruder Alarm System',
+      count: 10,
+      items: [
+        { id: 901, type: 'lesson', title: 'Introduction: Basics, purpose, applications', locked: true },
+        { id: 902, type: 'lesson', title: 'Types of Systems -Wired, Wireless, Hybrid', locked: true },
+        { id: 903, type: 'lesson', title: 'Components- Control panel, sensors (PIR, magnetic), siren', locked: true },
+        { id: 904, type: 'lesson', title: 'Working Principle: Detection → Signal → Alarm', locked: true },
+        { id: 905, type: 'lesson', title: 'Installation: Sensor placement, wiring', locked: true },
+        { id: 906, type: 'lesson', title: 'Programming: Zones, user codes, delay settings', locked: true },
+        { id: 907, type: 'lesson', title: 'Practical: Installation & real-time practice', locked: true }, 
+      ],
+    }
   ],
   students: [
     { name: 'Suresh K.', progress: 60, avatar: 'https://secure.gravatar.com/avatar/ee4ae5e45b778f6dd7303785b2f860bd42db7de37895934373d462a5445b0aae?s=250&d=mm&r=g' },
@@ -256,6 +278,26 @@ function StarRating({ rating, size = 16 }) {
 }
 
 
+/* ─────────────────── INSTRUCTOR ENTRY (reusable row) ─────────────────── */
+function InstructorEntry({ avatar, name, slug, bio }) {
+  return (
+    <div className="cd-instructor-entry">
+      <img src={avatar} alt={name} className="cd-instructor-avatar" />
+      <div className="cd-instructor-details">
+        <h4 className="cd-instructor-title">
+          <Link to={`/instructors/${slug}`}>{name}</Link>
+        </h4>
+        <div className="cd-instructor-bio">
+          {bio.split('\n').map((line, i) =>
+            line ? <p key={i}>{line}</p> : <br key={i} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 /* ─────────────────── SIDEBAR ─────────────────── */
 function CourseSidebar({ course }) {
   const [formData, setFormData] = useState({
@@ -286,13 +328,8 @@ function CourseSidebar({ course }) {
     try {
       const response = await fetch(URLS.ContactByCourse, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          course: course.title,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, course: course.title }),
       });
 
       const data = await response.json();
@@ -340,22 +377,34 @@ function CourseSidebar({ course }) {
           <div className="cd-batch-group">
             <p className="cd-batch-label">Regular Batches: Mon – Fri</p>
             <ul className="cd-batch-list">
-              <li>Morning: 9:00 AM – 12:00 PM</li>
-              <li>Afternoon: 1:00 PM – 4:00 PM</li>
-              <li>Evening: 4:00 PM – 7:30 PM</li>
+              <li>9:00 AM – 11:00 AM</li>
+              <li>11:00 AM – 01:00 PM</li>
+              <li>02:00 PM – 04:00 PM</li>
+              <li>04:00 PM – 06:00 PM</li>
             </ul>
           </div>
           <div className="cd-batch-group">
             <p className="cd-batch-label">Weekend Batches: Sat &amp; Sun</p>
             <ul className="cd-batch-list">
-              <li>Half Day: 9:00 AM – 1:00 PM</li>
+              <li>9:00 AM – 1:00 PM</li>
+            </ul>
+          </div>
+          <div className="cd-batch-group">
+            <p className="cd-batch-label">Online Timings</p>
+            <ul className="cd-batch-list">
+              <li>6:00 PM – 7:00 PM</li>
             </ul>
           </div>
         </div>
 
         {/* CTA buttons */}
         <div className="cd-sidebar-ctas">
-          <a href="https://wa.me/919010716664?text=Hi%20VOLTEDZ%2C%20I%20am%20interested%20in%20the%20Building%20Management%20Systems%20course." target="_blank" rel="noopener noreferrer" className="cd-cta-whatsapp">
+          <a
+            href="https://wa.me/919010716664?text=Hi%20VOLTEDZ%2C%20I%20am%20interested%20in%20the%20Building%20Management%20Systems%20course."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cd-cta-whatsapp"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
@@ -400,29 +449,29 @@ function CourseSidebar({ course }) {
         <div className="cd-sidebar-section">
           <h5 className="cd-sidebar-heading">Quick Contact</h5>
           <form className="cd-contact-form" onSubmit={handleSubmit}>
-            <input 
-              type="text" 
+            <input
+              type="text"
               name="name"
-              placeholder="Name *" 
+              placeholder="Name *"
               value={formData.name}
               onChange={handleInputChange}
-              required 
+              required
             />
-            <input 
-              type="email" 
+            <input
+              type="email"
               name="email"
-              placeholder="Email *" 
+              placeholder="Email *"
               value={formData.email}
               onChange={handleInputChange}
-              required 
+              required
             />
-            <input 
-              type="tel" 
+            <input
+              type="tel"
               name="phone"
-              placeholder="Phone *" 
+              placeholder="Phone *"
               value={formData.phone}
               onChange={handleInputChange}
-              required 
+              required
             />
             <div className="cd-textarea-wrap">
               <textarea
@@ -439,12 +488,12 @@ function CourseSidebar({ course }) {
               {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
             </button>
             {submitMessage && (
-              <p 
-                className={`cd-submit-message ${submitMessage.includes('success') ? 'success' : 'error'}`} 
+              <p
+                className={`cd-submit-message ${submitMessage.includes('success') ? 'success' : 'error'}`}
                 style={{
-                  fontSize: '13px', 
-                  marginTop: '10px', 
-                  color: submitMessage.includes('success') ? '#25D366' : '#d32f2f'
+                  fontSize: '13px',
+                  marginTop: '10px',
+                  color: submitMessage.includes('success') ? '#25D366' : '#d32f2f',
                 }}
               >
                 {submitMessage}
@@ -463,6 +512,17 @@ function CourseSidebar({ course }) {
 export default function CourseDetail() {
   const course = courseData;
 
+  // Combine main instructor + co-instructors into one flat list
+  const allInstructors = [
+    {
+      name: course.instructor,
+      slug: course.instructorSlug,
+      bio: course.instructorBio,
+      avatar: course.instructorAvatar,
+    },
+    ...course.coInstructors,
+  ];
+
   return (
     <div className="cd-page">
 
@@ -472,25 +532,33 @@ export default function CourseDetail() {
           <ul className="cd-breadcrumbs">
             {course.breadcrumbs.map((b, i) => (
               <li key={i}>
-                {b.href ? <Link  to={b.href}>{b.label}</Link> : <span>{b.label}</span>}
+                {b.href ? <Link to={b.href}>{b.label}</Link> : <span>{b.label}</span>}
               </li>
             ))}
           </ul>
         </div>
       </div>
 
-      {/* ── Course Header (full-width, outside cd-layout) ── */}
+      {/* ── Course Header ── */}
       <div className="cd-header-top">
         <h1 className="cd-title">{course.title}</h1>
         <h2 className="cd-tech-subtitle">
-          BMS Fundamentals, CCTV, Access Control, Fire Alarms, Networking &amp; Microcontrollers
+          PLC, SCADA, HMI , VFD , Control Wiring
         </h2>
+
+        {/* ↓ UPDATED: dynamically lists all instructor names from allInstructors */}
         <p className="cd-instructor-line">
-          INSTRUCTOR:{' '}
-          <Link  to={`/instructors/${course.instructorSlug}`} className="cd-instructor-name">
-            {course.instructor}
-          </Link>
+          {allInstructors.length > 1 ? 'INSTRUCTORS' : 'INSTRUCTOR'}:{' '}
+          {allInstructors.map((instructor, index) => (
+            <span key={instructor.slug}>
+              {index > 0 && <span className="cd-instructor-separator">,&nbsp;</span>}
+              <Link to={`/instructors/${instructor.slug}`} className="cd-instructor-name">
+                {instructor.name}
+              </Link>
+            </span>
+          ))}
         </p>
+
         <div className="cd-featured-img-wrap">
           <img src={course.featuredImage} alt={course.title} className="cd-featured-img" />
         </div>
@@ -546,25 +614,21 @@ export default function CourseDetail() {
             ))}
           </section>
 
-          {/* ── Instructor ── */}
+          {/* ── Instructors (both in one card) ── */}
           <section className="cd-instructor-section">
-            <h3 className="cd-section-title">About the Instructor</h3>
+            <h3 className="cd-section-title">About the Instructors</h3>
             <div className="cd-instructor-card">
-              <img
-                src={course.instructorAvatar}
-                alt={course.instructor}
-                className="cd-instructor-avatar"
-              />
-              <div className="cd-instructor-details">
-                <h4 className="cd-instructor-title">
-                  <Link  to={`/instructors/${course.instructorSlug}`}>{course.instructor}</Link>
-                </h4>
-                <div className="cd-instructor-bio">
-                  {course.instructorBio.split('\n').map((line, i) =>
-                    line ? <p key={i}>{line}</p> : <br key={i} />
-                  )}
+              {allInstructors.map((instructor, index) => (
+                <div key={instructor.slug}>
+                  {index > 0 && <hr className="cd-instructor-divider" />}
+                  <InstructorEntry
+                    avatar={instructor.avatar}
+                    name={instructor.name}
+                    slug={instructor.slug}
+                    bio={instructor.bio}
+                  />
                 </div>
-              </div>
+              ))}
             </div>
           </section>
 

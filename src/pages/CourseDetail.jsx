@@ -21,7 +21,7 @@ const courseData = {
     { label: 'Industrial Automation', href: null },
   ],
   objectives: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation with real-world practical sessions.',
-  structure: { duration: '12 Weeks', level: 'All levels', lessons: '15+', quizzes: 7, students: '12K' },
+  structure: { duration: '12 Weeks', level: 'All levels', modules: '30+', quizzes: 7, students: '12K' },
   features: [
     'Industry-standard PLC programming (Siemens, Allen Bradley, Mitsubishi)',
     'SCADA system design and implementation',
@@ -330,7 +330,7 @@ function CourseSidebar({ course }) {
           {[
             { icon: '⏱', label: 'Duration', value: course.structure.duration },
             { icon: '📊', label: 'Level', value: course.structure.level },
-            { icon: '📚', label: 'Modules', value: `${course.structure.lessons} Modules` },
+            { icon: '📚', label: 'Modules', value: `${course.structure.modules} Modules` },
             { icon: '👥', label: 'Students', value: `${course.structure.students}+ Enrolled` },
           ].map(({ icon, label, value }) => (
             <div className="cd-meta-row" key={label}>
@@ -349,15 +349,22 @@ function CourseSidebar({ course }) {
           <div className="cd-batch-group">
             <p className="cd-batch-label">Regular Batches: Mon – Fri</p>
             <ul className="cd-batch-list">
-              <li>Morning: 9:00 AM – 12:00 PM</li>
-              <li>Afternoon: 1:00 PM – 4:00 PM</li>
-              <li>Evening: 4:00 PM – 7:30 PM</li>
+              <li>9:00 AM – 11:00 AM</li>
+              <li>11:00 AM – 01:00 PM</li>
+              <li>02:00 PM – 04:00 PM</li>
+              <li>04:00 PM – 06:00 PM</li>
             </ul>
           </div>
           <div className="cd-batch-group">
             <p className="cd-batch-label">Weekend Batches: Sat &amp; Sun</p>
             <ul className="cd-batch-list">
-              <li>Half Day: 9:00 AM – 1:00 PM</li>
+              <li>9:00 AM – 1:00 PM</li>
+            </ul>
+          </div>
+          <div className="cd-batch-group">
+            <p className="cd-batch-label">Online Timings</p>
+            <ul className="cd-batch-list">
+              <li>6:00 PM – 7:00 PM</li>
             </ul>
           </div>
         </div>

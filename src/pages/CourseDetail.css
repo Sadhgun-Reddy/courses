@@ -277,11 +277,26 @@
 
 .cd-instructor-card {
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  flex-direction: column; 
+  gap: 0; 
+  padding: 0; 
   border: 1px solid #e7e7e7;
   border-radius: 12px;
   background: #fafafa;
+  overflow: hidden;
+}
+
+.cd-instructor-entry {
+  display: flex; 
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px; 
+}
+ 
+.cd-instructor-divider {
+  border: none;
+  border-top: 1px solid #e7e7e7;
+  margin: 0;
 }
 
 .cd-instructor-avatar {

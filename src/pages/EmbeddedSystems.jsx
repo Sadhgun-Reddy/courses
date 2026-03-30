@@ -327,15 +327,22 @@ function CourseSidebar({ course }) {
           <div className="cd-batch-group">
             <p className="cd-batch-label">Regular Batches: Mon – Fri</p>
             <ul className="cd-batch-list">
-              <li>Morning: 9:00 AM – 12:00 PM</li>
-              <li>Afternoon: 1:00 PM – 4:00 PM</li>
-              <li>Evening: 4:00 PM – 7:30 PM</li>
+              <li>9:00 AM – 11:00 AM</li>
+              <li>11:00 AM – 01:00 PM</li>
+              <li>02:00 PM – 04:00 PM</li>
+              <li>04:00 PM – 06:00 PM</li>
             </ul>
           </div>
           <div className="cd-batch-group">
             <p className="cd-batch-label">Weekend Batches: Sat &amp; Sun</p>
             <ul className="cd-batch-list">
               <li>Half Day: 9:00 AM – 1:00 PM</li>
+            </ul>
+          </div>
+          <div className="cd-batch-group">
+            <p className="cd-batch-label">Online Timings</p>
+            <ul className="cd-batch-list">
+              <li>6:00 PM – 7:00 PM</li>
             </ul>
           </div>
         </div>
