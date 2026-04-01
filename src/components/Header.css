@@ -58,7 +58,7 @@
 }
 
 .logo-img {
-  width: 200px;
+  width: 174px;
   height: auto;
   max-width: 100%;
   object-fit: contain;
@@ -83,6 +83,7 @@
 
 .nav-menu {
   display: flex;
+  justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -100,7 +101,7 @@
   color: #111fa2;
   text-decoration: none;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 17px;
   padding: 10px 24px;
   display: flex;
   align-items: center;
@@ -135,11 +136,68 @@
   transform: rotate(180deg);
 }
 
-/* ── Header Actions (mobile toggle) ── */
+/* ── Header Actions (auth buttons + mobile toggle) ── */
 .header-actions {
   flex: 0 0 auto;
-  display: none;
+  display: flex;
   align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@import url('../styles/theme.css');
+
+.btn-login,
+.btn-signup {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-login {
+  color: var(--primary-blue);
+  background-color: transparent;
+  border: 2px solid var(--primary-blue);
+  border-radius: 8px;
+}
+
+.btn-login:hover {
+  background-color: var(--primary-blue);
+  color: var(--text-light);
+}
+
+.btn-signup {
+  color: var(--text-light);
+  background: var(--primary-dark);
+  border: 2px solid var(--primary-dark);
+}
+
+.btn-signup:hover {
+  color: var(--text-light);
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  box-shadow: none;
+}
+
+.btn-login:focus,
+.btn-signup:focus {
+  outline: 2px solid #FFCC00;
+  outline-offset: 2px;
 }
 
 .mobile-menu-toggle {
@@ -233,7 +291,7 @@
   /* Position relative to .thim-ekit__header__inner via the static parent trick */
   position: absolute;
   top: calc(100% + 14px);
-  left: 40%;
+  left: 52%;
   transform: translateX(-50%) translateY(12px);
   width: calc(100vw - 40px);
   max-width: 1290px;
@@ -417,6 +475,18 @@
     display: flex;
   }
 
+  .auth-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 12px;
+  }
+
+  .btn-login,
+  .btn-signup {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+
   .nav-blue-block {
     order: 3;
     flex: 0 0 100%;
@@ -485,17 +555,39 @@
    ============================================================ */
 @media (max-width: 767px) {
   .thim-ekit__header__inner { padding: 0 14px; }
-  .logo-img { width: 160px; }
+  .logo-img { width: 130px; }
+  
+  .auth-buttons {
+    gap: 6px;
+    margin-right: 8px;
+  }
+
+  .btn-login,
+  .btn-signup {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
 }
 
 /* ============================================================
    Responsive — Small Mobile (≤ 480px)
    ============================================================ */
 @media (max-width: 480px) {
-  .logo-img { width: 130px; }
+  .logo-img { width: 100px; }
   .header-container { min-height: 62px; }
   .nav-menu li a { padding: 12px 16px; font-size: 14px; }
   .mega-img { height: 120px !important; }
   .mega-card-title { font-size: 13px; }
   .mega-link { font-size: 12px; }
+  
+  .auth-buttons {
+    gap: 4px;
+    margin-right: 6px;
+  }
+
+  .btn-login,
+  .btn-signup {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 }

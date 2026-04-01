@@ -85,7 +85,7 @@ const Footer = () => (
           <Link to="/contact">Contact Us</Link>
           <Link to="/privacy">Privacy Policy</Link>
         </nav>
-        <p className="footer-copy">© 2025 VOLTEDZ. All Rights Reserved.</p>
+        <p className="footer-copy">Designed and Developed by <a style={{color:"#fff"}} href="https://moironix.com/" target="_blank" rel="noopener noreferrer">Moironix</a> © 2026 VOLTEDZ. All Rights Reserved.</p>
       </div>
     </div>
   </footer>

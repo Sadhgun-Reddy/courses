@@ -294,7 +294,7 @@ function CourseSidebar({ course }) {
 
     try {
       const response = await fetch(URLS.ContactByCourse, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -564,7 +564,7 @@ export default function CourseDetail() {
           {/* ── Instructor ── */}
           <section className="cd-instructor-section">
             <h3 className="cd-section-title">About the Instructor</h3>
-            <div className="cd-instructor-card">
+            <div className="cd-instructor-entry">
               <img
                 src={course.instructorAvatar}
                 alt={course.instructor}

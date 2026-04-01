@@ -11,6 +11,7 @@ import EmbeddedSystems from './pages/EmbeddedSystems';
 import DataScience from './pages/DataScience';
 import CCTV from './pages/CCTV';
 import Contact from './pages/Contact';
+import Login from './pages/Login';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="courses/data-science" element={<DataScience />} />
           <Route path="courses/cctv" element={<CCTV />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>

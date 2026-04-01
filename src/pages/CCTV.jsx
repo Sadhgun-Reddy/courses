@@ -199,7 +199,7 @@ function CourseSidebar({ course }) {
 
     try {
       const response = await fetch(URLS.ContactByCourse, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

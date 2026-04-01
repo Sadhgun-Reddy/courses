@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Courses.css';
@@ -10,7 +11,7 @@ const coursesData = [
     description: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.',
     img: '/courses/Industrial Automation.png',
     rating: 5.0, reviews: 1, duration: '12 Weeks', Modules: 24, quizzes: 4,
-    price: 'paid', priceDisplay: '₹25,000', type: 'online', categories: [12],
+    price: 'paid',   type: 'online', categories: [12],
   },
   {
     id: 2,
@@ -19,7 +20,7 @@ const coursesData = [
     description: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.',
     img: '/courses/Building Management Systems.png',
     rating: 5.0, reviews: 1, duration: '10 Weeks', Modules: 20, quizzes: 3,
-    price: 'paid', priceDisplay: '₹20,000', type: 'online', categories: [13],
+    price: 'paid',   type: 'online', categories: [13],
   },
   {
     id: 3,
@@ -28,7 +29,7 @@ const coursesData = [
     description: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.',
     img: '/courses/Embedded Systems & IoT.png',
     rating: 5.0, reviews: 1, duration: '14 Weeks', Modules: 28, quizzes: 5,
-    price: 'paid', priceDisplay: '₹30,000', originalPrice: '₹35,000', priceSuffix: '', type: 'online', categories: [16],
+    price: 'paid', priceSuffix: '', type: 'online', categories: [16],
   },
   {
     id: 4,
@@ -37,24 +38,25 @@ const coursesData = [
     description: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.',
     img: '/courses/Data Science & AI.png',
     rating: 5.0, reviews: 1, duration: '16 Weeks', lessons: '15+', quizzes: 6,
-    price: 'paid', priceDisplay: '₹40,000', type: 'online', categories: [34],
+    price: 'paid',   type: 'online', categories: [34],
   },
   {
     id: 5,
     route: '/courses/cctv',
     title: 'CCTV & Security Systems',
     description: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.',
-    img: '/courses/Data Science & AI.png',
+    img: '/courses/CCTV.png',
     rating: 5.0, reviews: 1, duration: '16 Weeks', lessons: '15+', quizzes: 6,
-    price: 'paid', priceDisplay: '₹40,000', type: 'online', categories: [34],
+    price: 'paid',  type: 'online', categories: [34],
   },
 ];
 
 const categories = [
   { id: 12, label: 'Automation', count: 1 },
-  { id: 13, label: 'BMS & CCTV', count: 1 },
+  { id: 13, label: 'BMS', count: 1 },
   { id: 16, label: 'Embedded Systems', count: 1 },
   { id: 34, label: 'Data Science & AI', count: 1 },
+  { id: 38, label: 'CCTV', count: 1 },
 ];
 
 const COURSES_PER_PAGE = 9;
@@ -91,11 +93,11 @@ function CourseCard({ course }) {
               <img src={course.img} alt="course thumbnail" loading="lazy" />
             </div>
           </Link>
-          <button className="lp-button-wishlist-action" type="button" aria-label="Add to Wishlist">
+          {/* <button className="lp-button-wishlist-action" type="button" aria-label="Add to Wishlist">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
-          </button>
+          </button> */}
         </div>
         <div className="course-content">
           <div className="course-rating">
@@ -258,7 +260,7 @@ export default function Courses() {
               </div>
 
               {/* Type */}
-              <div className="lp-form-course-filter__item">
+              {/* <div className="lp-form-course-filter__item">
                 <div className="lp-form-course-filter__title">Type</div>
                 <div className="lp-form-course-filter__content">
                   {['online', 'offline'].map(t => (
@@ -268,10 +270,10 @@ export default function Courses() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* Price */}
-              <div className="lp-form-course-filter__item">
+              {/* <div className="lp-form-course-filter__item">
                 <div className="lp-form-course-filter__title">Price</div>
                 <div className="lp-form-course-filter__content">
                   <div className="lp-course-filter__field">
@@ -285,10 +287,10 @@ export default function Courses() {
                     <span className="count">2</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Rating */}
-              <div className="lp-form-course-filter__item">
+              {/* <div className="lp-form-course-filter__item">
                 <div className="lp-form-course-filter__title">Rating</div>
                 <div className="lp-form-course-filter__content">
                   <div className="lp-field-star">
@@ -307,10 +309,10 @@ export default function Courses() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <button type="submit" className="course-filter-submit">Apply</button>
-              <button type="button" className="course-filter-reset" onClick={resetFilters}>Reset</button>
+              {/* <button type="submit" className="course-filter-submit">Apply</button>
+              <button type="button" className="course-filter-reset" onClick={resetFilters}>Reset</button> */}
             </form>
           </div>
         </div>
@@ -335,20 +337,20 @@ export default function Courses() {
                     className="lp-course-filter-search-input"
                   />
                 </div>
-                <select className="courses-order-by" value={orderBy} onChange={e => setOrderBy(e.target.value)}>
+                {/* <select className="courses-order-by" value={orderBy} onChange={e => setOrderBy(e.target.value)}>
                   <option value="post_date">Newly published</option>
                   <option value="post_title">Title a-z</option>
                   <option value="post_title_desc">Title z-a</option>
                   <option value="price">Price high to low</option>
                   <option value="price_low">Price low to high</option>
-                </select>
+                </select> */}
                 <div className="switch-layout">
-                  <button className={`switch-btn grid${layout === 'grid' ? ' active' : ''}`} onClick={() => setLayout('grid')} title="Grid" type="button">
+                  {/* <button className={`switch-btn grid${layout === 'grid' ? ' active' : ''}`} onClick={() => setLayout('grid')} title="Grid" type="button">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" /><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" /><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" /><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" /></svg>
                   </button>
                   <button className={`switch-btn list${layout === 'list' ? ' active' : ''}`} onClick={() => setLayout('list')} title="List" type="button">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="2.5" rx="1" fill="currentColor" /><rect x="1" y="6.75" width="14" height="2.5" rx="1" fill="currentColor" /><rect x="1" y="11.5" width="14" height="2.5" rx="1" fill="currentColor" /></svg>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

@@ -142,12 +142,17 @@ const Header = () => {
                 <li onClick={() => setIsMobileMenuOpen(false)}>
                   <Link to="/contact">Contact Us</Link>
                 </li>
+                
               </ul>
             </nav>
           </div>
 
-          {/* Mobile Toggle */}
+          {/* Auth Buttons & Mobile Toggle */}
           <div className="header-actions">
+            <div className="auth-buttons">
+              <Link to="/login" className="btn-login">Login</Link>
+              <Link to="/login" className="btn-signup">Sign Up</Link>
+            </div>
             <button
               className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
               aria-label="Toggle menu"

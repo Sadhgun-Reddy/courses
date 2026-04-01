@@ -136,39 +136,40 @@ const courseData = {
         { id: 705, type: 'quiz', title: 'Module 7 Microcontrollers Assessment Quiz', duration: '15 Minutes', questions: 10, locked: true },
       ],
     },
-    {
+        {
       id: 8,
-      title: 'Module 8: BMS Configuration (Theory)',
-      count: 12,
+      title: 'Module 8: Intruder Alarm System',
+      count: 10,
       items: [
-        { id: 801, type: 'lesson', title: 'Basic Parameters of BMS Configuration', locked: true },
-        { id: 802, type: 'lesson', title: 'Energy Measurement', locked: true },
-        { id: 803, type: 'lesson', title: 'Transmission Techniques', locked: true },
-        { id: 804, type: 'lesson', title: 'Network Protocols – Modbus, Profibus & CANBus (Theory)', locked: true },
-        { id: 805, type: 'lesson', title: 'Lighting Controls (Theory)', locked: true },
-        { id: 806, type: 'lesson', title: 'Solar Panels (Theory)', locked: true },
-        { id: 807, type: 'lesson', title: 'UPS and Generators (Theory)', locked: true },
-        { id: 808, type: 'lesson', title: 'Surge & Lightning Protection Systems', locked: true },
-        { id: 809, type: 'lesson', title: 'HVAC Systems (Theory)', locked: true },
-        { id: 810, type: 'lesson', title: 'Automatic Gates & Barriers (Theory)', locked: true },
-        { id: 811, type: 'lesson', title: 'Field Instruments (Theory)', locked: true },
-        { id: 812, type: 'quiz', title: 'Module 8 BMS Configuration Final Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
+        { id: 801, type: 'lesson', title: 'Introduction: Basics, purpose, applications', locked: true },
+        { id: 802, type: 'lesson', title: 'Types of Systems -Wired, Wireless, Hybrid', locked: true },
+        { id: 803, type: 'lesson', title: 'Components- Control panel, sensors (PIR, magnetic), siren', locked: true },
+        { id: 804, type: 'lesson', title: 'Working Principle: Detection → Signal → Alarm', locked: true },
+        { id: 805, type: 'lesson', title: 'Installation: Sensor placement, wiring', locked: true },
+        { id: 806, type: 'lesson', title: 'Programming: Zones, user codes, delay settings', locked: true },
+        { id: 807, type: 'lesson', title: 'Practical: Installation & real-time practice', locked: true }, 
       ],
     },
     {
       id: 9,
-      title: 'Module 9: Intruder Alarm System',
-      count: 10,
+      title: 'Module 9: BMS Configuration (Theory)',
+      count: 12,
       items: [
-        { id: 901, type: 'lesson', title: 'Introduction: Basics, purpose, applications', locked: true },
-        { id: 902, type: 'lesson', title: 'Types of Systems -Wired, Wireless, Hybrid', locked: true },
-        { id: 903, type: 'lesson', title: 'Components- Control panel, sensors (PIR, magnetic), siren', locked: true },
-        { id: 904, type: 'lesson', title: 'Working Principle: Detection → Signal → Alarm', locked: true },
-        { id: 905, type: 'lesson', title: 'Installation: Sensor placement, wiring', locked: true },
-        { id: 906, type: 'lesson', title: 'Programming: Zones, user codes, delay settings', locked: true },
-        { id: 907, type: 'lesson', title: 'Practical: Installation & real-time practice', locked: true }, 
+        { id: 901, type: 'lesson', title: 'Basic Parameters of BMS Configuration', locked: true },
+        { id: 902, type: 'lesson', title: 'Energy Measurement', locked: true },
+        { id: 903, type: 'lesson', title: 'Transmission Techniques', locked: true },
+        { id: 904, type: 'lesson', title: 'Network Protocols – Modbus, Profibus & CANBus (Theory)', locked: true },
+        { id: 905, type: 'lesson', title: 'Lighting Controls (Theory)', locked: true },
+        { id: 906, type: 'lesson', title: 'Solar Panels (Theory)', locked: true },
+        { id: 907, type: 'lesson', title: 'UPS and Generators (Theory)', locked: true },
+        { id: 908, type: 'lesson', title: 'Surge & Lightning Protection Systems', locked: true },
+        { id: 909, type: 'lesson', title: 'HVAC Systems (Theory)', locked: true },
+        { id: 910, type: 'lesson', title: 'Automatic Gates & Barriers (Theory)', locked: true },
+        { id: 911, type: 'lesson', title: 'Field Instruments (Theory)', locked: true },
+        { id: 912, type: 'quiz', title: 'Module 8 BMS Configuration Final Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
       ],
-    }
+    },
+
   ],
   students: [
     { name: 'Suresh K.', progress: 60, avatar: 'https://secure.gravatar.com/avatar/ee4ae5e45b778f6dd7303785b2f860bd42db7de37895934373d462a5445b0aae?s=250&d=mm&r=g' },
@@ -327,7 +328,7 @@ function CourseSidebar({ course }) {
 
     try {
       const response = await fetch(URLS.ContactByCourse, {
-        method: 'PUT',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, course: course.title }),
       });
@@ -543,7 +544,7 @@ export default function CourseDetail() {
       <div className="cd-header-top">
         <h1 className="cd-title">{course.title}</h1>
         <h2 className="cd-tech-subtitle">
-          PLC, SCADA, HMI , VFD , Control Wiring
+          PLC, SCADA, HMI , VFD , Control Wiring, CCTV
         </h2>
 
         {/* ↓ UPDATED: dynamically lists all instructor names from allInstructors */}

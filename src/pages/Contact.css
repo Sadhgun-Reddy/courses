@@ -264,6 +264,17 @@
   text-align: center;
 }
 
+.contact-error-msg {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 /* Form grid */
 .wpcf7-form {
   width: 100%;
@@ -345,6 +356,12 @@
 
 .cf7-submit:hover {
   background: #ef2807;
+}
+
+.cf7-submit:disabled {
+  background: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* ── Responsive ── */

@@ -21,7 +21,7 @@ const courseData = {
     { label: 'Embedded Systems & IoT', href: null },
   ],
   objectives:
-    'Master Embedded C programming, microcontroller design with Arduino, PIC, STM32 and ESP32, communication protocols, FreeRTOS, PCB design, and full IoT cloud integration with Firebase, Blynk IoT and AWS IoT — across four comprehensive learning tracks: Basic, Advanced, Firmware+IoT Cloud, and IoT System.',
+    'Master Embedded C programming, microcontroller design with Arduino, PIC, STM32 and ESP32, communication protocols, FreeRTOS, PCB design, and full IoT cloud integration with Firebase, Blynk IoT and AWS IoT — across four comprehensive learning Modules: Basic, Advanced, Firmware+IoT Cloud, and IoT System.',
   structure: {
     duration: '14 Weeks',
     level: 'All levels',
@@ -30,17 +30,17 @@ const courseData = {
     students: '11k',
   },
   features: [
-    'Four tracks: Basic, Advanced, Firmware + IoT Cloud, and IoT System',
+    'Four Modules: Basic, Advanced, Firmware + IoT Cloud, and IoT System',
     'Hands-on ESP32 programming using ESP-IDF with FreeRTOS real-time tasks',
     '3 months on-field support post-training and lifetime assistance',
   ],
   overview: `<h3>Overview</h3>
-    <p>This course covers four comprehensive learning tracks designed to take you from embedded systems fundamentals to full-stack IoT product development. Starting with C and Embedded C programming and digital electronics basics, you progressively master microcontroller programming on Arduino, PIC, STM32, and ESP32 platforms with real hardware.</p>
-    <p>The Basic and Advanced tracks build strong foundations in peripheral interfacing, sensor integration, communication protocols (UART, I2C, SPI, CAN, Ethernet), PCB design, debugging, and FreeRTOS. The Firmware + IoT Cloud Integration and Internet of Things System tracks take you into ESP-IDF framework programming, HTTP and MQTT internet protocols, and live cloud dashboard deployment using Firebase, Blynk IoT, and AWS IoT — all culminating in industry-oriented end-to-end embedded and IoT projects.</p>`,
+    <p>This course covers four comprehensive learning Modules designed to take you from embedded systems fundamentals to full-stack IoT product development. Starting with C and Embedded C programming and digital electronics basics, you progressively master microcontroller programming on Arduino, PIC, STM32, and ESP32 platforms with real hardware.</p>
+    <p>The Basic and Advanced Modules build strong foundations in peripheral interfacing, sensor integration, communication protocols (UART, I2C, SPI, CAN, Ethernet), PCB design, debugging, and FreeRTOS. The Firmware + IoT Cloud Integration and Internet of Things System Modules take you into ESP-IDF framework programming, HTTP and MQTT internet protocols, and live cloud dashboard deployment using Firebase, Blynk IoT, and AWS IoT — all culminating in industry-oriented end-to-end embedded and IoT projects.</p>`,
   curriculum: [
     {
       id: 1,
-      title: 'Track 1 – BASIC: Embedded Systems',
+      title: 'Module 1 – BASIC: Embedded Systems',
       count: 12,
       items: [
         { id: 101, type: 'lesson', title: 'C Programming Fundamentals', duration: '60 Minutes', preview: true },
@@ -54,12 +54,12 @@ const courseData = {
         { id: 109, type: 'lesson', title: 'PCB Design', locked: true },
         { id: 110, type: 'lesson', title: 'Embedded Debugging Techniques', locked: true },
         { id: 111, type: 'lesson', title: 'Industry-Oriented Embedded Projects', locked: true },
-        { id: 112, type: 'quiz', title: 'Track 1 – Basic Embedded Systems Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
+        { id: 112, type: 'quiz', title: 'Module 1 – Basic Embedded Systems Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
       ],
     },
     {
       id: 2,
-      title: 'Track 2 – ADVANCED: Embedded Systems',
+      title: 'Module 2 – ADVANCED: Embedded Systems',
       count: 10,
       items: [
         { id: 201, type: 'lesson', title: 'C Programming – Advanced Level', locked: true },
@@ -72,12 +72,12 @@ const courseData = {
         { id: 208, type: 'lesson', title: 'Serial Communication Protocols – UART, I2C & SPI', locked: true },
         { id: 209, type: 'lesson', title: 'PCB Design (Advanced)', locked: true },
         { id: 210, type: 'lesson', title: 'Industry-Oriented Embedded Projects (Advanced)', locked: true },
-        { id: 211, type: 'quiz', title: 'Track 2 – Advanced Embedded Systems Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
+        { id: 211, type: 'quiz', title: 'Module 2 – Advanced Embedded Systems Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
       ],
     },
     {
       id: 3,
-      title: 'Track 3 – Embedded Firmware + IoT Cloud Integration',
+      title: 'Module 3 – Embedded Firmware + IoT Cloud Integration',
       count: 10,
       items: [
         { id: 301, type: 'lesson', title: 'C Programming for Embedded Firmware', locked: true },
@@ -90,12 +90,12 @@ const courseData = {
         { id: 308, type: 'lesson', title: 'Cloud Platform Integration – Blynk IoT & AWS IoT', locked: true },
         { id: 309, type: 'lesson', title: 'Real-Time Operating System (FreeRTOS) for IoT Firmware', locked: true },
         { id: 310, type: 'lesson', title: 'Industry-Oriented IoT Project – Firmware + Cloud', locked: true },
-        { id: 311, type: 'quiz', title: 'Track 3 – Firmware + IoT Cloud Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
+        { id: 311, type: 'quiz', title: 'Module 3 – Firmware + IoT Cloud Assessment Quiz', duration: '20 Minutes', questions: 15, locked: true },
       ],
     },
     {
       id: 4,
-      title: 'Track 4 – Internet of Things (IoT) System',
+      title: 'Module 4 – Internet of Things (IoT) System',
       count: 10,
       items: [
         { id: 401, type: 'lesson', title: 'C Programming for IoT System Design', locked: true },
@@ -107,7 +107,7 @@ const courseData = {
         { id: 407, type: 'lesson', title: 'IoT Cloud Platforms & Dashboards – Firebase, Blynk IoT & AWS IoT', locked: true },
         { id: 408, type: 'lesson', title: 'FreeRTOS in IoT System Architecture', locked: true },
         { id: 409, type: 'lesson', title: 'End-to-End Industry-Oriented IoT System Project', locked: true },
-        { id: 410, type: 'quiz', title: 'Track 4 – IoT System Final Assessment Quiz', duration: '25 Minutes', questions: 20, locked: true },
+        { id: 410, type: 'quiz', title: 'Module 4 – IoT System Final Assessment Quiz', duration: '25 Minutes', questions: 20, locked: true },
       ],
     },
   ],
@@ -138,8 +138,8 @@ const courseData = {
       avatar: 'https://secure.gravatar.com/avatar/8ee1f011bb5b9e464560e252b03aa580b722ade51dd178e8d8a149294d58a60f?s=250&d=mm&r=g',
       rating: 5,
       date: 'March 12, 2026',
-      title: 'Four Tracks Cover Every Skill Level',
-      content: 'The four-track structure is genius. I enrolled in the Advanced track and the microcontroller programming with Arduino and PIC was exactly what my job role required. Well-structured content.',
+      title: 'Four Modules Cover Every Skill Level',
+      content: 'The four-Module structure is genius. I enrolled in the Advanced Module and the microcontroller programming with Arduino and PIC was exactly what my job role required. Well-structured content.',
     },
     {
       author: 'Harish G.',
@@ -147,7 +147,7 @@ const courseData = {
       rating: 5,
       date: 'March 2, 2026',
       title: 'ESP32 + Firebase Integration Was Brilliant',
-      content: 'The IoT Cloud track with Firebase and Blynk IoT real-time dashboard was done with live hardware. I built my own sensor dashboard by the end of the session. Absolutely worth every rupee.',
+      content: 'The IoT Cloud Module with Firebase and Blynk IoT real-time dashboard was done with live hardware. I built my own sensor dashboard by the end of the session. Absolutely worth every rupee.',
     },
     {
       author: 'Pooja A.',
@@ -195,7 +195,7 @@ const courseData = {
       rating: 5,
       date: 'January 12, 2026',
       title: 'STM32 Programming Was a Great Addition',
-      content: 'The Basic track covering STM32 alongside Arduino and PIC is a major advantage. Most embedded courses stop at Arduino. VOLTEDZ clearly trains you for the real embedded job market.',
+      content: 'The Basic Module covering STM32 alongside Arduino and PIC is a major advantage. Most embedded courses stop at Arduino. VOLTEDZ clearly trains you for the real embedded job market.',
     },
     {
       author: 'Sravani N.',
@@ -215,7 +215,7 @@ const courseData = {
     },
   ],
   featuredReview:
-    'The four-track structure is brilliant — I could choose my level and grow step by step. The cloud integration with Firebase and AWS IoT was hands-on and practical. This course genuinely prepares you for real embedded and IoT product development.',
+    'The four-Module structure is brilliant — I could choose my level and grow step by step. The cloud integration with Firebase and AWS IoT was hands-on and practical. This course genuinely prepares you for real embedded and IoT product development.',
 };
 
 
@@ -272,7 +272,7 @@ function CourseSidebar({ course }) {
 
     try {
       const response = await fetch(URLS.ContactByCourse, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -395,29 +395,29 @@ function CourseSidebar({ course }) {
         <div className="cd-sidebar-section">
           <h5 className="cd-sidebar-heading">Quick Contact</h5>
           <form className="cd-contact-form" onSubmit={handleSubmit}>
-            <input 
-              type="text" 
+            <input
+              type="text"
               name="name"
-              placeholder="Name *" 
+              placeholder="Name *"
               value={formData.name}
               onChange={handleInputChange}
-              required 
+              required
             />
-            <input 
-              type="email" 
+            <input
+              type="email"
               name="email"
-              placeholder="Email *" 
+              placeholder="Email *"
               value={formData.email}
               onChange={handleInputChange}
-              required 
+              required
             />
-            <input 
-              type="tel" 
+            <input
+              type="tel"
               name="phone"
-              placeholder="Phone *" 
+              placeholder="Phone *"
               value={formData.phone}
               onChange={handleInputChange}
-              required 
+              required
             />
             <div className="cd-textarea-wrap">
               <textarea
@@ -434,11 +434,11 @@ function CourseSidebar({ course }) {
               {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
             </button>
             {submitMessage && (
-              <p 
-                className={`cd-submit-message ${submitMessage.includes('success') ? 'success' : 'error'}`} 
+              <p
+                className={`cd-submit-message ${submitMessage.includes('success') ? 'success' : 'error'}`}
                 style={{
-                  fontSize: '13px', 
-                  marginTop: '10px', 
+                  fontSize: '13px',
+                  marginTop: '10px',
                   color: submitMessage.includes('success') ? '#25D366' : '#d32f2f'
                 }}
               >
@@ -506,22 +506,22 @@ export default function CourseDetail() {
             />
           </section>
 
-          {/* ── Program intro with track preview ── */}
+          {/* ── Program intro with Module preview ── */}
           <section className="cd-program-section">
             <h2 className="cd-program-heading">
               {course.title}&nbsp;|&nbsp;Duration {course.structure.duration}
             </h2>
             <p className="cd-program-desc">
               The training program is structured into {course.curriculum.length} progressive
-              learning tracks. Each track is delivered by industry experts with hands-on lab
+              learning Modules. Each Module is delivered by industry experts with hands-on lab
               sessions on real hardware. Our curriculum takes participants from core C and
               Embedded C foundations all the way to live cloud-connected IoT product deployments
               — making engineers fully industry-ready.
             </p>
-            <p className="cd-modules-label">Learning tracks covered in this training:</p>
+            <p className="cd-modules-label">Learning Modules covered in this training:</p>
             <ul className="cd-modules-preview">
-              {course.curriculum.map((track) => (
-                <li key={track.id}>{track.title}</li>
+              {course.curriculum.map((Module) => (
+                <li key={Module.id}>{Module.title}</li>
               ))}
             </ul>
           </section>
@@ -545,7 +545,7 @@ export default function CourseDetail() {
           {/* ── Instructor ── */}
           <section className="cd-instructor-section">
             <h3 className="cd-section-title">About the Instructor</h3>
-            <div className="cd-instructor-card">
+            <div className="cd-instructor-entry">
               <img
                 src={course.instructorAvatar}
                 alt={course.instructor}

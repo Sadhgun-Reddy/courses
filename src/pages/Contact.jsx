@@ -1,21 +1,47 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Contact.css';
+import { URLS } from '../Url';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', website: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: ''  });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', website: '', message: '' });
-    setTimeout(() => setSubmitted(false), 5000);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${URLS.contactForm}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', phone: '', message: ''  });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        throw new Error(result.message || 'Submission failed. Please try again.');
+      }
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -98,6 +124,12 @@ export default function Contact() {
               </div>
             )}
 
+            {error && (
+              <div className="contact-error-msg">
+                ⚠ {error}
+              </div>
+            )}
+
             <form className="wpcf7-form" onSubmit={handleSubmit}>
               <div className="cf7-row">
                 <div className="cf7-col">
@@ -117,22 +149,18 @@ export default function Contact() {
                   <span className="cf7-wrap">
                     <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter phone number" required />
                   </span>
-                </div>
-                {/* <div className="cf7-col">
-                  <div className="cf7-label"><p>Website</p></div>
-                  <span className="cf7-wrap">
-                    <input type="text" name="website" value={formData.website} onChange={handleChange} placeholder="Enter website" />
-                  </span>
-                </div> */}
+                </div> 
                 <div className="cf7-col cf7-col--full">
                   <div className="cf7-label"><p>Message</p></div>
                   <span className="cf7-wrap">
-                    <textarea name="message" value={formData.message} onChange={handleChange} cols="40" rows="10" />
+                    <textarea name="message" value={formData.message} onChange={handleChange} cols="40" rows="10" placeholder="Enter message" required />
                   </span>
                 </div>
               </div>
               <p>
-                <input type="submit" value="Send request" className="cf7-submit" />
+                <button type="submit" className="cf7-submit" disabled={loading}>
+                  {loading ? 'Sending...' : 'Send request'}
+                </button>
               </p>
             </form>
           </div>

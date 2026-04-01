@@ -40,10 +40,10 @@ function useSlider(total, auto = 4000) {
 
 /* ────────────────── DATA ────────────────── */
 const courses = [
-  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '15+ Modules', quizzes: '4 Quizzes', price: '₹25,000', link: '/courses' },
-  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '15+ Modules', quizzes: '3 Quizzes', price: '₹20,000', link: '/courses' },
-  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '15+ Modules', quizzes: '5 Quizzes', price: '₹30,000', priceOld: '₹35,000', link: '/courses' },
-  { id: 4, img: '/courses/Data Science & AI.png', title: 'Data Science & AI', desc: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.', duration: '16 Weeks', lessons: '15+ Modules', quizzes: '6 Quizzes', price: '₹40,000', link: '/courses' },
+  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '15+ Modules', quizzes: '4 Quizzes',  link: '/courses' },
+  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '15+ Modules', quizzes: '3 Quizzes',  link: '/courses' },
+  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '15+ Modules', quizzes: '5 Quizzes',  link: '/courses' },
+  { id: 4, img: '/courses/Data Science & AI.png', title: 'Data Science & AI', desc: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.', duration: '16 Weeks', lessons: '15+ Modules', quizzes: '6 Quizzes', link: '/courses' },
 ];
 
 const featureItems = [
@@ -61,9 +61,9 @@ const carouselImages = [
 ];
 
 const programSteps = [
-  { title: 'Step 1 – Training Formats', desc: 'In-campus, Off-campus, Workshops, Seminars, and Corporate trainings.', img: '/wp-content/uploads/2025/11/Graphic.png' },
-  { title: 'Step 2 – Practical Sessions', desc: 'Sessions by top project engineers & analysts with focus on clarity and practical application.', img: '/wp-content/uploads/2025/11/Graphic-1.png' },
-  { title: 'Step 3 – Implementation Support', desc: '3 months on-field support post-training and lifetime assistance for continuous growth.', img: '/wp-content/uploads/2025/11/Graphic-2.png' },
+  { title: 'Step 1 – Training Formats', desc: 'In-campus, Off-campus, Workshops, Seminars, and Corporate trainings.', img: '/how-it-works/step1.jpg' },
+  { title: 'Step 2 – Practical Sessions', desc: 'Sessions by top project engineers & analysts with focus on clarity and practical application.', img: '/how-it-works/step2.jpg' },
+  { title: 'Step 3 – Implementation Support', desc: '3 months on-field support post-training and lifetime assistance for continuous growth.', img: '/how-it-works/step3.jpg' },
 ];
 
 const instructors = [
@@ -87,11 +87,17 @@ const blogPosts = [
   { id: 4, img: '/wp-content/uploads/2025/08/blog-a3-768x512.jpg', category: 'Corporate', title: 'The Role of Upskilling in Transforming Corporate Teams', author: 'Alex King', date: 'August 19, 2025', link: '/blog' },
 ];
 
-const tags = ['#Course', '#Online learning', '#Programs', '#Research', '#SEO'];
+const tags = [
+  '#IndustrialAutomation', '#PLC_SCADA', '#EmbeddedSystems', '#PCBDesign', '#VLSI_Design', '#AutomationExpert',
+  '#Voltedz', '#FutureSkills', '#SkillIndia', '#TechEducation', '#EmpoweringEngineers',
+  '#InnovationInLearning', '#HandsOnTraining', '#CareerExcellence', '#SkillDevelopment', '#TechCommunity',
+  '#JobReady', '#PlacementSuccess', '#EngineeringCareers', '#UpskillToday', '#SuccessWithVoltedz',
+  '#Online learning', '#Programs', '#Research', '#SEO'
+];
 
 const tickerItems = [
-  'Industrial Automation', 'BMS & CCTV', 'Embedded Systems & IoT', 'Data Science',
-  'Corporate Training', 'Professional Development', 'Industrial Automation', 'BMS & CCTV',
+  'Industrial Automation', 'Building Management Services (BMS) ', 'Embedded Systems & IoT', 'Data Science & AI',
+  'Corporate Training', 'Professional Development', 'CCTV', 'Internships',
 ];
 
 /* ── Category icons ── */
@@ -530,12 +536,10 @@ const Home = () => {
               <h5 className="tags-heading">Popular tags</h5>
               <div className="tagcloud">
                 {tags.map((t, i) => (
-                  <Link key={i} to="/blog" className="tag-cloud-link">{t}</Link>
+                  // <Link key={i} to="/blog" className="tag-cloud-link">{t}</Link>
+                  <p className="tag-cloud-link" key={i}>{t}</p>
                 ))}
-              </div>
-              <div className="blog-decor-img">
-                <img src="/wp-content/uploads/2025/11/vector-sun-s.png" alt="" onError={e => { e.target.style.display = 'none'; }} />
-              </div>
+              </div> 
             </div>
           </div>
         </section>
