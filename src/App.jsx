@@ -12,6 +12,10 @@ import DataScience from './pages/DataScience';
 import CCTV from './pages/CCTV';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import Instructors from './pages/Instructors';
+import Blog from './pages/Blog';
+import Events from './pages/Events';
+import Resources from './pages/Resources';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -39,6 +43,10 @@ function App() {
           <Route path="courses/data-science" element={<DataScience />} />
           <Route path="courses/cctv" element={<CCTV />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="instructors" element={<Instructors />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="events" element={<Events />} />
+          <Route path="resources" element={<Resources />} />
           <Route path="/login" element={<Login />} />
         </Route>
       </Routes>

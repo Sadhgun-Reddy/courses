@@ -1,0 +1,289 @@
+/* ── Fonts ──────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── Design tokens ───────────────────────────────────────────────────────────── */
+:root {
+  --cs-bg:          #F5F6F0;        /* warm off-white */
+  --cs-surface:     #FFFFFF;
+  --cs-navy:        #0F1628;        /* VOLTEDZ dark */
+  --cs-blue:        #1A3CCC;        /* brand accent */
+  --cs-blue-light:  #E8EDFF;
+  --cs-muted:       #6B7280;
+  --cs-rule:        #D9DDE8;
+  --cs-orb-a:       #C8D3FF;        /* soft blue orb */
+  --cs-orb-b:       #FDE8C8;        /* soft amber orb */
+  --cs-radius:      24px;
+  --cs-font-display:'DM Serif Display', Georgia, serif;
+  --cs-font-body:   'DM Sans', system-ui, sans-serif;
+}
+
+/* ── Reset / base ────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Root wrapper ────────────────────────────────────────────────────────────── */
+.cs-root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cs-bg);
+  font-family: var(--cs-font-body);
+  overflow: hidden;
+  padding: 48px 24px;
+}
+
+/* ── Ambient orbs ────────────────────────────────────────────────────────────── */
+.cs-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.cs-orb--1 {
+  width: 520px;
+  height: 520px;
+  background: var(--cs-orb-a);
+  top: -160px;
+  right: -120px;
+  animation: cs-drift 18s ease-in-out infinite alternate;
+}
+
+.cs-orb--2 {
+  width: 420px;
+  height: 420px;
+  background: var(--cs-orb-b);
+  bottom: -120px;
+  left: -100px;
+  animation: cs-drift 22s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes cs-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(24px, 18px) scale(1.06); }
+}
+
+/* ── Subtle dot-grid overlay ─────────────────────────────────────────────────── */
+.cs-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, #B0BAD4 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.35;
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────────── */
+.cs-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--cs-radius);
+  padding: 56px 52px;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 1px 1px rgba(15, 22, 40, 0.04),
+    0 4px 16px rgba(15, 22, 40, 0.07),
+    0 20px 60px rgba(15, 22, 40, 0.09);
+
+  animation: cs-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cs-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Badge ───────────────────────────────────────────────────────────────────── */
+.cs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--cs-blue-light);
+  color: var(--cs-blue);
+  font-family: var(--cs-font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+  animation: cs-rise 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cs-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cs-blue);
+  animation: cs-blink 2s ease-in-out infinite;
+}
+
+@keyframes cs-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+/* ── Headline ────────────────────────────────────────────────────────────────── */
+.cs-title {
+  font-family: var(--cs-font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 400;
+  color: var(--cs-navy);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  animation: cs-rise 0.7s 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cs-title__em {
+  font-style: italic;
+  color: var(--cs-blue);
+}
+
+/* ── Divider rule ────────────────────────────────────────────────────────────── */
+.cs-rule {
+  width: 48px;
+  height: 2px;
+  background: var(--cs-rule);
+  border-radius: 1px;
+  margin: 28px auto;
+  animation: cs-rise 0.7s 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Description ─────────────────────────────────────────────────────────────── */
+.cs-desc {
+  font-size: 0.975rem;
+  font-weight: 300;
+  color: var(--cs-muted);
+  line-height: 1.75;
+  max-width: 380px;
+  margin: 0 auto;
+  animation: cs-rise 0.7s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Orbital visual ──────────────────────────────────────────────────────────── */
+.cs-visual {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  margin: 36px auto;
+  animation: cs-rise 0.7s 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cs-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cs-ring--outer {
+  width: 88px;
+  height: 88px;
+  border-color: rgba(26, 60, 204, 0.15);
+  animation: cs-spin 14s linear infinite;
+}
+
+.cs-ring--mid {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(26, 60, 204, 0.25);
+  animation: cs-spin 9s linear infinite reverse;
+}
+
+.cs-ring--inner {
+  width: 36px;
+  height: 36px;
+  border-color: rgba(26, 60, 204, 0.4);
+  animation: cs-spin 5s linear infinite;
+}
+
+.cs-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--cs-blue);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px rgba(26, 60, 204, 0.12);
+}
+
+@keyframes cs-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ── CTA button ──────────────────────────────────────────────────────────────── */
+.cs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cs-navy);
+  color: #fff;
+  font-family: var(--cs-font-body);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.18s ease,
+    box-shadow 0.2s ease;
+  animation: cs-rise 0.7s 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cs-btn:hover {
+  background: var(--cs-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 60, 204, 0.28);
+}
+
+.cs-btn:active {
+  transform: translateY(0);
+}
+
+.cs-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.cs-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Footer note ─────────────────────────────────────────────────────────────── */
+.cs-footer-note {
+  position: relative;
+  z-index: 1;
+  margin-top: 32px;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+  animation: cs-rise 0.7s 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .cs-card {
+    padding: 40px 28px;
+  }
+  .cs-orb--1 { width: 300px; height: 300px; }
+  .cs-orb--2 { width: 260px; height: 260px; }
+}

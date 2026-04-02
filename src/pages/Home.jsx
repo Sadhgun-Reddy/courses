@@ -40,9 +40,9 @@ function useSlider(total, auto = 4000) {
 
 /* ────────────────── DATA ────────────────── */
 const courses = [
-  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '15+ Modules', quizzes: '4 Quizzes',  link: '/courses' },
-  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '15+ Modules', quizzes: '3 Quizzes',  link: '/courses' },
-  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '15+ Modules', quizzes: '5 Quizzes',  link: '/courses' },
+  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '15+ Modules', quizzes: '4 Quizzes', link: '/courses' },
+  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '15+ Modules', quizzes: '3 Quizzes', link: '/courses' },
+  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '15+ Modules', quizzes: '5 Quizzes', link: '/courses' },
   { id: 4, img: '/courses/Data Science & AI.png', title: 'Data Science & AI', desc: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.', duration: '16 Weeks', lessons: '15+ Modules', quizzes: '6 Quizzes', link: '/courses' },
 ];
 
@@ -262,8 +262,8 @@ const Home = () => {
                 </div>
               </div>
               <div className="elementor-element-6e900ac e-con-full e-flex e-con e-child">
-                <img loading="lazy" width={167} height={167} src="/wp-content/uploads/2025/11/half-circle-decor.png" alt="" className="hero-decor hero-decor-circle" />
-                <img loading="lazy" src="/wp-content/uploads/2025/11/study-abroad.png" alt="Student" className="hero-main-img" />
+                {/* <img loading="lazy" width={167} height={167} src="/wp-content/uploads/2025/11/half-circle-decor.png" alt="" className="hero-decor hero-decor-circle" /> */}
+                <img loading="lazy" src="/wp-content/uploads/2025/11/tes-group1new.png" alt="Student" className="hero-main-img" />
               </div>
             </div>
           </div>
@@ -539,7 +539,7 @@ const Home = () => {
                   // <Link key={i} to="/blog" className="tag-cloud-link">{t}</Link>
                   <p className="tag-cloud-link" key={i}>{t}</p>
                 ))}
-              </div> 
+              </div>
             </div>
           </div>
         </section>
