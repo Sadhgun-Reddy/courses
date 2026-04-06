@@ -74,10 +74,10 @@ const instructors = [
 ];
 
 const testimonials = [
-  { id: 1, img: '/wp-content/uploads/2025/11/tes-group2.png', quote: 'VOLTEDZ gave me the flexibility to learn while working full-time. The hands-on sessions are practical, and the mentor support is amazing!', name: 'Emma R', role: 'IoT Developer' },
-  { id: 2, img: '/wp-content/uploads/2025/11/tes-group3.png', quote: 'VOLTEDZ helped me balance my studies with work. The courses were structured, the instructors were inspiring, and I landed my first automation role.', name: 'Milla John', role: 'Automation Engineer' },
-  { id: 3, img: '/wp-content/uploads/2025/11/tes-group4.png', quote: 'VOLTEDZ provided an incredible environment for growth. The real-world projects made me confident in my data science skills.', name: 'Angela Natalya', role: 'Data Analyst' },
-  { id: 4, img: '/wp-content/uploads/2025/11/tes-group1.png', quote: 'VOLTEDZ helped me upgrade my skills seamlessly. The trainers were supportive, and every module felt highly relevant to my career growth.', name: 'Maria Lane', role: 'BMS Technician' },
+  { id: 1, img: '/testimonials/1.png', quote: 'VOLTEDZ gave me the flexibility to learn while working full-time. The hands-on sessions are practical, and the mentor support is amazing!', name: 'Emma R', role: 'IoT Developer' },
+  { id: 2, img: '/testimonials/2.png', quote: 'VOLTEDZ helped me balance my studies with work. The courses were structured, the instructors were inspiring, and I landed my first automation role.', name: 'Milla John', role: 'Automation Engineer' },
+  { id: 3, img: '/testimonials/3.png', quote: 'VOLTEDZ provided an incredible environment for growth. The real-world projects made me confident in my data science skills.', name: 'Angela Natalya', role: 'Data Analyst' },
+  { id: 4, img: '/testimonials/4.png', quote: 'VOLTEDZ helped me upgrade my skills seamlessly. The trainers were supportive, and every module felt highly relevant to my career growth.', name: 'Maria Lane', role: 'BMS Technician' },
 ];
 
 const blogPosts = [
@@ -250,7 +250,7 @@ const Home = () => {
         {/* ═══════════ HERO ═══════════ */}
         <section className="hero-section elementor-element-d13dea6 e-flex e-parent">
           <div className="e-con-inner e-con-boxed e-con">
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
               <div className="elementor-element-29aab34 e-con-full e-flex e-con e-child">
                 <div className="thim-ekits-heading thim-ekit__heading">
                   <h1 className="title">Empowering Individuals Through Quality Training.</h1>
@@ -263,7 +263,7 @@ const Home = () => {
               </div>
               <div className="elementor-element-6e900ac e-con-full e-flex e-con e-child">
                 {/* <img loading="lazy" width={167} height={167} src="/wp-content/uploads/2025/11/half-circle-decor.png" alt="" className="hero-decor hero-decor-circle" /> */}
-                <img loading="lazy" src="/wp-content/uploads/2025/11/tes-group1new.png" alt="Student" className="hero-main-img" />
+                {/* <img loading="lazy" src="/wp-content/uploads/2025/11/tes-group1new.png" alt="Student" className="hero-main-img" /> */}
               </div>
             </div>
           </div>
@@ -451,7 +451,14 @@ const Home = () => {
         <section className="testimonials-section">
           <div className="e-con-boxed testi-inner">
             <div className="testi-image-col">
-              <img src={testimonials[testiIdx].img} alt={testimonials[testiIdx].name} className="testi-avatar-img" />
+              <div className="testi-main-photo-wrapper">
+                <img 
+                  key={testiIdx} 
+                  src={testimonials[testiIdx].img} 
+                  alt={testimonials[testiIdx].name} 
+                  className="testi-avatar-img active" 
+                />
+              </div>
             </div>
             <div className="testi-content-col">
               <p className="sub-heading">Trusted by Global Institutions</p>

@@ -13,9 +13,14 @@ import CCTV from './pages/CCTV';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Instructors from './pages/Instructors';
+import ForgotPassword from './pages/ForgotPassword';
 import Blog from './pages/Blog';
 import Events from './pages/Events';
 import Resources from './pages/Resources';
+import MyCourses from './pages/MyCourses';
+import MyProfile from './pages/MyProfile';
+import PurchaseHistory from './pages/PurchaseHistory';
+import SupportTickets from './pages/SupportTickets';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -48,6 +53,11 @@ function App() {
           <Route path="events" element={<Events />} />
           <Route path="resources" element={<Resources />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="my-courses" element={<MyCourses />} />
+          <Route path="profile" element={<MyProfile />} />
+          <Route path="purchase-history" element={<PurchaseHistory />} />
+          <Route path="support" element={<SupportTickets />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,334 @@
+/* ============================================================
+   Support Tickets Styles (Electric Luxury Theme)
+   ============================================================ */
+
+.tickets-container {
+  padding: 40px 20px 80px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.tickets-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(17, 31, 162, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  min-height: 700px;
+  overflow: hidden;
+}
+
+/* ─── Sidebar (Left Pane) ───────────────────────────── */
+.tickets-sidebar {
+  border-right: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  background-color: #fcfdfe;
+}
+
+.tickets-sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tickets-sidebar-header h2 {
+  font-size: 22px;
+  color: #0f172a;
+  margin: 0 0 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.btn-new-ticket {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  background: linear-gradient(90deg, #111FA2 0%, #1a2a9e 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(17, 31, 162, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-new-ticket:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(17, 31, 162, 0.3);
+}
+
+.tickets-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.ticket-list-item {
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+}
+
+.ticket-list-item:hover {
+  background-color: #f8fafc;
+}
+
+.ticket-list-item.active {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.ticket-list-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.ticket-list-subject {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ticket-list-desc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.ticket-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.ticket-badge.open {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.ticket-badge.closed {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+/* ─── Main View (Right Pane) ────────────────────────── */
+.tickets-main {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+.tickets-main-header {
+  padding: 24px 32px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tickets-main-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.tickets-content-area {
+  padding: 32px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Form Styles */
+.ticket-form {
+  max-width: 600px;
+}
+
+.ticket-form-group {
+  margin-bottom: 24px;
+}
+
+.ticket-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.ticket-input,
+.ticket-textarea {
+  width: 100%;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #0f172a;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.ticket-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.ticket-input:focus,
+.ticket-textarea:focus {
+  outline: none;
+  border-color: #111FA2;
+  box-shadow: 0 0 0 4px rgba(17, 31, 162, 0.1);
+  background-color: #ffffff;
+}
+
+.file-upload-box {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.file-upload-box:hover {
+  border-color: #94a3b8;
+  background-color: #f1f5f9;
+}
+
+.selected-files-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.file-preview-item {
+  font-size: 12px;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 6px 12px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Chat Styles */
+.ticket-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 700px;
+}
+
+.ticket-message {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ticket-message.user {
+  align-items: flex-end;
+}
+
+.ticket-message.admin {
+  align-items: flex-start;
+}
+
+.message-bubble {
+  padding: 16px 20px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+.ticket-message.user .message-bubble {
+  background-color: #111FA2;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.ticket-message.admin .message-bubble {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border-bottom-left-radius: 4px;
+}
+
+.message-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.message-attachment-img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.ticket-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.ticket-empty svg {
+  margin-bottom: 16px;
+  color: #cbd5e1;
+}
+
+.ticket-empty h3 {
+  font-size: 20px;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  .tickets-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .tickets-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    max-height: 400px;
+  }
+}

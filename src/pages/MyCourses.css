@@ -1,0 +1,171 @@
+/* ============================================================
+   My Courses Styles (Electric Luxury Theme Redesign)
+   ============================================================ */
+
+.dashboard-page-wrapper {
+  background-color: #f4f7fa;
+  background-image: 
+    linear-gradient(rgba(17, 31, 162, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 31, 162, 0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  width: 100%;
+  padding-bottom: 80px;
+  min-height: calc(100vh - 80px - 300px);
+}
+
+.courses-dashboard-section {
+  padding: 60px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  color: #111FA2;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-header p {
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.my-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+/* --- Course Card --- */
+.my-course-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(17, 31, 162, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.my-course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 54px rgba(17, 31, 162, 0.1);
+}
+
+.my-course-img-wrap {
+  width: 100%;
+  height: 190px;
+  background-color: #f1f5f9;
+  position: relative;
+  overflow: hidden;
+}
+
+.my-course-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.my-course-card:hover .my-course-img {
+  transform: scale(1.08);
+}
+
+.my-course-content {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.my-course-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-family: inherit;
+}
+
+.my-course-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111FA2; /* Syncing color with brand instead of red */
+  margin-bottom: 24px;
+}
+
+.my-course-action {
+  margin-top: auto;
+}
+
+.btn-continue-learning {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(90deg, #111FA2 0%, #1a2a9e 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 14px 0;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(17, 31, 162, 0.2);
+}
+
+.btn-continue-learning:hover {
+  background: linear-gradient(90deg, #0d1528 0%, #111FA2 100%);
+  box-shadow: 0 12px 32px rgba(17, 31, 162, 0.3);
+}
+
+/* Empty State */
+.empty-courses-state {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 2px dashed #cbd5e1;
+  box-shadow: 0 10px 40px rgba(17, 31, 162, 0.03);
+}
+
+.empty-courses-icon {
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
+.empty-courses-state h3 {
+  font-size: 24px;
+  color: #0f172a;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.empty-courses-state p {
+  color: #64748b;
+  margin-bottom: 28px;
+  font-size: 16px;
+}
+
+.btn-browse-courses {
+  display: inline-block;
+  padding: 14px 32px;
+  background: linear-gradient(90deg, #111FA2 0%, #1a2a9e 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(17, 31, 162, 0.25);
+}
+
+.btn-browse-courses:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(17, 31, 162, 0.35);
+}

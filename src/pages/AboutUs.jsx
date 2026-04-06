@@ -311,7 +311,7 @@ export default function AboutUs() {
                 Our team is ready to assist you with course information, admissions,
                 and learning pathways tailored to your goals.
               </p>
-              <Link to="/contact-us" className="read-link">Contact →</Link>
+              <Link to="/contact" className="read-link">Contact →</Link>
             </div>
             <div className="quick-link-card">
               <h4>Read our news</h4>

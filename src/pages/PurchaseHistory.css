@@ -1,0 +1,168 @@
+/* ============================================================
+   Purchase History Styles (Electric Luxury Theme Redesign)
+   ============================================================ */
+
+.dashboard-page-wrapper {
+  background-color: #f4f7fa;
+  background-image: 
+    linear-gradient(rgba(17, 31, 162, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 31, 162, 0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  width: 100%;
+  padding-bottom: 80px;
+  min-height: calc(100vh - 80px - 300px);
+}
+
+.purchase-history-container {
+  padding: 60px 20px 0;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  color: #111FA2;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-header p {
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.history-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(17, 31, 162, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  position: relative;
+}
+
+.history-table-wrapper {
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 750px;
+}
+
+.history-table th {
+  background-color: #f8fafc;
+  padding: 20px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  border-bottom: 2px solid #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-table td {
+  padding: 24px 28px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 15px;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.history-table tbody tr {
+  transition: background-color 0.25s ease;
+}
+
+.history-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.course-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.course-thumb-mini {
+  width: 64px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: #e2e8f0;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.course-title-mini {
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.course-category-mini {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.status-badge.completed {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.status-badge.pending {
+  background-color: #fefce8;
+  color: #a16207;
+  border: 1px solid #fef08a;
+}
+
+.status-badge.failed {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.history-empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.history-empty-icon {
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
+.history-empty-state h3 {
+  font-size: 22px;
+  color: #0f172a;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.history-empty-state p {
+  color: #64748b;
+  font-size: 16px;
+}
