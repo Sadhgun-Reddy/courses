@@ -447,7 +447,7 @@ function CourseSidebar({ course }) {
         </div>
 
         {/* Quick contact form */}
-        <div className="cd-sidebar-section">
+        <div className="cd-sidebar-section" id="enroll-now">
           <h5 className="cd-sidebar-heading">Quick Contact</h5>
           <form className="cd-contact-form" onSubmit={handleSubmit}>
             <input
@@ -537,6 +537,7 @@ export default function CourseDetail() {
               </li>
             ))}
           </ul>
+          <a href="#enroll-now" className="cd-enroll-btn">Enroll Now</a>
         </div>
       </div>
 
