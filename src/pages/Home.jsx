@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import TestimonialSection from '../components/TestimonialSection';
 import './Home.css';
-
 
 /* ── counter hook ── */
 function useCountUp(target, duration = 2000, start = false, startFrom = 0) {
@@ -22,20 +22,6 @@ function useCountUp(target, duration = 2000, start = false, startFrom = 0) {
   return count;
 }
 
-
-/* ── slider hook ── */
-function useSlider(total, auto = 4000) {
-  const [idx, setIdx] = useState(0);
-  const timerRef = useRef(null);
-  const reset = useCallback(() => {
-    clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setIdx(i => (i + 1) % total), auto);
-  }, [total, auto]);
-  useEffect(() => { reset(); return () => clearInterval(timerRef.current); }, [reset]);
-  const prev = () => { setIdx(i => (i - 1 + total) % total); reset(); };
-  const next = () => { setIdx(i => (i + 1) % total); reset(); };
-  return { idx, prev, next, setIdx };
-}
 
 
 /* ────────────────── DATA ────────────────── */
@@ -74,10 +60,11 @@ const instructors = [
 ];
 
 const testimonials = [
-  { id: 1, img: '/testimonials/1.png', quote: 'VOLTEDZ gave me the flexibility to learn while working full-time. The hands-on sessions are practical, and the mentor support is amazing!', name: 'Emma R', role: 'IoT Developer' },
-  { id: 2, img: '/testimonials/2.png', quote: 'VOLTEDZ helped me balance my studies with work. The courses were structured, the instructors were inspiring, and I landed my first automation role.', name: 'Milla John', role: 'Automation Engineer' },
-  { id: 3, img: '/testimonials/3.png', quote: 'VOLTEDZ provided an incredible environment for growth. The real-world projects made me confident in my data science skills.', name: 'Angela Natalya', role: 'Data Analyst' },
-  { id: 4, img: '/testimonials/4.png', quote: 'VOLTEDZ helped me upgrade my skills seamlessly. The trainers were supportive, and every module felt highly relevant to my career growth.', name: 'Maria Lane', role: 'BMS Technician' },
+  { id: 1, img: '/testimonials/1.png', initials: 'ER', name: 'Emma R', role: 'IoT Developer', batchYear: 'Batch 2024', quote: 'VOLTEDZ gave me the flexibility to learn while working full-time. The hands-on sessions are practical, and the mentor support is amazing!', highlightedQuote: 'hands-on sessions are practical' },
+  { id: 2, img: '/testimonials/2.png', initials: 'MJ', name: 'Milla John', role: 'Automation Engineer', batchYear: 'Batch 2023', quote: 'VOLTEDZ helped me balance my studies with work. The courses were structured, the instructors were inspiring, and I landed my first automation role.', highlightedQuote: 'courses were structured' },
+  { id: 3, img: '/testimonials/3.png', initials: 'AN', name: 'Angela Natalya', role: 'Data Analyst', batchYear: 'Batch 2024', quote: 'VOLTEDZ provided an incredible environment for growth. The real-world projects made me confident in my data science skills.', highlightedQuote: 'real-world projects' },
+  { id: 4, img: '/testimonials/4.png', initials: 'ML', name: 'Maria Lane', role: 'BMS Technician', batchYear: 'Batch 2025', quote: 'VOLTEDZ helped me upgrade my skills seamlessly. The trainers were supportive, and every module felt highly relevant to my career growth.', highlightedQuote: 'upgrade my skills seamlessly' },
+  { id: 5, img: '', initials: 'AK', name: 'Alex King', role: 'Software Engineer', batchYear: 'Batch 2023', quote: 'The interactive learning approach completely changed my perspective. I was able to build an entire IoT fleet management system by the end of my boot camp.', highlightedQuote: 'interactive learning approach' },
 ];
 
 const blogPosts = [
@@ -236,8 +223,7 @@ const Home = () => {
   /* Instructors */
   const [instrIdx, setInstrIdx] = useState(0);
 
-  /* Testimonials */
-  const { idx: testiIdx, prev: testiPrev, next: testiNext, setIdx: setTestiIdx } = useSlider(testimonials.length);
+  /* Testimonials handled by TestimonialSection component */
 
   /* Blog slider – show 2 */
   const [blogIdx, setBlogIdx] = useState(0);
@@ -448,46 +434,8 @@ const Home = () => {
         </section>
 
         {/* ═══════════ TESTIMONIALS ═══════════ */}
-        <section className="testimonials-section">
-          <div className="e-con-boxed testi-inner">
-            <div className="testi-image-col">
-              <div className="testi-main-photo-wrapper">
-                <img 
-                  key={testiIdx} 
-                  src={testimonials[testiIdx].img} 
-                  alt={testimonials[testiIdx].name} 
-                  className="testi-avatar-img active" 
-                />
-              </div>
-            </div>
-            <div className="testi-content-col">
-              <p className="sub-heading">Trusted by Global Institutions</p>
-              <h2 className="title testi-title">Recognized by Global Institutions</h2>
-              <div className="testi-quote-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="88" viewBox="0 0 82 120" fill="none">
-                  <path d="M57.1172 120C52.9701 120 48.2575 116.62 42.9793 109.859L42.9793 108.169L48.069 77.7465L48.069 69.2958L42.9793 13.5211C45.9954 4.50705 52.0276 5.00912e-06 61.0759 5.80015e-06C75.0253 7.01965e-06 82 24.7887 82 74.3662C82 104.789 73.7057 120 57.1172 120ZM16.4 113.239C5.46667 111.737 1.18205e-06 106.479 1.97009e-06 97.4648C6.03219 77.1831 9.04828 60.6573 9.04829 47.8873L3.95863 19.1549C3.95864 14.6479 9.42529 10.5164 20.3586 6.76056C35.4391 9.76525 42.9793 24.6009 42.9793 51.2676C38.4552 92.5822 30.9149 113.239 20.3586 113.239L16.4 113.239Z" fill="#FFBD1C" />
-                </svg>
-              </div>
-              <p className="testi-quote-text">{testimonials[testiIdx].quote}</p>
-              <div className="testi-author">
-                <span className="testi-name">{testimonials[testiIdx].name}</span>
-                <span className="testi-role">{testimonials[testiIdx].role}</span>
-              </div>
-              <div className="testi-nav-row">
-                <button className="testi-arrow-btn" onClick={testiPrev} aria-label="Previous">
-                  <svg viewBox="0 0 448 512" width="14" height="14"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" fill="currentColor" /></svg>
-                </button>
-                <div className="testi-dots">
-                  {testimonials.map((_, i) => (
-                    <button key={i} className={`testi-dot${i === testiIdx ? ' active' : ''}`} onClick={() => setTestiIdx(i)} aria-label={`Testimonial ${i + 1}`} />
-                  ))}
-                </div>
-                <button className="testi-arrow-btn" onClick={testiNext} aria-label="Next">
-                  <svg viewBox="0 0 448 512" width="14" height="14"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" fill="currentColor" /></svg>
-                </button>
-              </div>
-            </div>
-          </div>
+        <section className="testimonials-section-new-wrapper">
+          <TestimonialSection testimonials={testimonials} />
         </section>
 
         {/* ═══════════ BLOG ═══════════ */}
