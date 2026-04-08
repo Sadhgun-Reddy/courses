@@ -170,7 +170,7 @@
    form content is taller than the visible area. overflow-y: auto adds
    a scrollbar only when needed. Padding gives breathing room on all sides. */
 .auth-form.auth-form--register {
-  justify-content: flex-start;
+  justify-content: center;
   overflow-y: auto;
   padding-top: 36px;
   padding-bottom: 36px;
@@ -262,6 +262,7 @@
   transition: all 0.25s ease;
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 /* Autofill override */

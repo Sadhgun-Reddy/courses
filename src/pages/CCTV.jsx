@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './CourseDetail.css';
 import { URLS } from '../Url';
@@ -181,6 +181,43 @@ function CourseSidebar({ course }) {
   const [charCount, setCharCount] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
+  const [razorpayPayment, setRazorpayPayment] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [razorpayScriptLoaded, setRazorpayScriptLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!razorpayScriptLoaded) {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => setRazorpayScriptLoaded(true);
+      document.body.appendChild(script);
+    }
+  }, [razorpayScriptLoaded]);
+
+  useEffect(() => {
+    if (razorpayPayment && razorpayScriptLoaded && window.Razorpay) {
+      const options = {
+        key: 'rzp_test_SaYtbTomCHS1WJ',
+        amount: razorpayPayment.amount,
+        currency: razorpayPayment.currency,
+        name: 'VOLTEDZ',
+        description: course.title,
+        image: course.featuredImage,
+        handler: function (response) {
+          setPaymentSuccess(true);
+          setIsProcessing(false);
+        },
+        prefill: { name: formData.name, email: formData.email, contact: formData.phone },
+        theme: { color: '#1f5bd6' }
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on('payment.failed', function (response){
+        setIsProcessing(false);
+      });
+      rzp1.open();
+    }
+  }, [razorpayPayment, razorpayScriptLoaded, course, formData]);
 
   const certBrands = ['Hikvision', 'Dahua', 'CP Plus', 'Honeywell', 'Bosch', 'ZKTeco', 'Axis'];
 
@@ -212,9 +249,10 @@ function CourseSidebar({ course }) {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setSubmitMessage('Enquiry submitted successfully!');
-        setFormData({ name: '', email: '', phone: '', description: '' });
-        setCharCount(0);
+        setSubmitMessage('Enquiry submitted successfully! Opening payment gateway...');
+        setIsProcessing(true);
+        const amountPaise = course.priceDisplay ? parseInt(course.priceDisplay.replace(/[^0-9]/g, ''), 10) * 100 : 250000;
+        setRazorpayPayment({ amount: amountPaise, currency: 'INR' });
       } else {
         setSubmitMessage(data.message || 'Failed to submit enquiry. Please try again.');
       }
@@ -318,9 +356,23 @@ function CourseSidebar({ course }) {
           </div>
         </div>
 
-        {/* Quick contact form */}
+        {/* Payment & Contact Section */}
         <div className="cd-sidebar-section" id="enroll-now">
-          <h5 className="cd-sidebar-heading">Quick Contact</h5>
+          <h5 className="cd-sidebar-heading">Enroll in {course.title}</h5>
+          
+          {isProcessing ? (
+            <div className="payment-processing" style={{ textAlign: 'center', padding: '20px 0' }}>
+              <div className="payment-spinner" style={{ width: '30px', height: '30px', border: '3px solid #f3f3f3', borderTop: '3px solid #1f5bd6', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 10px' }}></div>
+              <p>Opening Payment Gateway...</p>
+              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+            </div>
+          ) : paymentSuccess ? (
+            <div className="payment-success" style={{ textAlign: 'center', padding: '20px 0' }}>
+            <div style={{fontSize: '48px', color: '#28a745', marginBottom: '16px'}}>✓</div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#28a745' }}>Payment Successful!</h4>
+            <p style={{ margin: '0 0 8px 0' }}>You are now enrolled in {course.title}</p>
+            </div>
+          ) : (
           <form className="cd-contact-form" onSubmit={handleSubmit}>
             <input 
               type="text" 
@@ -358,7 +410,7 @@ function CourseSidebar({ course }) {
               <span className="cd-char-count">{charCount} / 300</span>
             </div>
             <button type="submit" className="cd-submit-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
+              {isSubmitting ? 'Processing...' : 'Enroll & Pay'}
             </button>
             {submitMessage && (
               <p 
@@ -373,6 +425,7 @@ function CourseSidebar({ course }) {
               </p>
             )}
           </form>
+          )}
         </div>
 
       </div>
@@ -384,6 +437,43 @@ function CourseSidebar({ course }) {
 /* ─────────────────── MAIN COMPONENT ─────────────────── */
 export default function CourseDetail() {
   const course = courseData;
+
+  const [razorpayPaymentMain, setRazorpayPaymentMain] = useState(null);
+  const [razorpayScriptLoadedMain, setRazorpayScriptLoadedMain] = useState(false);
+
+  useEffect(() => {
+    if (!razorpayScriptLoadedMain) {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => setRazorpayScriptLoadedMain(true);
+      document.body.appendChild(script);
+    }
+  }, [razorpayScriptLoadedMain]);
+
+  useEffect(() => {
+    if (razorpayPaymentMain && razorpayScriptLoadedMain && window.Razorpay) {
+      const options = {
+        key: 'rzp_test_SaYtbTomCHS1WJ',
+        amount: razorpayPaymentMain.amount,
+        currency: razorpayPaymentMain.currency,
+        name: 'VOLTEDZ',
+        description: course.title || 'Course Enrollment',
+        image: course.featuredImage || '/logo.png',
+        handler: function (response) {
+          alert('Payment Successful! \nTransaction ID: ' + response.razorpay_payment_id);
+        },
+        theme: { color: '#1f5bd6' }
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    }
+  }, [razorpayPaymentMain, razorpayScriptLoadedMain, course]);
+
+  const handleEnrollClick = () => {
+    const amountPaise = course.priceDisplay ? parseInt(course.priceDisplay.replace(/[^0-9]/g, ''), 10) * 100 : 250000;
+    setRazorpayPaymentMain({ amount: amountPaise, currency: 'INR' });
+  };
+
 
   return (
     <div className="cd-page">
@@ -398,25 +488,39 @@ export default function CourseDetail() {
               </li>
             ))}
           </ul>
-          <a href="#enroll-now" className="cd-enroll-btn">Enroll Now</a>
         </div>
       </div>
 
       {/* ── Course Header (full-width, outside cd-layout) ── */}
       <div className="cd-header-top">
-        <h1 className="cd-title">{course.title}</h1>
-        <h2 className="cd-tech-subtitle">
-          Security Fundamentals, CCTV, Biometric Access Control, Fire Alarms, Video Door Phones &amp; Networking
-        </h2>
-        <p className="cd-instructor-line">
-          INSTRUCTOR:{' '}
-          <Link to={`/instructors/${course.instructorSlug}`} className="cd-instructor-name">
-            {course.instructor}
-          </Link>
-        </p>
-        <div className="cd-featured-img-wrap">
-          <img src={course.featuredImage} alt={course.title} className="cd-featured-img" />
-        </div>
+        <div >
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:'20px' }}>
+            <div>
+              <h1 className="cd-title">{course.title}</h1>
+              <h2 className="cd-tech-subtitle">
+                Security Fundamentals, CCTV, Biometric Access Control, Fire Alarms, Video Door Phones &amp; Networking
+              </h2>
+              <p className="cd-instructor-line">
+                INSTRUCTOR:{' '}
+                <Link to={`/instructors/${course.instructorSlug}`} className="cd-instructor-name">
+                  {course.instructor}
+                </Link>
+              </p>
+            </div>
+
+            <div>
+              <button className="cd-enroll-btn" onClick={handleEnrollClick}>Enroll Now</button>
+              <p style={{color:'black',fontSize:'16px',fontWeight:'bold',marginTop:'10px' }}>Price: ₹25,000</p>
+            </div>
+
+          </div>
+
+
+            <div className="cd-featured-img-wrap">
+              <img src={course.featuredImage} alt={course.title} className="cd-featured-img" />
+            </div>
+          
+        </div> 
       </div>
 
       {/* Page body */}

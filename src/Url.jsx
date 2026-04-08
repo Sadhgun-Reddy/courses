@@ -15,4 +15,6 @@ export const URLS ={
     createTicket: base_url + "v1/voltedzApi/user/ticket/create",
     getMyTickets: base_url + "v1/voltedzApi/user/ticket/getMyTickets",
     getTicketDetails: base_url + "v1/voltedzApi/user/ticket/getTicketDetails",
+    sendStudentOtp: base_url + "v1/voltedzApi/user/student/sendStudentOtp",
+    verifyStudentOtp: base_url + "v1/voltedzApi/user/student/verifyStudentOtp",
 }

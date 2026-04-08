@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Auth.css';
 import { URLS } from '../Url';
@@ -58,11 +58,112 @@ const Login = () => {
   const [isPanelActive, setIsPanelActive] = useState(false);
   const [registerData, setRegisterData] = useState({ fullName: '', mobile: '', email: '', password: '', confirm: '', address: '' });
   const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [currentEmail, setCurrentEmail] = useState('');
+  const [resendTimer, setResendTimer] = useState(0);
+  const [otpError, setOtpError] = useState('');
+  const [otpSuccess, setOtpSuccess] = useState('');
+  const [formMessage, setFormMessage] = useState({ type: '', text: '' });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const timer = setInterval(() => {
+        setResendTimer(prev => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [resendTimer]);
+
+  const handleSendOtp = async () => {
+    if (!registerData.email) {
+      setFormMessage({ type: 'error', text: 'Please enter your email address' });
+      return;
+    }
+    setIsLoading(true);
+    setFormMessage({ type: '', text: '' });
+    try {
+      const response = await fetch(URLS.sendStudentOtp, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: registerData.email }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setIsOtpSent(true);
+        setCurrentEmail(registerData.email);
+        setResendTimer(60);
+        setFormMessage({ type: 'success', text: data.message || 'OTP sent successfully' });
+      } else {
+        setFormMessage({ type: 'error', text: data.message || 'Failed to send OTP' });
+      }
+    } catch (error) {
+      console.error(error);
+      setFormMessage({ type: 'error', text: 'Failed to send OTP' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      setOtpError('Please enter the OTP');
+      return;
+    }
+    setIsLoading(true);
+    setOtpError('');
+    try {
+      const response = await fetch(URLS.verifyStudentOtp, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: currentEmail, otp: otp }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setIsOtpVerified(true);
+        setOtpError('');
+      } else {
+        setOtpError(data.message || 'Invalid OTP');
+      }
+    } catch (error) {
+      console.error(error);
+      setOtpError('Failed to verify OTP');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (resendTimer > 0) return;
+    setOtp('');
+    setOtpError('');
+    await handleSendOtp();
+  };
+
+  const getEmailSuffix = (email) => {
+    if (!email) return '';
+    return email.slice(-5);
+  };
+
+  const resetOtpFlow = () => {
+    setIsOtpSent(false);
+    setIsOtpVerified(false);
+    setOtp('');
+    setCurrentEmail('');
+    setResendTimer(0);
+    setOtpError('');
+    setOtpSuccess('');
+  };
 
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
     setRegisterData(prev => ({ ...prev, [name]: value }));
+    if (name === 'email' && isOtpSent) {
+      resetOtpFlow();
+    }
   };
 
   const handleLoginChange = (e) => {
@@ -72,10 +173,15 @@ const Login = () => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    if (registerData.password !== registerData.confirm) {
-      alert("Passwords do not match");
+    if (!isOtpVerified) {
+      setFormMessage({ type: 'error', text: "Please verify your email with OTP first" });
       return;
     }
+    if (registerData.password !== registerData.confirm) {
+      setFormMessage({ type: 'error', text: "Passwords do not match" });
+      return;
+    }
+    setFormMessage({ type: '', text: '' });
     try {
       const formData = new FormData();
       formData.append('name', registerData.fullName);
@@ -87,14 +193,17 @@ const Login = () => {
       const response = await fetch(URLS.studentRegister, { method: 'POST', body: formData });
       const data = await response.json();
       if (data.success) {
-        alert(data.message || "Student registered successfully");
-        setIsPanelActive(false);
+        setFormMessage({ type: 'success', text: data.message || "Student registered successfully" });
+        setTimeout(() => {
+          setIsPanelActive(false);
+          resetOtpFlow();
+        }, 1500);
       } else {
-        alert(data.message || "Registration failed");
+        setFormMessage({ type: 'error', text: data.message || "Registration failed" });
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred during registration");
+      setFormMessage({ type: 'error', text: "An error occurred during registration" });
     }
   };
 
@@ -108,16 +217,15 @@ const Login = () => {
       });
       const data = await response.json();
       if (data.success) {
-        alert(data.message || "Login successful");
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         navigate('/');
       } else {
-        alert(data.message || "Login failed");
+        setFormMessage({ type: 'error', text: data.message || "Login failed" });
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred during login");
+      setFormMessage({ type: 'error', text: "An error occurred during login" });
     }
   };
 
@@ -140,23 +248,113 @@ const Login = () => {
               {/* <p className="auth-subtext">Join thousands of learners today</p> */}
             </div>
 
+            <div style={{ width: '100%', minHeight: '50px', marginBottom: '12px' }}>
+              {formMessage.text && (
+                <div style={{ 
+                  padding: '11px 14px', 
+                  borderRadius: '10px', 
+                  textAlign: 'center',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  background: formMessage.type === 'success' ? 'rgba(245,166,35,0.12)' : 'rgba(220,53,69,0.12)',
+                  color: formMessage.type === 'success' ? '#f5a623' : '#ff6b7a',
+                  border: formMessage.type === 'success' ? '1px solid rgba(245,166,35,0.3)' : '1px solid rgba(220,53,69,0.3)',
+                  letterSpacing: '0.1px',
+                }}>
+                  {formMessage.text}
+                </div>
+              )}
+            </div>
+
             <div className="auth-fields">
               <FloatingInput label="Full Name"        name="fullName" value={registerData.fullName} onChange={handleRegisterChange} required />
               <FloatingInput label="Mobile Number"    name="mobile"   type="tel"      value={registerData.mobile}   onChange={handleRegisterChange} required />
               <FloatingInput label="Email Address"    name="email"    type="email"    value={registerData.email}    onChange={handleRegisterChange} required />
-              <FloatingInput label="Address"          name="address"  type="text"     value={registerData.address}  onChange={handleRegisterChange} required />
-              <FloatingInput label="Password"         name="password" type="password" value={registerData.password} onChange={handleRegisterChange} required />
-              <FloatingInput label="Confirm Password" name="confirm"  type="password" value={registerData.confirm}  onChange={handleRegisterChange} required />
+              
+              {!isOtpSent ? (
+                <button 
+                  type="button" 
+                  className="auth-button" 
+                  onClick={handleSendOtp}
+                  disabled={isLoading}
+                  style={{ marginBottom: '15px' }}
+                >
+                  <span>{isLoading ? 'Sending OTP...' : 'Send OTP'}</span>
+                </button>
+              ) : (
+                <>
+                  {!isOtpVerified ? (
+                    <>
+                      <div className="otp-info" style={{ marginBottom: '12px', padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '10px', fontSize: '13px' }}>
+                        <span style={{ color: 'rgba(220,228,255,0.55)' }}>OTP sent to: </span>
+                        <span style={{ fontWeight: '600', color: '#f0f4ff' }}>****{getEmailSuffix(currentEmail)}</span>
+                        <p style={{ margin: '6px 0 0', color: 'rgba(245,166,35,0.8)', fontSize: '12px' }}>⏱ OTP is valid only for 5 minutes</p>
+                      </div>
+                      <FloatingInput 
+                        label="Enter OTP" 
+                        name="otp" 
+                        type="text" 
+                        value={otp} 
+                        onChange={(e) => setOtp(e.target.value)} 
+                        required 
+                      />
+                      {otpError && <p style={{ color: '#ff6b7a', fontSize: '12px', marginBottom: '10px', padding: '8px 12px', background: 'rgba(220,53,69,0.1)', border: '1px solid rgba(220,53,69,0.25)', borderRadius: '8px' }}>{otpError}</p>}
+                      {otpSuccess && <p style={{ color: '#f5a623', fontSize: '12px', marginBottom: '10px', padding: '8px 12px', background: 'rgba(245,166,35,0.1)', border: '1px solid rgba(245,166,35,0.25)', borderRadius: '8px' }}>{otpSuccess}</p>}
+                      <div className="otp-actions" style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+                        <button 
+                          type="button" 
+                          className="auth-button" 
+                          onClick={handleVerifyOtp}
+                          disabled={isLoading}
+                          style={{ flex: 1 }}
+                        >
+                          <span>{isLoading ? 'Verifying...' : 'Verify OTP'}</span>
+                        </button>
+                        <button 
+                          type="button" 
+                          className="auth-button" 
+                          onClick={handleResendOtp}
+                          disabled={resendTimer > 0}
+                          style={{ flex: 1, background: resendTimer > 0 ? '#ccc' : '' }}
+                        >
+                          <span>{resendTimer > 0 ? `Resend (${resendTimer}s)` : 'Resend OTP'}</span>
+                        </button>
+                      </div>
+                      <button 
+                        type="button" 
+                        onClick={resetOtpFlow}
+                        style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', marginBottom: '15px', textDecoration: 'underline' }}
+                      >
+                        Change Email
+                      </button>
+                    </>
+                  ) : (
+                    <div className="otp-verified" style={{ marginBottom: '15px', padding: '11px 14px', background: 'rgba(245,166,35,0.12)', border: '1px solid rgba(245,166,35,0.3)', borderRadius: '10px', color: '#f5a623', fontSize: '13px', fontWeight: '600', textAlign: 'center' }}>
+                      ✓ Email verified successfully
+                    </div>
+                  )}
+                </>
+              )}
+              
+              {isOtpVerified && (
+                <>
+                  <FloatingInput label="Address"          name="address"  type="text"     value={registerData.address}  onChange={handleRegisterChange} required />
+                  <FloatingInput label="Password"         name="password" type="password" value={registerData.password} onChange={handleRegisterChange} required />
+                  <FloatingInput label="Confirm Password" name="confirm"  type="password" value={registerData.confirm}  onChange={handleRegisterChange} required />
+                </>
+              )}
             </div>
 
-            <button className="auth-button" type="submit">
-              <span>Create Account</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
+            {isOtpVerified && (
+              <button className="auth-button" type="submit">
+                <span>Create Account</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            )}
 
             <div className="auth-mobile-switch">
               <span>Already have an account?</span>
-              <button type="button" onClick={() => setIsPanelActive(false)}>Sign In</button>
+              <button type="button" onClick={() => { setIsPanelActive(false); resetOtpFlow(); setFormMessage({ type: '', text: '' }); }}>Sign In</button>
             </div>
           </form>
         </div>
@@ -168,6 +366,24 @@ const Login = () => {
               <div className="auth-badge">Welcome Back</div>
               <h1 className="auth-heading-1">Sign In</h1>
               <p className="auth-subtext">Access your learning dashboard</p>
+            </div>
+
+            <div style={{ width: '100%', minHeight: '50px', marginBottom: '12px' }}>
+              {formMessage.text && (
+                <div style={{ 
+                  padding: '11px 14px', 
+                  borderRadius: '10px', 
+                  textAlign: 'center',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  background: formMessage.type === 'success' ? 'rgba(245,166,35,0.12)' : 'rgba(220,53,69,0.12)',
+                  color: formMessage.type === 'success' ? '#f5a623' : '#ff6b7a',
+                  border: formMessage.type === 'success' ? '1px solid rgba(245,166,35,0.3)' : '1px solid rgba(220,53,69,0.3)',
+                  letterSpacing: '0.1px',
+                }}>
+                  {formMessage.text}
+                </div>
+              )}
             </div>
 
             <div className="auth-fields">
