@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './TestimonialSection.css';
 
-const DURATION = 5000; // 5 seconds per testimonial
+const DURATION = 3000; // 5 seconds per testimonial
 const UPDATE_INTERVAL = 50; // Update progress every 50ms
 
 const QuoteIcon = () => (

@@ -68,6 +68,14 @@ const Login = () => {
   const [formMessage, setFormMessage] = useState({ type: '', text: '' });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  
+  // ✅ Add this block — redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     if (resendTimer > 0) {

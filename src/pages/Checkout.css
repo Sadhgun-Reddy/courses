@@ -1,0 +1,292 @@
+.checkout-page {
+  min-height: 80vh;
+  background-color: #f8f9fa;
+  padding-bottom: 60px;
+}
+
+.checkout-container {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  align-items: flex-start;
+}
+
+.checkout-left {
+  flex: 1.5;
+}
+
+.checkout-right {
+  flex: 1;
+  position: sticky;
+  top: 100px; /* offset from header */
+}
+
+.checkout-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+
+.checkout-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.billing-form .form-group {
+  margin-bottom: 20px;
+}
+
+.billing-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a4a4a;
+  margin-bottom: 8px;
+}
+
+.billing-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.billing-form input:focus {
+  outline: none;
+  border-color: #1f5bd6;
+  box-shadow: 0 0 0 3px rgba(31, 91, 214, 0.1);
+}
+
+/* Order Summary */
+.checkout-course-preview {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.checkout-course-img {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.checkout-course-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+
+.checkout-course-info p {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 8px;
+}
+
+.checkout-course-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1f5bd6;
+  background-color: rgba(31, 91, 214, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.checkout-divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 24px 0;
+}
+
+/* Promo Code */
+.checkout-promo-box label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a4a4a;
+  margin-bottom: 10px;
+}
+
+.promo-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.promo-input-group input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.promo-input-group input:focus {
+  outline: none;
+  border-color: #1f5bd6;
+}
+
+.promo-input-group .apply-btn {
+  background: #f0f4fd;
+  color: #1f5bd6;
+  border: 1px solid rgba(31, 91, 214, 0.2);
+  padding: 0 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.promo-input-group .apply-btn:hover {
+  background: #1f5bd6;
+  color: white;
+}
+
+.promo-message {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.promo-message.success {
+  color: #28a745;
+}
+
+.promo-message.error {
+  color: #dc3545;
+}
+
+/* Totals */
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #4a4a4a;
+  margin-bottom: 12px;
+}
+
+.total-row.discount {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.total-row.grand-total {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+/* Buttons */
+.checkout-btn {
+  width: 100%;
+  text-align: center;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  margin-top: 24px;
+}
+
+.checkout-btn.submit-btn {
+  background: #1f5bd6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(31, 91, 214, 0.3);
+}
+
+.checkout-btn.submit-btn:hover:not(:disabled) {
+  background: #1545a8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(31, 91, 214, 0.4);
+}
+
+.checkout-btn.submit-btn:disabled {
+  background: #a0b8ec;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.checkout-btn.primary-btn {
+  display: inline-block;
+  background: #1f5bd6;
+  color: white;
+  text-decoration: none;
+  width: auto;
+  padding: 14px 28px;
+}
+
+.secure-badge {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* Success State */
+.checkout-success {
+  background: white;
+  border-radius: 16px;
+  padding: 60px 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #e8f5e9;
+  color: #28a745;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+}
+
+.checkout-success h2 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.checkout-success p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.mt-4 {
+  margin-top: 32px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .checkout-container {
+    flex-direction: column;
+  }
+  
+  .checkout-right {
+    position: static;
+  }
+}

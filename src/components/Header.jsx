@@ -149,7 +149,7 @@ const Header = () => {
                     <div className="mega-col">
                       <div className="mega-card">
                         <Link to="/courses/industrial-automation" onClick={handleLinkClick} className="mega-card-link-wrapper" style={{flexDirection:"column", paddingRight: "0px"}}>
-                          <img src="/courses/Industrial Automation.png" alt="Industrial Automation" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
+                          <img src="/courses/Banners/Banner%20IA.png" alt="Industrial Automation" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
                           <h6 className="mega-card-title">Industrial Automation</h6>
                           <span className="mega-link mt-1">View Course</span>
                         </Link>

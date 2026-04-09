@@ -1,6 +1,7 @@
 export const base_url = "https://backend.voltedz.com/";
 
 export const URLS ={
+    base_url  : base_url,
     ContactByCourse : base_url +  "v1/voltedzApi/admin/enquiry/addenquiry",
     contactForm : base_url +  "v1/voltedzApi/admin/contactForm/create",
     studentRegister: base_url + "v1/voltedzApi/user/student/create",
@@ -17,4 +18,5 @@ export const URLS ={
     getTicketDetails: base_url + "v1/voltedzApi/user/ticket/getTicketDetails",
     sendStudentOtp: base_url + "v1/voltedzApi/user/student/sendStudentOtp",
     verifyStudentOtp: base_url + "v1/voltedzApi/user/student/verifyStudentOtp",
+    getFullCourseDetails: base_url + "v1/voltedzApi/user/getCourseFullDetails/getFullCourseDetails",
 }

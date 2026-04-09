@@ -21,6 +21,7 @@ import MyCourses from './pages/MyCourses';
 import MyProfile from './pages/MyProfile';
 import PurchaseHistory from './pages/PurchaseHistory';
 import SupportTickets from './pages/SupportTickets';
+import Checkout from './pages/Checkout';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="profile" element={<MyProfile />} />
           <Route path="purchase-history" element={<PurchaseHistory />} />
           <Route path="support" element={<SupportTickets />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </BrowserRouter>
