@@ -19,4 +19,6 @@ export const URLS ={
     sendStudentOtp: base_url + "v1/voltedzApi/user/student/sendStudentOtp",
     verifyStudentOtp: base_url + "v1/voltedzApi/user/student/verifyStudentOtp",
     getFullCourseDetails: base_url + "v1/voltedzApi/user/getCourseFullDetails/getFullCourseDetails",
+    createOrder: base_url + "v1/voltedzApi/user/order/createOrder",
+    updateTransaction: base_url + "v1/voltedzApi/user/order/updateTransaction",
 }
