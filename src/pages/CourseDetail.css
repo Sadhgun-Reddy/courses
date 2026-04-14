@@ -301,7 +301,7 @@
 /* ── Instructor ── */
 .cd-instructor-section {
   margin-bottom: 48px;
-  padding-bottom: 48px;
+  /* padding-bottom: 48px; */
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -330,8 +330,8 @@
 }
 
 .cd-instructor-avatar {
-  width: 80px !important;
-  height: 80px !important;
+  width: 180px !important;
+  height: 180px !important;
   border-radius: 50%;
   object-fit: cover !important;
   flex-shrink: 0;

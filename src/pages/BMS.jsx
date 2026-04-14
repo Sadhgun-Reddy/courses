@@ -403,7 +403,7 @@ function CourseSidebar({ course }) {
         {/* CTA buttons */}
         <div className="cd-sidebar-ctas">
           <a
-            href="https://wa.me/919010716664?text=Hi%20VOLTEDZ%2C%20I%20am%20interested%20in%20the%20Building%20Management%20Systems%20course."
+            href="https://wa.me/919010016664?text=Hi%20VOLTEDZ%2C%20I%20am%20interested%20in%20the%20Building%20Management%20Systems%20course."
             target="_blank"
             rel="noopener noreferrer"
             className="cd-cta-whatsapp"
@@ -413,7 +413,7 @@ function CourseSidebar({ course }) {
             </svg>
             WhatsApp Enquiry
           </a>
-          <a href="tel:+919010716664" className="cd-cta-phone">
+          <a href="tel:+919010016664" className="cd-cta-phone">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
             </svg>
@@ -572,10 +572,10 @@ export default function CourseDetail() {
               ))}
             </p>
           </div>
-          <div>
+          {/* <div>
             <button className="cd-enroll-btn" onClick={handleEnrollClick}>Enroll Now</button>
             <p style={{color:'black',fontSize:'16px',fontWeight:'bold',marginTop:'10px' }}>Price: ₹25,000</p>
-          </div>
+          </div> */}
 
           
         </div>

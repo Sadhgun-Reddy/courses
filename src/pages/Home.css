@@ -281,7 +281,7 @@
 
 /* Left col – vertical list */
 .features-left-col {
-  flex: 0 0 50%;
+  flex: 0 0 40%;
   display: flex;
   flex-direction: column;
 }
@@ -349,57 +349,56 @@
 
 .features-carousel-rotating {
   position: relative;
-  width: 440px;
+  width: 90%;
   height: 440px;
   /* border-radius: 50%; */
   /* circular crop */
   overflow: hidden;
-  animation: rotate-cw 50s linear infinite;
   /* box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18); */
   flex-shrink: 0;
-}
-
-.features-carousel-rotating:hover {
-  animation-play-state: paused;
+  animation: float-up-down 6s ease-in-out infinite;
 }
 
 .features-car-img {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 500px;
+  height: 400px;
   object-fit: cover;
-  /* counter-rotate so the image content stays upright while the frame spins */
-  animation: rotate-ccw 50s linear infinite;
   opacity: 0;
-  transition: opacity 1s ease;
 }
 
-.features-car-img.active {
-  opacity: 1;
+/* Both slides overlap via position:absolute */
+/* Incoming slides in while outgoing slides out */
+.slide-out {
+  animation: slideOutUp 0.45s ease-in forwards;
+  z-index: 1;
 }
 
-.features-carousel-rotating:hover .features-car-img {
-  animation-play-state: paused;
+.slide-in {
+  animation: slideInUp 0.45s ease-out forwards;
+  z-index: 2;
 }
 
-@keyframes rotate-cw {
+@keyframes slideInUp {
   from {
-    transform: rotate(0deg);
+    transform: translateY(100%);
+    opacity: 0.4;
   }
 
   to {
-    transform: rotate(360deg);
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-@keyframes rotate-ccw {
+@keyframes slideOutUp {
   from {
-    transform: rotate(0deg);
+    transform: translateY(0);
   }
 
   to {
-    transform: rotate(-360deg);
+    transform: translateY(-100%);
   }
 }
 
@@ -1238,6 +1237,7 @@
     opacity: 0;
     transform: scale(0.9) translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);

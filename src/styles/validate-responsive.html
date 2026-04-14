@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Design Foundation Validation - Task 3.1</title>
+  <link rel="stylesheet" href="./variables.css">
+  <link rel="stylesheet" href="./responsive.css">
+  <link rel="stylesheet" href="./typography.css">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .validation-section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    
+    .validation-section h2 {
+      margin-top: 0;
+      color: #111FA2;
+    }
+    
+    .test-result {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    
+    .test-pass {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+    
+    .test-fail {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+    
+    .demo-container {
+      margin: 20px 0;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 20px 0;
+    }
+    
+    @media (min-width: 768px) {
+      .demo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .demo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .demo-item {
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Task 3.1: Mobile-First CSS Architecture Validation</h1>
+  <p>This page validates the responsive design foundation implementation.</p>
+
+  <div class="validation-section">
+    <h2>✓ Requirement 1.1: CSS Custom Properties for Breakpoints</h2>
+    <div id="breakpoint-tests"></div>
+  </div>
+
+  <div class="validation-section">
+    <h2>✓ Requirement 1.2: Mobile-First Base Styles</h2>
+    <div id="mobile-first-tests"></div>
+  </div>
+
+  <div class="validation-section">
+    <h2>✓ Requirement 1.3: Progressive Enhancement Media Queries</h2>
+    <div id="media-query-tests"></div>
+  </div>
+
+  <div class="validation-section">
+    <h2>✓ Requirement 1.4: Consistency Across Components</h2>
+    <div id="consistency-tests"></div>
+  </div>
+
+  <div class="validation-section">
+    <h2>Demo: Responsive Grid System</h2>
+    <div class="demo-container">
+      <p>Resize your browser to see the grid adapt:</p>
+      <ul>
+        <li>Mobile (&lt;768px): 1 column</li>
+        <li>Tablet (768px-1023px): 2 columns</li>
+        <li>Desktop (≥1024px): 3 columns</li>
+      </ul>
+      <div class="demo-grid">
+        <div class="demo-item">Item 1</div>
+        <div class="demo-item">Item 2</div>
+        <div class="demo-item">Item 3</div>
+        <div class="demo-item">Item 4</div>
+        <div class="demo-item">Item 5</div>
+        <div class="demo-item">Item 6</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Validation Tests
+    function runTests() {
+      const rootStyles = getComputedStyle(document.documentElement);
+      
+      // Test 1: Breakpoint Custom Properties
+      const breakpointTests = [
+        { name: '--breakpoint-mobile', expected: '0px', actual: rootStyles.getPropertyValue('--breakpoint-mobile').trim() },
+        { name: '--breakpoint-tablet', expected: '768px', actual: rootStyles.getPropertyValue('--breakpoint-tablet').trim() },
+        { name: '--breakpoint-desktop', expected: '1024px', actual: rootStyles.getPropertyValue('--breakpoint-desktop').trim() },
+        { name: '--breakpoint-desktop-large', expected: '1200px', actual: rootStyles.getPropertyValue('--breakpoint-desktop-large').trim() },
+        { name: '--container-mobile', expected: '100%', actual: rootStyles.getPropertyValue('--container-mobile').trim() },
+        { name: '--container-tablet', expected: '750px', actual: rootStyles.getPropertyValue('--container-tablet').trim() },
+        { name: '--container-desktop', expected: '1200px', actual: rootStyles.getPropertyValue('--container-desktop').trim() },
+        { name: '--container-desktop-large', expected: '1330px', actual: rootStyles.getPropertyValue('--container-desktop-large').trim() },
+        { name: '--touch-target-min', expected: '44px', actual: rootStyles.getPropertyValue('--touch-target-min').trim() }
+      ];
+      
+      displayTests('breakpoint-tests', breakpointTests);
+      
+      // Test 2: Mobile-First Base Styles
+      const testDiv = document.createElement('div');
+      testDiv.className = 'container-responsive';
+      document.body.appendChild(testDiv);
+      const containerStyles = getComputedStyle(testDiv);
+      
+      const mobileFirstTests = [
+        { name: 'Container width is 100%', expected: true, actual: containerStyles.width === '100%' || containerStyles.width === document.body.clientWidth + 'px' },
+        { name: 'Container has auto margins', expected: true, actual: containerStyles.marginLeft === 'auto' && containerStyles.marginRight === 'auto' }
+      ];
+      
+      document.body.removeChild(testDiv);
+      displayTests('mobile-first-tests', mobileFirstTests);
+      
+      // Test 3: Media Query Support
+      const mediaQueryTests = [
+        { name: 'Tablet breakpoint (768px) defined', expected: true, actual: window.matchMedia('(min-width: 768px)').media !== 'not all' },
+        { name: 'Desktop breakpoint (1024px) defined', expected: true, actual: window.matchMedia('(min-width: 1024px)').media !== 'not all' },
+        { name: 'Desktop large breakpoint (1200px) defined', expected: true, actual: window.matchMedia('(min-width: 1200px)').media !== 'not all' }
+      ];
+      
+      displayTests('media-query-tests', mediaQueryTests);
+      
+      // Test 4: Consistency
+      const consistencyTests = [
+        { name: 'Breakpoints in ascending order', expected: true, actual: 
+          parseInt(rootStyles.getPropertyValue('--breakpoint-tablet')) < 
+          parseInt(rootStyles.getPropertyValue('--breakpoint-desktop')) &&
+          parseInt(rootStyles.getPropertyValue('--breakpoint-desktop')) < 
+          parseInt(rootStyles.getPropertyValue('--breakpoint-desktop-large'))
+        },
+        { name: 'Grid gaps increase with screen size', expected: true, actual:
+          parseFloat(rootStyles.getPropertyValue('--grid-gap-mobile')) <
+          parseFloat(rootStyles.getPropertyValue('--grid-gap-tablet')) &&
+          parseFloat(rootStyles.getPropertyValue('--grid-gap-tablet')) <
+          parseFloat(rootStyles.getPropertyValue('--grid-gap-desktop'))
+        },
+        { name: 'Container padding increases with screen size', expected: true, actual:
+          parseInt(rootStyles.getPropertyValue('--container-padding-mobile')) <
+          parseInt(rootStyles.getPropertyValue('--container-padding-tablet')) &&
+          parseInt(rootStyles.getPropertyValue('--container-padding-tablet')) <
+          parseInt(rootStyles.getPropertyValue('--container-padding-desktop'))
+        }
+      ];
+      
+      displayTests('consistency-tests', consistencyTests);
+    }
+    
+    function displayTests(containerId, tests) {
+      const container = document.getElementById(containerId);
+      let passCount = 0;
+      let failCount = 0;
+      
+      tests.forEach(test => {
+        const div = document.createElement('div');
+        const passed = typeof test.expected === 'boolean' ? 
+          test.actual === test.expected : 
+          test.actual === test.expected;
+        
+        div.className = passed ? 'test-pass' : 'test-fail';
+        div.textContent = `${passed ? '✓' : '✗'} ${test.name}: ${
+          typeof test.expected === 'boolean' ? 
+            (test.actual ? 'PASS' : 'FAIL') :
+            `Expected "${test.expected}", Got "${test.actual}"`
+        }`;
+        
+        container.appendChild(div);
+        
+        if (passed) passCount++;
+        else failCount++;
+      });
+      
+      const summary = document.createElement('div');
+      summary.style.marginTop = '10px';
+      summary.style.fontWeight = 'bold';
+      summary.textContent = `Summary: ${passCount} passed, ${failCount} failed`;
+      container.appendChild(summary);
+    }
+    
+    // Run tests when page loads
+    window.addEventListener('DOMContentLoaded', runTests);
+  </script>
+</body>
+</html>

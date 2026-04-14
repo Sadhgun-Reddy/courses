@@ -40,10 +40,10 @@ const featureItems = [
 ];
 
 const carouselImages = [
-  '/wp-content/uploads/2025/11/why-learns.jpg',
-  '/wp-content/uploads/2025/12/new-carousel-02-1.jpg',
-  '/wp-content/uploads/2025/12/new-carousel-03-1.jpg',
-  '/wp-content/uploads/2025/12/new-carousel-01-1.jpg',
+  '/why-choose-us/1.png',
+  '/why-choose-us/3.png',
+  '/why-choose-us/2.png',
+  '/why-choose-us/8.png',
 ];
 
 const programSteps = [
@@ -291,14 +291,18 @@ const Home = () => {
               </div>
               <div className="features-right-col">
                 <div className="features-carousel-rotating">
-                  {carouselImages.map((img, i) => (
-                    <img
-                      key={i}
-                      src={img}
-                      alt={`Why VOLTEDZ ${i + 1}`}
-                      className={`features-car-img${i === carIdx ? ' active' : ''}`}
-                    />
-                  ))}
+                  {carouselImages.map((img, i) => {
+                    const isCurrent = i === carIdx;
+                    const isPrev = i === (carIdx - 1 + carouselImages.length) % carouselImages.length;
+                    return (
+                      <img
+                        key={i}
+                        src={img}
+                        alt={`Why VOLTEDZ ${i + 1}`}
+                        className={`features-car-img ${isCurrent ? 'slide-in' : isPrev ? 'slide-out' : ''}`}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
