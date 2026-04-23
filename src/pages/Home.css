@@ -5,6 +5,11 @@
 
 @import url('../styles/theme.css');
 
+/* ── Global Overflow Fix ── */
+html, body {
+  overflow-x: hidden;
+}
+
 /* ── Base ── */
 * {
   box-sizing: border-box;
@@ -13,6 +18,7 @@
 .home-page-container,
 .elementor {
   width: 100%;
+  overflow-x: hidden;
 }
 
 .e-con-boxed {
@@ -22,7 +28,7 @@
   padding-right: 20px;
 }
 
-/* ── Typography helpers ── */
+/* ── Typography helpers with fluid clamp() ── */
 .sub-heading {
   font-size: 0.8rem;
   font-weight: 600;
@@ -34,7 +40,7 @@
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
   font-weight: 700;
   line-height: 1.2;
   color: #111111;
@@ -57,8 +63,7 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  padding-top: 40px;
-  /* padding-bottom: 80px;   */
+  padding-top: 80px;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -91,7 +96,7 @@
 }
 
 .elementor-element-29aab34 .title {
-  font-size: 3.8rem;
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
   color: #FFFFFF;
   font-weight: 700;
   line-height: 1.15;
@@ -229,6 +234,7 @@
   white-space: nowrap;
   animation: ticker-scroll 30s linear infinite;
   width: max-content;
+  will-change: transform;
 }
 
 .ticker-item {
@@ -362,8 +368,8 @@
 .features-car-img {
   position: absolute;
   inset: 0;
-  width: 500px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   opacity: 0;
 }
@@ -1695,14 +1701,22 @@
     height: 320px;
   }
 
+  /* How It Works - 2 columns on tablet */
   .programs-grid {
-    grid-template-columns: 1fr;
-    max-width: 500px;
-    margin: 0 auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .courses-section {
+    padding: 70px 0 60px;
   }
 
   .courses-slide {
     flex: 0 0 50%;
+  }
+
+  .instructors-section {
+    padding: 70px 0 60px;
   }
 
   .instructor-slide {
@@ -1734,10 +1748,15 @@
     padding: 60px 0 40px;
   }
 
+  .blog-slide {
+    padding-right: 0;
+  }
+
   .blog-tags-col {
     width: 100%;
     flex: unset;
     align-self: auto;
+    padding: 40px 24px;
   }
 }
 
@@ -1750,11 +1769,46 @@
     font-size: 2rem;
   }
 
+  /* Hero - stack CTA buttons vertically */
+  .hero-cta-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-outline {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Hide empty hero element on mobile */
+  .elementor-element-6e900ac {
+    display: none;
+  }
+
+  .hero-section {
+    min-height: 70vh;
+  }
+
+  /* Features - reduce carousel size */
   .features-carousel-rotating {
     width: 260px;
     height: 260px;
   }
 
+  /* How It Works - 1 column on mobile */
+  .how-it-works-section {
+    padding: 80px 0 60px;
+  }
+
+  .programs-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Stats - keep 2x2 grid, stack girl+blob */
   .stats-counters-row {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1767,16 +1821,67 @@
     font-size: 1.8rem;
   }
 
+  .stats-bottom-row {
+    flex-direction: column;
+  }
+
+  .stats-girl-wrap {
+    width: 100%;
+  }
+
+  .stats-blob-wrap {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .stats-blob {
+    padding: 40px 30px;
+  }
+
+  .stats-blob-text {
+    font-size: 1.2rem;
+  }
+
+  /* Courses - 1 slide visible on mobile */
+  .courses-section {
+    padding: 60px 0 50px;
+  }
+
   .courses-slide {
     flex: 0 0 100%;
+  }
+
+  /* Instructors - 1 slide visible on mobile */
+  .instructors-section {
+    padding: 60px 0 50px;
   }
 
   .instructor-slide {
     flex: 0 0 100%;
   }
 
+  /* Touch active state for instructor cards */
+  .instructor-card.touch-active .instr-photo-layer {
+    height: 0;
+    opacity: 0;
+  }
+
+  .instructor-card.touch-active .instr-name-bar {
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+  }
+
+  .instructor-card.touch-active .instr-content-layer {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Blog - 1 slide visible on mobile */
   .blog-slide {
     flex: 0 0 100%;
+    padding-right: 0;
   }
 
   .testi-quote-text {
@@ -1791,7 +1896,6 @@
     display: none;
   }
 
-  /* .how-it-works-section, */
   .features-section,
   .courses-section,
   .instructors-section,
@@ -1840,6 +1944,7 @@
   .hero-btn-outline {
     padding: 0.7rem 1.5rem;
     font-size: 0.85rem;
+    min-height: 44px;
   }
 
   .hero-cta-row {
@@ -1859,7 +1964,7 @@
   }
 
   .feature-title {
-    font-size: 1.5rem;
+    font-size: clamp(1.3rem, 4vw, 1.5rem);
   }
 
   .feature-desc {
@@ -1885,16 +1990,16 @@
 
   /* Stats Section */
   .stats-counters-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
   .stat-big-number {
-    font-size: 2rem;
+    font-size: clamp(2rem, 8vw, 2.5rem);
   }
 
   .stat-big-suffix {
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
   }
 
   .stat-label-text {
@@ -1909,17 +2014,23 @@
     max-height: 200px;
   }
 
-  .stats-text-box {
-    padding: 20px 16px;
-    margin-left: 0;
-    border-radius: 0;
+  .stats-blob-wrap {
+    padding: 20px 14px;
   }
 
-  .stats-text-box p {
+  .stats-blob {
+    padding: 30px 20px;
+  }
+
+  .stats-blob-text {
     font-size: 1rem;
   }
 
   /* Courses Section */
+  .courses-section {
+    padding: 50px 0 40px;
+  }
+
   .courses-slide {
     flex: 0 0 100%;
   }
@@ -1937,6 +2048,10 @@
   }
 
   /* Instructors */
+  .instructors-section {
+    padding: 50px 0 40px;
+  }
+
   .instructor-slide {
     flex: 0 0 100%;
   }
@@ -1990,8 +2105,8 @@
   }
 
   .tag-cloud-link {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem !important;
+    padding: 0.3rem 0.8rem !important;
   }
 
   /* Sections padding */
@@ -2004,13 +2119,21 @@
   }
 
   .e-con-boxed {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .ticker-item {
     padding: 0 20px;
     font-size: 0.8rem;
+  }
+
+  /* Ensure all touch targets are minimum 44px */
+  .slider-nav-btn,
+  .blog-nav-btn,
+  .testi-arrow-btn {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 

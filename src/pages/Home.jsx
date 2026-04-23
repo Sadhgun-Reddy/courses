@@ -3,8 +3,16 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import TestimonialSection from '../components/TestimonialSection';
 import './Home.css';
+import { URLS } from '../Url';
 
-/* ── counter hook ── */
+ 
+// Helper to build full image URLs
+const getImageUrl = (path) => {
+  if (!path) return '';
+  return path.startsWith('http') ? path : `${URLS.base_url}/${path}`;
+};
+
+// ----- Counter Hook -----
 function useCountUp(target, duration = 2000, start = false, startFrom = 0) {
   const [count, setCount] = useState(startFrom);
   useEffect(() => {
@@ -22,72 +30,17 @@ function useCountUp(target, duration = 2000, start = false, startFrom = 0) {
   return count;
 }
 
+// ----- Helper to parse numeric values from strings like "12,000+" -----
+const parseCountValue = (str) => {
+  if (typeof str === 'number') return str;
+  const num = parseInt(str?.replace(/[^0-9]/g, ''), 10);
+  return isNaN(num) ? 0 : num;
+};
 
+// ----- Preset colors for instructor cards (cycle through) -----
+const instructorColors = ['#D1F6DC', '#E9CFF7', '#D1E7F6', '#FFD2D2'];
 
-/* ────────────────── DATA ────────────────── */
-const courses = [
-  { id: 1, img: '/courses/Industrial Automation.png', title: 'Industrial Automation', desc: 'Master PLC, SCADA, HMI, and VFDs to build a career in industrial automation.', duration: '12 Weeks', lessons: '15+ Modules', quizzes: '4 Quizzes', link: '/courses' },
-  { id: 2, img: '/courses/Building Management Systems.png', title: 'Building Management Systems (BMS)', desc: 'Learn CCTV, Biometric systems, Fire Alarms, Networking, and HVAC controls.', duration: '10 Weeks', lessons: '15+ Modules', quizzes: '3 Quizzes', link: '/courses' },
-  { id: 3, img: '/courses/Embedded Systems & IoT.png', title: 'Embedded Systems & IoT', desc: 'Deep dive into Microcontrollers, IoT Cloud Integration, and FreeRTOS programming.', duration: '14 Weeks', lessons: '15+ Modules', quizzes: '5 Quizzes', link: '/courses' },
-  { id: 4, img: '/courses/Data Science & AI.png', title: 'Data Science & AI', desc: 'Master Python, MySQL, Machine Learning, AI, and Deep Learning for the data-driven world.', duration: '16 Weeks', lessons: '15+ Modules', quizzes: '6 Quizzes', link: '/courses' },
-];
-
-const featureItems = [
-  { id: '48fc2f3', color: '#9040EF', title: 'Experienced Instructors', desc: 'Experienced instructors with industry expertise.' },
-  { id: 'ad96adf', color: '#0088CC', title: 'Customized Training', desc: 'Customized training solutions for your needs.' },
-  { id: '05764f0', color: '#00B109', title: 'Flexible Delivery', desc: 'In-person, virtual, and online flexible delivery.' },
-  { id: '92dc6c9', color: '#EA5A00', title: 'Quality Assurance', desc: 'Quality assurance in content and delivery with lifetime assistance.' },
-];
-
-const carouselImages = [
-  '/why-choose-us/1.png',
-  '/why-choose-us/3.png',
-  '/why-choose-us/2.png',
-  '/why-choose-us/8.png',
-];
-
-const programSteps = [
-  { title: 'Step 1 – Training Formats', desc: 'In-campus, Off-campus, Workshops, Seminars, and Corporate trainings.', img: '/how-it-works/step1.jpg' },
-  { title: 'Step 2 – Practical Sessions', desc: 'Sessions by top project engineers & analysts with focus on clarity and practical application.', img: '/how-it-works/step2.jpg' },
-  { title: 'Step 3 – Implementation Support', desc: '3 months on-field support post-training and lifetime assistance for continuous growth.', img: '/how-it-works/step3.jpg' },
-];
-
-const instructors = [
-  { id: 1, img: '/wp-content/uploads/2025/11/custom-ava4.jpg', decorColor: '#D1F6DC', name: 'Dr. Trived Balivada', school: 'VOLTEDZ', edu: 'Business Operations Head', bio: 'Guiding global operations and strategy for VOLTEDZ with extensive industry experience.', link: '/instructors' },
-  { id: 2, img: '/instructors/Amit Rao Perka.jpeg', decorColor: '#E9CFF7', name: 'Mr. Amit Rao Perka', school: 'VOLTEDZ', edu: 'National Technical Head', bio: 'Leading the technical direction and ensuring top-level engineering training standards.', link: '/instructors' },
-  { id: 3, img: '/wp-content/uploads/2025/11/custom-ava2.jpg', decorColor: '#D1E7F6', name: 'Ms. Vajeeha Taranum', school: 'VOLTEDZ', edu: 'Sr. IT Engineer', bio: 'Expert in IT infrastructure and software development, mentoring the next generation.', link: '/instructors' },
-  { id: 4, img: '/instructors/Dhanunjay.jpeg', decorColor: '#FFD2D2', name: 'Mr. Dhanunjay', school: 'VOLTEDZ', edu: 'Sr. Embedded & IoT Expert', bio: 'Specialist in Microcontrollers and IoT Cloud Integration with hands-on industrial knowledge.', link: '/instructors' },
-];
-
-const testimonials = [
-  { id: 1, img: '/testimonials/1.png', initials: 'ER', name: 'Emma R', role: 'IoT Developer', batchYear: 'Batch 2024', quote: 'VOLTEDZ gave me the flexibility to learn while working full-time. The hands-on sessions are practical, and the mentor support is amazing!', highlightedQuote: 'hands-on sessions are practical' },
-  { id: 2, img: '/testimonials/2.png', initials: 'MJ', name: 'Milla John', role: 'Automation Engineer', batchYear: 'Batch 2023', quote: 'VOLTEDZ helped me balance my studies with work. The courses were structured, the instructors were inspiring, and I landed my first automation role.', highlightedQuote: 'courses were structured' },
-  { id: 3, img: '/testimonials/3.png', initials: 'AN', name: 'Angela Natalya', role: 'Data Analyst', batchYear: 'Batch 2024', quote: 'VOLTEDZ provided an incredible environment for growth. The real-world projects made me confident in my data science skills.', highlightedQuote: 'real-world projects' },
-  { id: 4, img: '/testimonials/4.png', initials: 'ML', name: 'Maria Lane', role: 'BMS Technician', batchYear: 'Batch 2025', quote: 'VOLTEDZ helped me upgrade my skills seamlessly. The trainers were supportive, and every module felt highly relevant to my career growth.', highlightedQuote: 'upgrade my skills seamlessly' },
-  { id: 5, img: '', initials: 'AK', name: 'Alex King', role: 'Software Engineer', batchYear: 'Batch 2023', quote: 'The interactive learning approach completely changed my perspective. I was able to build an entire IoT fleet management system by the end of my boot camp.', highlightedQuote: 'interactive learning approach' },
-];
-
-const blogPosts = [
-  { id: 1, img: '/wp-content/uploads/2025/10/blog-a10-768x512.jpg', category: 'Automation', title: 'Building Trust: Why Hands-On Experience is Crucial in Industrial Automation', author: 'Alex King', date: 'October 3, 2025', link: '/blog' },
-  { id: 2, img: '/wp-content/uploads/2025/09/blog-a1-768x512.jpg', category: 'IoT', title: 'How to Choose the Right Training Program for Embedded Systems', author: 'Alex King', date: 'September 16, 2025', link: '/blog' },
-  { id: 3, img: '/wp-content/uploads/2025/08/blog-a2-768x512.jpg', category: 'Data Science', title: 'Top 7 Skills Every Future Data Scientist Must Have', author: 'Alex King', date: 'August 27, 2025', link: '/blog' },
-  { id: 4, img: '/wp-content/uploads/2025/08/blog-a3-768x512.jpg', category: 'Corporate', title: 'The Role of Upskilling in Transforming Corporate Teams', author: 'Alex King', date: 'August 19, 2025', link: '/blog' },
-];
-
-const tags = [
-  '#IndustrialAutomation', '#PLC_SCADA', '#EmbeddedSystems', '#PCBDesign', '#VLSI_Design', '#AutomationExpert',
-  '#Voltedz', '#FutureSkills', '#SkillIndia', '#TechEducation', '#EmpoweringEngineers',
-  '#InnovationInLearning', '#HandsOnTraining', '#CareerExcellence', '#SkillDevelopment', '#TechCommunity',
-  '#JobReady', '#PlacementSuccess', '#EngineeringCareers', '#UpskillToday', '#SuccessWithVoltedz',
-  '#Online learning', '#Programs', '#Research', '#SEO'
-];
-
-const tickerItems = [
-  'Industrial Automation', 'Building Management Services (BMS) ', 'Embedded Systems & IoT', 'Data Science & AI',
-  'Corporate Training', 'Professional Development', 'CCTV', 'Internships',
-];
-
-/* ── Category icons ── */
+// ----- Icons (kept as before) -----
 const AutomationIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
@@ -121,7 +74,13 @@ const categoryButtons = [
   { label: 'Embedded & IoT', link: '/course-category/embedded-iot', Icon: IoTIcon },
 ];
 
-/* ─── Course Card ─── */
+// ----- Ticker items (static) -----
+const tickerItems = [
+  'Industrial Automation', 'Building Management Services (BMS)', 'Embedded Systems & IoT', 'Data Science & AI',
+  'Corporate Training', 'Professional Development', 'CCTV', 'Internships',
+];
+
+// ----- Sub-components -----
 const CourseCard = ({ course }) => (
   <div className="course-card">
     <div className="course-thumbnail">
@@ -134,20 +93,20 @@ const CourseCard = ({ course }) => (
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
         ))}
-        <span className="rating-score">5.0</span>
-        <span className="rating-count">( 1 Review )</span>
+        <span className="rating-score">{course.rating || '5.0'}</span>
+        <span className="rating-count">({course.reviewCount || '1 Review'})</span>
       </div>
       <Link to={course.link}><h3 className="course-title">{course.title}</h3></Link>
       <p className="course-desc">{course.desc}</p>
       <div className="course-meta">
         <span>⏱ {course.duration}</span>
         <span>📖 {course.lessons}</span>
-        <span>📝 {course.quizzes}</span>
+        {course.quizzes && <span>📝 {course.quizzes}</span>}
       </div>
       <div className="course-footer">
         <span className="course-price">
           {course.priceOld && <span className="course-price-origin">{course.priceOld}</span>}
-          <span className="price">{course.price}</span>
+          <span className="price">{course.price || 'Free'}</span>
         </span>
         <Link to={course.link} className="btn-enroll">Enroll now</Link>
       </div>
@@ -155,34 +114,210 @@ const CourseCard = ({ course }) => (
   </div>
 );
 
-/* ─── Instructor Card ─── */
-const InstructorCard = ({ instr }) => (
-  <div className="instructor-card" style={{ '--card-decor': instr.decorColor }}>
-    <div className="instr-photo-layer">
-      <img src={instr.img} alt={instr.name} />
-    </div>
-    <div className="instr-name-bar">
-      <h4 className="instr-name-title"><Link to={instr.link}>{instr.name}</Link></h4>
-      <p className="instr-school-line">{instr.school}<br />Education: {instr.edu}</p>
-    </div>
-    <div className="instr-content-layer">
-      <h4 className="instr-name-title hover-name"><Link to={instr.link}>{instr.name}</Link></h4>
-      <div className="instr-school-block">
-        <p>{instr.school}</p>
-        <p>Education: {instr.edu}</p>
+const InstructorCard = ({ instr }) => {
+  const [touched, setTouched] = useState(false);
+  return (
+    <div 
+      className={`instructor-card ${touched ? 'touch-active' : ''}`} 
+      style={{ '--card-decor': instr.decorColor }}
+      onClick={() => setTouched(t => !t)}
+    >
+      <div className="instr-photo-layer">
+        <img src={instr.img} alt={instr.name} />
       </div>
-      <p className="instr-bio-text">{instr.bio}</p>
-      <Link to={instr.link} className="instr-more-link">More info</Link>
+      <div className="instr-name-bar">
+        <h4 className="instr-name-title"><Link to={instr.link}>{instr.name}</Link></h4>
+        <p className="instr-school-line">{instr.school}<br />Education: {instr.edu}</p>
+      </div>
+      <div className="instr-content-layer">
+        <h4 className="instr-name-title hover-name"><Link to={instr.link}>{instr.name}</Link></h4>
+        <div className="instr-school-block">
+          <p>{instr.school}</p>
+          <p>Education: {instr.edu}</p>
+        </div>
+        <p className="instr-bio-text">{instr.bio}</p>
+        <Link to={instr.link} className="instr-more-link">More info</Link>
+      </div>
     </div>
-  </div>
-);
-
+  );
+};
 
 /* ─────────────────── MAIN COMPONENT ─────────────────── */
 const Home = () => {
+  // State for API data
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [homeData, setHomeData] = useState(null);
+
+  // Derived state
+  const [courses, setCourses] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [popularTags, setPopularTags] = useState([]);
+  const [howItWorksSteps, setHowItWorksSteps] = useState([]);
+  const [featureItems, setFeatureItems] = useState([]);
+  const [carouselImages, setCarouselImages] = useState([]);
+  const [statsData, setStatsData] = useState({ activeLearners: 0, onlineCourses: 0, certifiedInstructors: 0, studentSatisfactionRate: 0 });
+  const [homeStat, setHomeStat] = useState({ image: '/wp-content/uploads/2025/11/pretty-schoolgirl-1.png', description: '' });
+
+  // Refs and local UI state
   const statsRef = useRef(null);
   const [statsVisible, setStatsVisible] = useState(false);
+  const [carIdx, setCarIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [courseIdx, setCourseIdx] = useState(0);
+  const [instrIdx, setInstrIdx] = useState(0);
+  const [instrSlidesVisible, setInstrSlidesVisible] = useState(
+    window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 4
+  );
+  const [blogIdx, setBlogIdx] = useState(0);
+  const [blogSlidesVisible, setBlogSlidesVisible] = useState(
+    window.innerWidth <= 768 ? 1 : 2
+  );
 
+  // ----- Fetch API Data -----
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(URLS.GetHomePage, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        const json = await response.json();
+        if (!json.success) throw new Error('API returned unsuccessful response');
+        setHomeData(json.data);
+      } catch (err) {
+        console.error('Failed to fetch home data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHomeData();
+  }, []);
+
+  // ----- Process API data when available -----
+  useEffect(() => {
+    if (!homeData) return;
+
+    // Courses
+    const mappedCourses = (homeData.courses || []).map(c => ({
+      id: c._id,
+      img: getImageUrl(c.thumbnail),
+      title: c.title,
+      desc: c.shortDescription,
+      duration: c.duration,
+      lessons: `${c.totalLessons || 0} Modules`,
+      quizzes: null, // Not provided
+      rating: c.averageRating?.toFixed(1) || '5.0',
+      reviewCount: '1 Review', // Placeholder
+      link: `/courses/${c._id}` // Adjust as needed
+    }));
+    setCourses(mappedCourses);
+
+    // Instructors
+    const mappedInstructors = (homeData.instructors || []).map((inst, idx) => ({
+      id: inst._id,
+      img: getImageUrl(inst.image),
+      decorColor: instructorColors[idx % instructorColors.length],
+      name: inst.name,
+      school: 'VOLTEDZ',
+      edu: inst.education || 'Instructor',
+      bio: inst.description || 'Expert instructor at VOLTEDZ.',
+      link: `/instructors/${inst._id}` // Adjust as needed
+    }));
+    setInstructors(mappedInstructors);
+
+    // Testimonials
+    const mappedTestimonials = (homeData.testimonials || []).map(t => {
+      const initials = t.name.split(' ').map(n => n[0]).join('').toUpperCase();
+      return {
+        id: t._id,
+        img: getImageUrl(t.image),
+        initials: initials || '?',
+        name: t.name,
+        role: t.role,
+        batchYear: `Batch ${t.batch}`,
+        quote: t.description,
+        highlightedQuote: '' // Could extract a phrase if needed
+      };
+    });
+    setTestimonials(mappedTestimonials);
+
+    // Blogs
+    const mappedBlogs = (homeData.blogs || []).map(b => ({
+      id: b._id,
+      img: getImageUrl(b.blogThumbnail || b.blogBanner) || '/wp-content/uploads/2025/10/blog-a10-768x512.jpg', // fallback
+      category: b.category,
+      title: b.title,
+      author: 'VOLTEDZ Team',
+      date: new Date(b.logCreatedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      link: `/blog/${b._id}`
+    }));
+    setBlogPosts(mappedBlogs);
+
+    // Popular Tags
+    const tags = homeData.popularTags?.keywords || [];
+    setPopularTags(tags);
+
+    // How It Works
+    const steps = (homeData.howItWorks || []).map(s => ({
+      title: s.title,
+      desc: s.description,
+      img: getImageUrl(s.image)
+    }));
+    setHowItWorksSteps(steps);
+
+    // Why Choose Us -> featureItems and carouselImages
+    const wcu = homeData.whyChooseUs || {};
+    const features = [];
+    const carouselImgs = [];
+    for (let i = 1; i <= 4; i++) {
+      const title = wcu[`title${i}`];
+      const desc = wcu[`description${i}`];
+      const img = wcu[`image${i}`];
+      if (title) {
+        const color = i === 1 ? '#9040EF' : i === 2 ? '#0088CC' : i === 3 ? '#00B109' : '#EA5A00';
+        features.push({
+          id: `feat-${i}`,
+          color,
+          title,
+          desc
+        });
+      }
+      if (img) {
+        carouselImgs.push(getImageUrl(img));
+      }
+    }
+    setFeatureItems(features);
+    setCarouselImages(carouselImgs);
+
+    // Counts / Stats
+    const counts = homeData.counts || {};
+    setStatsData({
+      activeLearners: parseCountValue(counts.activeLearners),
+      onlineCourses: parseCountValue(counts.onlineCourses),
+      certifiedInstructors: parseCountValue(counts.certifiedInstructors),
+      studentSatisfactionRate: parseCountValue(counts.studentSatisfactionRate)
+    });
+
+    // Home Stat (blob description and girl image)
+    const homeStatItem = homeData.homeStats?.[0] || {};
+    setHomeStat({
+      image: getImageUrl(homeStatItem.image) || '/wp-content/uploads/2025/11/pretty-schoolgirl-1.png',
+      description: homeStatItem.description || 'VOLTEDZ empowers individuals worldwide through flexible, high-quality training.'
+    });
+
+    // Banners are not used in the current UI; you can add them later if needed.
+  }, [homeData]);
+
+  // ----- UI Effects (carousel, resize, intersection) -----
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setStatsVisible(true); },
@@ -190,18 +325,11 @@ const Home = () => {
     );
     if (statsRef.current) observer.observe(statsRef.current);
     return () => observer.disconnect();
-  }, []);
+  }, [loading]);
 
-  const stat1 = useCountUp(12000, 2000, statsVisible, 0);
-  const stat2 = useCountUp(980, 2000, statsVisible, 0);
-  const stat3 = useCountUp(85, 2000, statsVisible, 0);
-  const stat4 = useCountUp(98, 2000, statsVisible, 0);
-
-  /* Features carousel – auto-advance every 5s */
-  const [carIdx, setCarIdx] = useState(0);
-  const [progress, setProgress] = useState(0);
-
+  // Carousel auto-advance (for feature images)
   useEffect(() => {
+    if (!carouselImages.length) return;
     const interval = setInterval(() => {
       setProgress(p => {
         const newP = p + 2;
@@ -213,27 +341,57 @@ const Home = () => {
       });
     }, 100);
     return () => clearInterval(interval);
+  }, [carouselImages.length]);
+
+  // Resize handlers for sliders
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) setInstrSlidesVisible(1);
+      else if (window.innerWidth <= 1024) setInstrSlidesVisible(2);
+      else setInstrSlidesVisible(4);
+      setBlogSlidesVisible(window.innerWidth <= 768 ? 1 : 2);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  /* Courses slider – show 3 */
-  const [courseIdx, setCourseIdx] = useState(0);
-  const visibleCourses = 3;
-  const maxCourseIdx = courses.length - visibleCourses;
+  // Counter values
+  const stat1 = useCountUp(statsData.activeLearners || 0, 2000, statsVisible, 0);
+  const stat2 = useCountUp(statsData.onlineCourses || 0, 2000, statsVisible, 0);
+  const stat3 = useCountUp(statsData.certifiedInstructors || 0, 2000, statsVisible, 0);
+  const stat4 = useCountUp(statsData.studentSatisfactionRate || 0, 2000, statsVisible, 0);
 
-  /* Instructors */
-  const [instrIdx, setInstrIdx] = useState(0);
+  // Slider indices bounds
+  const visibleCourses = 1;
+  const maxCourseIdx = Math.max(0, courses.length - 1);
+  const maxInstrIdx = Math.max(0, instructors.length - instrSlidesVisible);
+  const maxBlogIdx = Math.max(0, blogPosts.length - blogSlidesVisible);
 
-  /* Testimonials handled by TestimonialSection component */
+  // Show loading/error states
+  if (loading) {
+    return <div className="home-page-container"><div className="loading">Loading home content...</div></div>;
+  }
+  if (error) {
+    return <div className="home-page-container"><div className="error">Error: {error}</div></div>;
+  }
 
-  /* Blog slider – show 2 */
-  const [blogIdx, setBlogIdx] = useState(0);
-  const maxBlogIdx = blogPosts.length - 2;
+  // Fallback for empty arrays (show nothing but prevent crashes)
+  const safeCourses = courses.length ? courses : [];
+  const safeInstructors = instructors.length ? instructors : [];
+  const safeTestimonials = testimonials.length ? testimonials : [];
+  const safeBlogPosts = blogPosts.length ? blogPosts : [];
+  const safeTags = popularTags.length ? popularTags : ['#IndustrialAutomation', '#PLC_SCADA', '#EmbeddedSystems'];
+  const safeSteps = howItWorksSteps.length ? howItWorksSteps : [
+    { title: 'Step 1 – Training Formats', desc: 'In-campus, Off-campus, Workshops, Seminars, and Corporate trainings.', img: '/how-it-works/step1.jpg' },
+    { title: 'Step 2 – Practical Sessions', desc: 'Sessions by top project engineers & analysts with focus on clarity and practical application.', img: '/how-it-works/step2.jpg' },
+    { title: 'Step 3 – Implementation Support', desc: '3 months on-field support post-training and lifetime assistance for continuous growth.', img: '/how-it-works/step3.jpg' },
+  ];
 
   return (
     <div className="home-page-container">
       <div className="elementor elementor-35321">
 
-        {/* ═══════════ HERO ═══════════ */}
+        {/* HERO (static for now, can be made dynamic with banners if needed) */}
         <section className="hero-section elementor-element-d13dea6 e-flex e-parent">
           <div className="e-con-inner e-con-boxed e-con">
             <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
@@ -248,14 +406,13 @@ const Home = () => {
                 </div>
               </div>
               <div className="elementor-element-6e900ac e-con-full e-flex e-con e-child">
-                {/* <img loading="lazy" width={167} height={167} src="/wp-content/uploads/2025/11/half-circle-decor.png" alt="" className="hero-decor hero-decor-circle" /> */}
-                {/* <img loading="lazy" src="/wp-content/uploads/2025/11/tes-group1new.png" alt="Student" className="hero-main-img" /> */}
+                {/* Hero image can be added from banner data if desired */}
               </div>
             </div>
           </div>
         </section>
 
-        {/* ═══════════ TICKER ═══════════ */}
+        {/* TICKER */}
         <div className="ticker-band">
           <div className="ticker-inner">
             <div className="ticker-track">
@@ -271,7 +428,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ═══════════ FEATURES ═══════════ */}
+        {/* FEATURES (Why Choose Us) */}
         <section className="features-section">
           <div className="features-inner e-con-boxed">
             <div className="features-heading-wrap">
@@ -309,7 +466,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* ═══════════ HOW IT WORKS ═══════════ */}
+        {/* HOW IT WORKS */}
         <section className="how-it-works-section">
           <div className="how-inner e-con-boxed">
             <div className="how-heading section-heading-center">
@@ -317,7 +474,7 @@ const Home = () => {
               <h2 className="title">How Learning with VOLTEDZ Works</h2>
             </div>
             <div className="programs-grid">
-              {programSteps.map((p, i) => (
+              {safeSteps.map((p, i) => (
                 <div key={i} className="program-step-card">
                   <div className="program-step-num">0{i + 1}</div>
                   <figure className="program-step-img">
@@ -334,10 +491,9 @@ const Home = () => {
           </div>
         </section>
 
-        {/* ═══════════ STATS ═══════════ */}
+        {/* STATS */}
         <section ref={statsRef} className="stats-section">
           <div className="stats-inner e-con-boxed">
-            {/* 4 counters */}
             <div className="stats-counters-row">
               {[
                 { icon: '/wp-content/uploads/2025/11/vec1.png', count: stat1.toLocaleString(), suffix: '+', label: 'Active Learners' },
@@ -358,62 +514,63 @@ const Home = () => {
               ))}
             </div>
 
-            {/* ── Bottom: girl + morphing blob ── */}
             <div className="stats-bottom-row">
               <div className="stats-girl-wrap">
                 <img
-                  src="/wp-content/uploads/2025/11/pretty-schoolgirl-1.png"
+                  src={homeStat.image}
                   alt="Student"
                   className="stats-girl-img"
                 />
               </div>
-              {/* ↓ CHANGED: blob wrapper + inner text */}
               <div className="stats-blob-wrap">
                 <div className="stats-blob">
-                  <p className="stats-blob-text">
-                    VOLTEDZ empowers individuals worldwide through flexible, high-quality training — bridging knowledge and real-world skills to shape confident, future-ready professionals.
-                  </p>
+                  <p className="stats-blob-text">{homeStat.description}</p>
                 </div>
               </div>
             </div>
-
           </div>
         </section>
 
-        {/* ═══════════ COURSES ═══════════ */}
+        {/* COURSES */}
         <section className="courses-section">
           <div className="e-con-boxed courses-inner">
             <div className="courses-heading-wrap">
               <p className="sub-heading">Featured Online Courses</p>
               <h2 className="title">Explore Top-Rated Courses</h2>
             </div>
-            <div className="courses-slider-nav-row">
-              <button className="slider-nav-btn" onClick={() => setCourseIdx(i => Math.max(0, i - 1))} disabled={courseIdx === 0} aria-label="Previous">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6" /></svg>
-              </button>
-              <button className="slider-nav-btn" onClick={() => setCourseIdx(i => Math.min(maxCourseIdx, i + 1))} disabled={courseIdx === maxCourseIdx} aria-label="Next">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
-              </button>
-            </div>
-            <div className="courses-slider-viewport">
-              <div
-                className="courses-slider-track"
-                style={{ transform: `translateX(-${courseIdx * (100 / visibleCourses)}%)` }}
-              >
-                {courses.map(c => (
-                  <div key={c.id} className="courses-slide">
-                    <CourseCard course={c} />
+            {safeCourses.length > 0 ? (
+              <>
+                <div className="courses-slider-nav-row">
+                  <button className="slider-nav-btn" onClick={() => setCourseIdx(i => Math.max(0, i - 1))} disabled={courseIdx === 0} aria-label="Previous">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6" /></svg>
+                  </button>
+                  <button className="slider-nav-btn" onClick={() => setCourseIdx(i => Math.min(maxCourseIdx, i + 1))} disabled={courseIdx === maxCourseIdx} aria-label="Next">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
+                  </button>
+                </div>
+                <div className="courses-slider-viewport">
+                  <div
+                    className="courses-slider-track"
+                    style={{ transform: `translateX(-${courseIdx * (100 / visibleCourses)}%)` }}
+                  >
+                    {safeCourses.map(c => (
+                      <div key={c.id} className="courses-slide">
+                        <CourseCard course={c} />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              </>
+            ) : (
+              <p>No courses available at the moment.</p>
+            )}
             <div className="courses-cta-row">
               <Link className="cta-dark-btn" to="/courses">Browse All Courses</Link>
             </div>
           </div>
         </section>
 
-        {/* ═══════════ INSTRUCTORS ═══════════ */}
+        {/* INSTRUCTORS */}
         <section className="instructors-section">
           <div className="e-con-boxed instructors-inner">
             <div className="instructors-header">
@@ -422,71 +579,81 @@ const Home = () => {
                 <h2 className="title">Meet Our World-Class Faculty</h2>
               </div>
             </div>
-            <div className="instructors-slider-viewport">
-              <div
-                className="instructors-track"
-                style={{ transform: `translateX(-${instrIdx * 25}%)` }}
-              >
-                {instructors.map(instr => (
-                  <div key={instr.id} className="instructor-slide">
-                    <InstructorCard instr={instr} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ TESTIMONIALS ═══════════ */}
-        <section className="testimonials-section-new-wrapper">
-          <TestimonialSection testimonials={testimonials} />
-        </section>
-
-        {/* ═══════════ BLOG ═══════════ */}
-        <section className="blog-section">
-          <div className="e-con-boxed blog-inner">
-            <div className="blog-posts-col">
-              <p className="sub-heading blog-sub">RESEARCH &amp; ACADEMIC INSIGHTS</p>
-              <h2 className="title blog-title-h2">Insights That Inspire Learning</h2>
-              <div className="blog-slider-nav-row">
-                <button className="blog-nav-btn" onClick={() => setBlogIdx(i => Math.max(0, i - 1))} disabled={blogIdx === 0} aria-label="Previous">
-                  <svg viewBox="0 0 448 512" width="14" height="14"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" fill="currentColor" /></svg>
-                </button>
-                <button className="blog-nav-btn" onClick={() => setBlogIdx(i => Math.min(maxBlogIdx, i + 1))} disabled={blogIdx === maxBlogIdx} aria-label="Next">
-                  <svg viewBox="0 0 448 512" width="14" height="14"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" fill="currentColor" /></svg>
-                </button>
-              </div>
-              <div className="blog-slider-viewport">
-                <div className="blog-slider-track" style={{ transform: `translateX(-${blogIdx * 50}%)` }}>
-                  {blogPosts.map(post => (
-                    <div key={post.id} className="blog-slide">
-                      <div className="blog-card">
-                        <div className="blog-card-thumb">
-                          <Link to={post.link}><img src={post.img} alt={post.title} /></Link>
-                        </div>
-                        <div className="blog-card-body">
-                          <span className="blog-cat-tag">{post.category}</span>
-                          <h5 className="blog-post-title"><Link to={post.link}>{post.title}</Link></h5>
-                          <div className="blog-post-meta">
-                            <span>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'relative', top: 2, marginRight: 4 }}>
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-                              </svg>
-                              {post.author}
-                            </span>
-                            <span>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'relative', top: 2, marginRight: 4 }}>
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-                              </svg>
-                              {post.date}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+            {safeInstructors.length > 0 ? (
+              <div className="instructors-slider-viewport">
+                <div
+                  className="instructors-track"
+                  style={{ transform: `translateX(-${instrIdx * (100 / instrSlidesVisible)}%)` }}
+                >
+                  {safeInstructors.map(instr => (
+                    <div key={instr.id} className="instructor-slide">
+                      <InstructorCard instr={instr} />
                     </div>
                   ))}
                 </div>
               </div>
+            ) : (
+              <p>Instructor information coming soon.</p>
+            )}
+          </div>
+        </section>
+
+        {/* TESTIMONIALS */}
+        <section className="testimonials-section-new-wrapper">
+          <TestimonialSection testimonials={safeTestimonials} />
+        </section>
+
+        {/* BLOG */}
+        <section className="blog-section">
+          <div className="e-con-boxed blog-inner">
+            <div className="blog-posts-col">
+              <p className="sub-heading blog-sub">RESEARCH & ACADEMIC INSIGHTS</p>
+              <h2 className="title blog-title-h2">Insights That Inspire Learning</h2>
+              {safeBlogPosts.length > 0 ? (
+                <>
+                  <div className="blog-slider-nav-row">
+                    <button className="blog-nav-btn" onClick={() => setBlogIdx(i => Math.max(0, i - 1))} disabled={blogIdx === 0} aria-label="Previous">
+                      <svg viewBox="0 0 448 512" width="14" height="14"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" fill="currentColor" /></svg>
+                    </button>
+                    <button className="blog-nav-btn" onClick={() => setBlogIdx(i => Math.min(maxBlogIdx, i + 1))} disabled={blogIdx === maxBlogIdx} aria-label="Next">
+                      <svg viewBox="0 0 448 512" width="14" height="14"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" fill="currentColor" /></svg>
+                    </button>
+                  </div>
+                  <div className="blog-slider-viewport">
+                    <div className="blog-slider-track" style={{ transform: `translateX(-${blogIdx * (100 / blogSlidesVisible)}%)` }}>
+                      {safeBlogPosts.map(post => (
+                        <div key={post.id} className="blog-slide">
+                          <div className="blog-card">
+                            <div className="blog-card-thumb">
+                              <Link to={post.link}><img src={post.img} alt={post.title} /></Link>
+                            </div>
+                            <div className="blog-card-body">
+                              <span className="blog-cat-tag">{post.category}</span>
+                              <h5 className="blog-post-title"><Link to={post.link}>{post.title}</Link></h5>
+                              <div className="blog-post-meta">
+                                <span>
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'relative', top: 2, marginRight: 4 }}>
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+                                  </svg>
+                                  {post.author}
+                                </span>
+                                <span>
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'relative', top: 2, marginRight: 4 }}>
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                                  </svg>
+                                  {post.date}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <p>No blog posts available.</p>
+              )}
               <div style={{ marginTop: '2rem' }}>
                 <Link to="/blog" className="btn-white-outline-blog">Read More Insights</Link>
               </div>
@@ -494,8 +661,7 @@ const Home = () => {
             <div className="blog-tags-col">
               <h5 className="tags-heading">Popular tags</h5>
               <div className="tagcloud">
-                {tags.map((t, i) => (
-                  // <Link key={i} to="/blog" className="tag-cloud-link">{t}</Link>
+                {safeTags.map((t, i) => (
                   <p className="tag-cloud-link" key={i}>{t}</p>
                 ))}
               </div>

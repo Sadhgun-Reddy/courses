@@ -166,7 +166,7 @@ const TestimonialSection = ({ testimonials }) => {
           // but if we want the staggered animation on manual shift, we can use a key that changes on index shift.
           return (
             <div 
-              key={`${currentIndex}-${idx}`} 
+              key={`${currentIndex}-${idx}-${pos}`} 
               className={`mini-card animating`} 
               style={{ animationDelay: `${pos * 0.1}s` }}
               onClick={() => jumpTo(idx)}

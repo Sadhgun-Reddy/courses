@@ -324,7 +324,7 @@ export default function CourseDetail() {
               </p>
             )}
           </div>
-          {/* <div style={{ textAlign: 'right' }}>
+          <div style={{ textAlign: 'right' }}>
             <div style={{ marginBottom: '8px' }}>
               <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#1a1a1a' }}>
                 ₹{course.discountedPrice || course.price}
@@ -336,7 +336,7 @@ export default function CourseDetail() {
               )}
             </div>
             <button className="cd-enroll-btn" onClick={handleEnrollClick}>Enroll Now</button>
-          </div> */}
+          </div>
         </div>
 
         <div className="cd-featured-img-wrap">

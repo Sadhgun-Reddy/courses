@@ -21,4 +21,6 @@ export const URLS ={
     getFullCourseDetails: base_url + "v1/voltedzApi/user/getCourseFullDetails/getFullCourseDetails",
     createOrder: base_url + "v1/voltedzApi/user/order/createOrder",
     updateTransaction: base_url + "v1/voltedzApi/user/order/updateTransaction",
+    GetHomePage: base_url + "v1/voltedzApi/admin/homePage/getAllHomeData",
+    GetAboutUsPage: base_url + "v1/voltedzApi/admin/aboutUs/getAllAboutUsData",
 }

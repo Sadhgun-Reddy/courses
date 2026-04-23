@@ -123,7 +123,7 @@ const Header = () => {
             <nav className="main-navigation">
               <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                 <li onClick={() => setIsMobileMenuOpen(false)}>
-                  <Link to="/">Home</Link>
+                  <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
                 </li>
 
                 <li
@@ -134,7 +134,7 @@ const Header = () => {
                   <Link
                     to="/courses/industrial-automation"
                     onClick={handleDropdownToggle}
-                    className="courses-link"
+                    className={`courses-link ${location.pathname.startsWith('/courses') ? 'active' : ''}`}
                   >
                     Courses
                     <span className="dropdown-arrow">
@@ -195,10 +195,10 @@ const Header = () => {
                 </li>
 
                 <li>
-                  <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
+                  <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className={location.pathname.startsWith('/about') ? 'active' : ''}>About Us</Link>
                 </li>
                 <li onClick={() => setIsMobileMenuOpen(false)}>
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/contact" className={location.pathname.startsWith('/contact') ? 'active' : ''}>Contact Us</Link>
                 </li>
                 
               </ul>
@@ -288,13 +288,13 @@ const Header = () => {
                 <Link to="/login" className="btn-signup">Sign Up</Link>
               </div>
             )}
-            {/* <button
+            <button
               className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
               aria-label="Toggle menu"
               onClick={handleMobileMenuToggle}
             >
               <span className="menu-icon"></span>
-            </button> */}
+            </button>
           </div>
 
         </div>
