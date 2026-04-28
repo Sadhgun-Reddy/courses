@@ -13,6 +13,25 @@ const Header = () => {
   const profileMenuRef = useRef(null);
 
   const [profileImage, setProfileImage] = useState(null);
+  const [megaMenuCourses, setMegaMenuCourses] = useState([]);
+
+  useEffect(() => {
+    fetch(URLS.getCourseMinimalDetails, { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data) {
+          setMegaMenuCourses(data.data);
+        }
+      })
+      .catch(err => console.error("Error fetching mega menu courses:", err));
+  }, []);
+
+  const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
   useEffect(() => {
     setIsDropdownOpen(false);
@@ -132,7 +151,7 @@ const Header = () => {
                   onMouseLeave={handleMouseLeave}
                 >
                   <Link
-                    to="/courses/industrial-automation"
+                    to="/courses"
                     onClick={handleDropdownToggle}
                     className={`courses-link ${location.pathname.startsWith('/courses') ? 'active' : ''}`}
                   >
@@ -146,51 +165,28 @@ const Header = () => {
 
                   {/* Mega menu — note: only "mega-menu" class, NOT "dropdown-menu" */}
                   <div className={`mega-menu ${isDropdownOpen ? 'open' : ''}`}>
-                    <div className="mega-col">
-                      <div className="mega-card">
-                        <Link to="/courses/industrial-automation" onClick={handleLinkClick} className="mega-card-link-wrapper" style={{flexDirection:"column", paddingRight: "0px"}}>
-                          <img src="/courses/Industrial Automation.png" alt="Industrial Automation" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
-                          <h6 className="mega-card-title">Industrial Automation</h6>
-                          <span className="mega-link mt-1">View Course</span>
-                        </Link>
+                    {megaMenuCourses.map((course) => (
+                      <div className="mega-col" key={course._id}>
+                        <div className="mega-card">
+                          <Link 
+                            to={`/courses/${slugify(course.title)}`} 
+                            state={{ courseId: course._id }}
+                            onClick={handleLinkClick} 
+                            className="mega-card-link-wrapper" 
+                            style={{flexDirection:"column", paddingRight: "0px"}}
+                          >
+                            <img 
+                              src={`${base_url}${course.thumbnail}`} 
+                              alt={course.title} 
+                              className="mega-img" 
+                              onError={(e) => e.target.style.display = 'none'} 
+                            />
+                            <h6 className="mega-card-title">{course.title}</h6>
+                            <span className="mega-link mt-1">View Course</span>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className="mega-col">
-                      <div className="mega-card">
-                        <Link to="/courses/building-management-systems" onClick={handleLinkClick} className="mega-card-link-wrapper" style={{flexDirection:"column", paddingRight: "0px"}}>
-                          <img src="/courses/Building Management Systems.png" alt="BMS" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
-                          <h6 className="mega-card-title">Building Management Systems (BMS)</h6>
-                          <span className="mega-link mt-1">View Course</span>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="mega-col">
-                      <div className="mega-card">
-                        <Link to="/courses/embedded-systems" onClick={handleLinkClick} className="mega-card-link-wrapper" style={{flexDirection:"column", paddingRight: "0px"}}>
-                          <img src="/courses/Embedded Systems & IoT.png" alt="Embedded Systems" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
-                          <h6 className="mega-card-title">Embedded Systems & IoT</h6>
-                          <span className="mega-link mt-1">View Course</span>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="mega-col">
-                      <div className="mega-card">
-                        <Link to="/courses/data-science" onClick={handleLinkClick} className="mega-card-link-wrapper" style={{flexDirection:"column", paddingRight: "0px"}}>
-                          <img src="/courses/Data Science & AI.png" alt="Data Science" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
-                          <h6 className="mega-card-title">Data Science & AI</h6>
-                          <span className="mega-link mt-1">View Course</span>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="mega-col">
-                      <div className="mega-card">
-                        <Link to="/courses/cctv" onClick={handleLinkClick} className="mega-card-link-wrapper" style={{flexDirection:"column", paddingRight: "0px"}}>
-                          <img src="/courses/CCTV.png" alt="CCTV" className="mega-img" onError={(e) => e.target.style.display = 'none'} />
-                          <h6 className="mega-card-title">CCTV & Security Systems</h6>
-                          <span className="mega-link mt-1">View Course</span>
-                        </Link>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </li>
 

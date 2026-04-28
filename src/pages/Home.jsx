@@ -5,7 +5,7 @@ import TestimonialSection from '../components/TestimonialSection';
 import './Home.css';
 import { URLS } from '../Url';
 
- 
+
 // Helper to build full image URLs
 const getImageUrl = (path) => {
   if (!path) return '';
@@ -80,11 +80,19 @@ const tickerItems = [
   'Corporate Training', 'Professional Development', 'CCTV', 'Internships',
 ];
 
+const offerItems = [
+  'Flash Sale: 50% Off on All Automation Courses!',
+  'Limited Time Offer: Get Certified for just $99!',
+  'New Batch Starting Soon - Enroll Now!',
+  'Free Internship Opportunity with Every Professional Course',
+  'Special Discount for Group Enrollments!',
+];
+
 // ----- Sub-components -----
 const CourseCard = ({ course }) => (
   <div className="course-card">
     <div className="course-thumbnail">
-      <Link to={course.link}><img src={course.img} alt={course.title} /></Link>
+      <Link to={course.link} state={{ courseId: course.id }}><img src={course.img} alt={course.title} /></Link>
     </div>
     <div className="course-content">
       <div className="course-rating">
@@ -96,7 +104,7 @@ const CourseCard = ({ course }) => (
         <span className="rating-score">{course.rating || '5.0'}</span>
         <span className="rating-count">({course.reviewCount || '1 Review'})</span>
       </div>
-      <Link to={course.link}><h3 className="course-title">{course.title}</h3></Link>
+      <Link to={course.link} state={{ courseId: course.id }}><h3 className="course-title">{course.title}</h3></Link>
       <p className="course-desc">{course.desc}</p>
       <div className="course-meta">
         <span>⏱ {course.duration}</span>
@@ -105,10 +113,10 @@ const CourseCard = ({ course }) => (
       </div>
       <div className="course-footer">
         <span className="course-price">
-          {course.priceOld && <span className="course-price-origin">{course.priceOld}</span>}
-          <span className="price">{course.price || 'Free'}</span>
+          {/* {course.quizzes && <span className="course-price-origin">{course.price}</span>} */}
+          <span className="price">₹{course.price?.toLocaleString()}</span>
         </span>
-        <Link to={course.link} className="btn-enroll">Enroll now</Link>
+        <Link to={course.link} state={{ courseId: course.id }} className="btn-enroll">Enroll now</Link>
       </div>
     </div>
   </div>
@@ -117,8 +125,8 @@ const CourseCard = ({ course }) => (
 const InstructorCard = ({ instr }) => {
   const [touched, setTouched] = useState(false);
   return (
-    <div 
-      className={`instructor-card ${touched ? 'touch-active' : ''}`} 
+    <div
+      className={`instructor-card ${touched ? 'touch-active' : ''}`}
       style={{ '--card-decor': instr.decorColor }}
       onClick={() => setTouched(t => !t)}
     >
@@ -207,18 +215,22 @@ const Home = () => {
     if (!homeData) return;
 
     // Courses
-    const mappedCourses = (homeData.courses || []).map(c => ({
-      id: c._id,
-      img: getImageUrl(c.thumbnail),
-      title: c.title,
-      desc: c.shortDescription,
-      duration: c.duration,
-      lessons: `${c.totalLessons || 0} Modules`,
-      quizzes: null, // Not provided
-      rating: c.averageRating?.toFixed(1) || '5.0',
-      reviewCount: '1 Review', // Placeholder
-      link: `/courses/${c._id}` // Adjust as needed
-    }));
+    const mappedCourses = (homeData.courses || []).map(c => {
+      const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      return {
+        id: c._id,
+        img: getImageUrl(c.thumbnail),
+        title: c.title,
+        desc: c.shortDescription,
+        duration: c.duration,
+        lessons: `${c.totalLessons || 0} Modules`,
+        quizzes: null, // Not provided
+        rating: c.averageRating?.toFixed(1) || '5.0',
+        reviewCount: '1 Review', // Placeholder
+        price: c.price,
+        link: `/courses/${slugify(c.title)}` // Dynamic slug
+      };
+    });
     setCourses(mappedCourses);
 
     // Instructors
@@ -251,15 +263,20 @@ const Home = () => {
     setTestimonials(mappedTestimonials);
 
     // Blogs
-    const mappedBlogs = (homeData.blogs || []).map(b => ({
-      id: b._id,
-      img: getImageUrl(b.blogThumbnail || b.blogBanner) || '/wp-content/uploads/2025/10/blog-a10-768x512.jpg', // fallback
-      category: b.category,
-      title: b.title,
-      author: 'VOLTEDZ Team',
-      date: new Date(b.logCreatedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      link: `/blog/${b._id}`
-    }));
+    const mappedBlogs = (homeData.blogs || []).map(b => {
+      const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      const slug = slugify(b.title);
+      return {
+        id: b._id,
+        img: getImageUrl(b.blogThumbnail || b.blogBanner) || '/wp-content/uploads/2025/10/blog-a10-768x512.jpg', // fallback
+        category: b.category,
+        title: b.title,
+        author: 'VOLTEDZ Team',
+        date: new Date(b.logCreatedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        link: `/blog/${slug}`,
+        originalId: b._id
+      };
+    });
     setBlogPosts(mappedBlogs);
 
     // Popular Tags
@@ -390,6 +407,22 @@ const Home = () => {
   return (
     <div className="home-page-container">
       <div className="elementor elementor-35321">
+
+        {/* TOP TICKER (OFFERS) */}
+        <div className="ticker-band top-ticker">
+          <div className="ticker-inner">
+            <div className="ticker-track">
+              {[...offerItems, ...offerItems].map((item, i) => (
+                <span key={i} className="ticker-item">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 512 512" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+                  </svg>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* HERO (static for now, can be made dynamic with banners if needed) */}
         <section className="hero-section elementor-element-d13dea6 e-flex e-parent">
@@ -625,11 +658,11 @@ const Home = () => {
                         <div key={post.id} className="blog-slide">
                           <div className="blog-card">
                             <div className="blog-card-thumb">
-                              <Link to={post.link}><img src={post.img} alt={post.title} /></Link>
+                              <Link to={post.link} state={{ blogId: post.id }}><img src={post.img} alt={post.title} /></Link>
                             </div>
                             <div className="blog-card-body">
                               <span className="blog-cat-tag">{post.category}</span>
-                              <h5 className="blog-post-title"><Link to={post.link}>{post.title}</Link></h5>
+                              <h5 className="blog-post-title"><Link to={post.link} state={{ blogId: post.id }}>{post.title}</Link></h5>
                               <div className="blog-post-meta">
                                 <span>
                                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'relative', top: 2, marginRight: 4 }}>

@@ -23,4 +23,6 @@ export const URLS ={
     updateTransaction: base_url + "v1/voltedzApi/user/order/updateTransaction",
     GetHomePage: base_url + "v1/voltedzApi/admin/homePage/getAllHomeData",
     GetAboutUsPage: base_url + "v1/voltedzApi/admin/aboutUs/getAllAboutUsData",
+    getCourseMinimalDetails: base_url + "v1/voltedzApi/user/getCourseFullDetails/getCourseMinimalDetails",
+    getBlogById: base_url + "/v1/voltedzApi/admin/blog/getById",
 }

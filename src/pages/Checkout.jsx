@@ -35,6 +35,11 @@ export default function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
+  // Partial Payment states
+  const [paymentType, setPaymentType] = useState('full'); // 'full' or 'partial'
+  const [partialAmount, setPartialAmount] = useState('');
+  const [partialError, setPartialError] = useState('');
+
   useEffect(() => {
     if (!course) {
       navigate('/courses');
@@ -58,6 +63,10 @@ export default function Checkout() {
     ? course.discountedPrice
     : basePrice - Math.floor((basePrice * discountPercent) / 100);
   const discountAmount = basePrice - finalPriceValue;
+
+  // Partial Payment calculations
+  const minPartialAmount = Math.ceil(finalPriceValue * 0.5);
+  const amountToPay = paymentType === 'partial' ? (Number(partialAmount) || 0) : finalPriceValue;
 
   const handleApplyPromo = () => {
     if (!promoCode.trim()) {
@@ -92,6 +101,21 @@ export default function Checkout() {
       return;
     }
 
+    if (paymentType === 'partial') {
+      if (!partialAmount) {
+        setPartialError(`Please enter an amount.`);
+        return;
+      }
+      if (Number(partialAmount) < minPartialAmount) {
+        setPartialError(`Minimum payment required: ₹${minPartialAmount.toLocaleString('en-IN')}`);
+        return;
+      }
+      if (Number(partialAmount) > finalPriceValue) {
+        setPartialError(`Amount cannot exceed the total: ₹${finalPriceValue.toLocaleString('en-IN')}`);
+        return;
+      }
+    }
+
     if (razorpayScriptLoaded && window.Razorpay) {
       setIsProcessing(true);
       try {
@@ -104,8 +128,8 @@ export default function Checkout() {
           },
           body: JSON.stringify({
             courseId: course._id,
-            userId: user._id,
-            amount: finalPriceValue.toString()
+            paymentType: paymentType,
+            paidAmount: Number(amountToPay)
           })
         });
 
@@ -118,8 +142,8 @@ export default function Checkout() {
         }
 
         const options = {
-          key: 'rzp_test_SbJiSxd4NAzqKo',
-          amount: finalPriceValue * 100,
+          key: 'rzp_test_ShfYcPKH5TchAo',
+          amount: amountToPay * 100,
           currency: 'INR',
           name: 'VOLTEDZ',
           description: `Enroll: ${course.title}`,
@@ -322,6 +346,62 @@ export default function Checkout() {
                 <span>Total Amount</span>
                 <span>₹{finalPriceValue.toLocaleString('en-IN')}</span>
               </div>
+
+              <hr className="checkout-divider" />
+
+              {/* Payment Type Selection */}
+              <div className="payment-options">
+                <label className="payment-option-label">Choose Payment Plan:</label>
+                <div className="payment-type-toggle">
+                  <button
+                    type="button"
+                    className={`type-btn ${paymentType === 'full' ? 'active' : ''}`}
+                    onClick={() => {
+                      setPaymentType('full');
+                      setPartialError('');
+                    }}
+                  >
+                    Full Payment
+                  </button>
+                  <button
+                    type="button"
+                    className={`type-btn ${paymentType === 'partial' ? 'active' : ''}`}
+                    onClick={() => setPaymentType('partial')}
+                  >
+                    Partial Payment
+                  </button>
+                </div>
+
+                {paymentType === 'partial' && (
+                  <div className="partial-input-box mt-3">
+                    <label>Enter Amount to Pay Now (Min 50%)</label>
+                    <div className="input-with-symbol">
+                      <span className="currency-symbol">₹</span>
+                      <input
+                        type="number"
+                        value={partialAmount}
+                        onChange={(e) => {
+                          setPartialAmount(e.target.value);
+                          setPartialError('');
+                        }}
+                        placeholder={`Min: ₹${minPartialAmount}`}
+                      />
+                    </div>
+                    {partialError ? (
+                      <p className="partial-error">{partialError}</p>
+                    ) : (
+                      <p className="partial-hint">Remaining balance: ₹{(finalPriceValue - (Number(partialAmount) || 0)).toLocaleString('en-IN')}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {paymentType === 'partial' && (
+                <div className="total-row amount-to-pay mt-2">
+                  <span>Amount to Pay Today</span>
+                  <span className="highlight">₹{amountToPay.toLocaleString('en-IN')}</span>
+                </div>
+              )}
             </div>
 
             <button
@@ -329,7 +409,7 @@ export default function Checkout() {
               onClick={handlePayment}
               disabled={isProcessing}
             >
-              {isProcessing ? 'Processing...' : `Pay ₹${finalPriceValue.toLocaleString('en-IN')} Now`}
+              {isProcessing ? 'Processing...' : `Pay ₹${amountToPay.toLocaleString('en-IN')} Now`}
             </button>
             <p className="secure-badge">🔒 Secure Checkout via Razorpay</p>
           </div>

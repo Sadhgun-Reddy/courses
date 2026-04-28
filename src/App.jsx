@@ -22,6 +22,7 @@ import MyProfile from './pages/MyProfile';
 import PurchaseHistory from './pages/PurchaseHistory';
 import SupportTickets from './pages/SupportTickets';
 import Checkout from './pages/Checkout';
+import BlogDetail from './pages/BlogDetail';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -43,11 +44,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="courses" element={<Courses />} />
-          <Route path="courses/industrial-automation" element={<CourseDetail />} />
-          <Route path="courses/building-management-systems" element={<BMS />} />
-          <Route path="courses/embedded-systems" element={<EmbeddedSystems />} />
-          <Route path="courses/data-science" element={<DataScience />} />
-          <Route path="courses/cctv" element={<CCTV />} />
+          <Route path="courses/:courseSlug" element={<CourseDetail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="instructors" element={<Instructors />} />
           <Route path="blog" element={<Blog />} />
@@ -60,6 +57,7 @@ function App() {
           <Route path="purchase-history" element={<PurchaseHistory />} />
           <Route path="support" element={<SupportTickets />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="blog/:blogSlug" element={<BlogDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -223,6 +223,11 @@ html, body {
   width: 100%;
 }
 
+.top-ticker {
+  background-color: #080f52; /* Darker navy for the top offers ticker */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .ticker-inner {
   padding: 13px 0;
   overflow: hidden;
