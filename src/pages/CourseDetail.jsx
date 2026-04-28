@@ -115,7 +115,7 @@ function CourseSidebar({ course }) {
                   {batch.batchName || (batch.type?.charAt(0).toUpperCase() + batch.type?.slice(1))} Batches: {formatDays(batch.days)}
                 </p>
                 <ul className="cd-batch-list">
-                  {batch.slots.map((slot, sIdx) => (
+                  {batch.slots && batch.slots.map((slot, sIdx) => (
                     <li key={sIdx}>{slot.startTime} – {slot.endTime}</li>
                   ))}
                 </ul>
@@ -236,10 +236,8 @@ export default function CourseDetail() {
   const { courseSlug } = useParams();
 
   const handleEnrollClick = () => {
-    // Check if user is logged in
     const userStr = localStorage.getItem('user');
     if (!userStr) {
-      // Redirect to login page (adjust path as needed)
       navigate('/login', { state: { from: `/course/${course?._id}` } });
       return;
     }
@@ -254,7 +252,6 @@ export default function CourseDetail() {
       try {
         let targetCourseId = location.state?.courseId;
 
-        // Fallback for direct links or refreshes where state is lost
         if (!targetCourseId && courseSlug) {
            const homeRes = await fetch(URLS.GetHomePage);
            const homeData = await homeRes.json();
@@ -301,7 +298,7 @@ export default function CourseDetail() {
     fetchDetails();
   }, [location.state?.courseId, courseSlug]);
 
-  // Ensure page scrolls to top after data loads, preventing mid-page anchors
+  // Ensure page scrolls to top after data loads
   useEffect(() => {
     if (!loading && course) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -326,44 +323,40 @@ export default function CourseDetail() {
 
   if (!course) return null;
 
+  // Calculate total available seats from all batches
+  const totalAvailableSeats = course.batchDetails
+    ? course.batchDetails.reduce((sum, batch) => sum + (batch.availableSeats || 0), 0)
+    : 0;
+
+  // Dynamic seat message
+  const seatMessage = course.batchDetails
+    ? totalAvailableSeats > 0
+      ? `🔥 Only ${totalAvailableSeats} seats available across batches!`
+      : 'All batches are currently full.'
+    : 'Limited seats available!';
+
   const instructor = course.instructorDetails && course.instructorDetails[0];
 
   return (
     <div className="cd-page">
       {/* ── Floating Sticky Bottom Card ── */}
-      <div className={`cd-floating-card ${showFloatingCard ? 'cd-floating-card--visible' : ''}`}>
-        <div className="cd-floating-card-inner">
-          <div className="cd-floating-card-info">
-            <span className="cd-floating-card-title">{course.title}</span>
-            <div className="cd-floating-card-pricing">
-              <p style={{ color: '#ff6b7a', fontSize: '16px', fontWeight: '600' }}>
-                Only 1 seat left in this batch 🔥
-              </p>
-
-              {/* <span className="cd-floating-card-price">₹{course.discountedPrice || course.price}</span>
-              {course.hasDiscount && (
-                <span className="cd-floating-card-original">₹{course.price}</span>
-              )} */}
+      {showFloatingCard && (
+        <div className={`cd-floating-card ${showFloatingCard ? 'cd-floating-card--visible' : ''}`}>
+          <div className="cd-floating-card-inner">
+            <div className="cd-toast-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <div className="cd-floating-card-info">
+              <span className="cd-floating-card-title">{course.title}</span>
+              <div className="cd-floating-card-pricing">
+                <p className="cd-seat-message">{seatMessage.replace('🔥 ', '')}</p>
+              </div>
             </div>
           </div>
-          {/* <div className="cd-floating-card-actions">
-            <a
-              href={`https://wa.me/919010016664?text=Hi%20VOLTEDZ%2C%20I%20am%20interested%20in%20the%20${course.title}%20course.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cd-floating-whatsapp"
-              aria-label="WhatsApp Enquiry"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-              WhatsApp
-            </a>
-            <button className="cd-floating-enroll" onClick={handleEnrollClick}>Enroll Now</button>
-          </div> */}
         </div>
-      </div>
+      )}
 
+      {/* Rest of the component remains exactly the same */}
       <div className="cd-banner" ref={headerRef}>
         <div className="cd-banner-inner">
           <ul className="cd-breadcrumbs">

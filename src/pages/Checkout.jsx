@@ -34,6 +34,7 @@ export default function Checkout() {
   const [razorpayScriptLoaded, setRazorpayScriptLoaded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [invoiceUrl, setInvoiceUrl] = useState(null);
 
   // Partial Payment states
   const [paymentType, setPaymentType] = useState('full'); // 'full' or 'partial'
@@ -177,6 +178,9 @@ export default function Checkout() {
               const verifyData = await verifyResponse.json();
 
               if (verifyData.success) {
+                if (verifyData.data && verifyData.data.invoiceUrl) {
+                  setInvoiceUrl(verifyData.data.invoiceUrl);
+                }
                 setPaymentSuccess(true);
               } else {
                 alert(verifyData.message || 'Payment verification failed on server.');
@@ -217,7 +221,20 @@ export default function Checkout() {
           <h2>Payment Successful!</h2>
           <p>You have successfully enrolled in <strong>{course.title}</strong>.</p>
           <p>We've sent a receipt and further instructions to <strong>{formData.email}</strong>.</p>
-          <Link to="/profile" className="checkout-btn primary-btn mt-4">Go to Student Dashboard</Link>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '20px' }}>
+            {invoiceUrl && (
+              <a 
+                href={invoiceUrl.startsWith('http') ? invoiceUrl : `${URLS.base_url}${invoiceUrl.startsWith('/') ? invoiceUrl.slice(1) : invoiceUrl}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="checkout-btn secondary-btn"
+                style={{ background: '#f4f4f4', color: '#333', textDecoration: 'none', border: '1px solid #ccc' }}
+              >
+                Download Invoice
+              </a>
+            )}
+            <Link to="/profile" className="checkout-btn primary-btn">Go to Student Dashboard</Link>
+          </div>
         </div>
       </div>
     );
