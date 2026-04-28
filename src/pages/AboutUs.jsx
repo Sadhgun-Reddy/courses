@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AboutUs.css';
+import Loader from '../components/Loader';
 import { URLS } from '../Url';
 
 // Helper to build full image URLs
@@ -176,7 +177,7 @@ export default function AboutUs() {
 
   // Loading / Error states
   if (loading) {
-    return <div className="about-page"><div className="loading">Loading about us content...</div></div>;
+    return <Loader fullPage text="Loading about us content..." />;
   }
   if (error) {
     return <div className="about-page"><div className="error">Error: {error}</div></div>;

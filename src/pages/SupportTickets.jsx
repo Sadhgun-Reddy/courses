@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { URLS, base_url } from '../Url';
+import Loader from '../components/Loader';
 import './SupportTickets.css';
 
 const SupportTickets = () => {
@@ -147,7 +148,7 @@ const SupportTickets = () => {
             
             <div className="tickets-list">
               {loadingList ? (
-                <div style={{ padding: '20px', textAlign: 'center', color: '#64748b' }}>Loading tickets...</div>
+                <Loader fullPage={false} text="Loading tickets..." />
               ) : tickets.length === 0 ? (
                 <div style={{ padding: '20px', textAlign: 'center', color: '#64748b', fontSize: '14px' }}>No tickets found.</div>
               ) : (

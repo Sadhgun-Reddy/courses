@@ -121,6 +121,10 @@ export default function Checkout() {
       setIsProcessing(true);
       try {
         const token = localStorage.getItem('token');
+        const selectedBatch = course.batchDetails?.find(b => b._id === selectedBatchId);
+        const startTime = selectedBatch?.slots?.[0]?.startTime || "";
+        const endTime = selectedBatch?.slots?.[0]?.endTime || "";
+
         const response = await fetch(URLS.createOrder, {
           method: 'POST',
           headers: {
@@ -130,7 +134,10 @@ export default function Checkout() {
           body: JSON.stringify({
             courseId: course._id,
             paymentType: paymentType,
-            paidAmount: Number(amountToPay)
+            paidAmount: Number(amountToPay),
+            batchId: selectedBatchId,
+            startTime: startTime,
+            endTime: endTime
           })
         });
 
@@ -171,7 +178,7 @@ export default function Checkout() {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_signature: response.razorpay_signature,
-                  status: 'completed'
+                  status: paymentType === 'partial' ? 'partial' : 'completed'
                 })
               });
 

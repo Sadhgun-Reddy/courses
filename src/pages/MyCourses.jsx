@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { URLS, base_url } from '../Url';
+import Loader from '../components/Loader';
 import './MyCourses.css';
 
 const MyCourses = () => {
@@ -52,7 +53,7 @@ const MyCourses = () => {
         </div>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '60px', color: '#111FA2', fontWeight: 600 }}>Loading courses...</div>
+          <Loader fullPage={false} text="Loading your courses..." />
         ) : error ? (
           <div style={{ textAlign: 'center', padding: '60px', color: '#ef4444', fontWeight: 600 }}>{error}</div>
         ) : courses.length === 0 ? (

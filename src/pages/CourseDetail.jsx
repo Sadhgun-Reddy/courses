@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import './CourseDetail.css';
+import Loader from '../components/Loader';
 import { URLS, base_url } from '../Url';
 
 function StarRating({ rating, size = 16 }) {
@@ -306,11 +307,7 @@ export default function CourseDetail() {
   }, [loading, course]);
 
   if (loading) {
-    return (
-      <div className="cd-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-        <p style={{ color: '#f5a623', fontSize: '18px', fontWeight: '600' }}>Loading course details...</p>
-      </div>
-    );
+    return <Loader fullPage text="Loading course details..." />;
   }
 
   if (error) {

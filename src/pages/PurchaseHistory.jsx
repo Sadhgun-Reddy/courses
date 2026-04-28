@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PurchaseHistory.css';
+import Loader from '../components/Loader';
 
 const PurchaseHistory = () => {
   // Temporary mock data since there is no API provided yet.
@@ -48,7 +49,7 @@ const PurchaseHistory = () => {
 
         <div className="history-card">
           {loading ? (
-             <div style={{ textAlign: 'center', padding: '60px', color: '#111FA2', fontWeight: 600 }}>Loading transactions...</div>
+             <Loader fullPage={false} text="Loading transactions..." />
           ) : history.length === 0 ? (
             <div className="history-empty-state">
               <div className="history-empty-icon">

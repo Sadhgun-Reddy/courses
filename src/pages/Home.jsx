@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import TestimonialSection from '../components/TestimonialSection';
+import Loader from '../components/Loader';
 import './Home.css';
 import { URLS } from '../Url';
 
@@ -386,7 +387,7 @@ const Home = () => {
 
   // Show loading/error states
   if (loading) {
-    return <div className="home-page-container"><div className="loading">Loading home content...</div></div>;
+    return <Loader fullPage text="Loading home content..." />;
   }
   if (error) {
     return <div className="home-page-container"><div className="error">Error: {error}</div></div>;
