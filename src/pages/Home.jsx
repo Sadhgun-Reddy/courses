@@ -215,9 +215,10 @@ const Home = () => {
   useEffect(() => {
     if (!homeData) return;
 
+    const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
     // Courses
     const mappedCourses = (homeData.courses || []).map(c => {
-      const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
       return {
         id: c._id,
         img: getImageUrl(c.thumbnail),
@@ -243,7 +244,7 @@ const Home = () => {
       school: 'VOLTEDZ',
       edu: inst.education || 'Instructor',
       bio: inst.description || 'Expert instructor at VOLTEDZ.',
-      link: `/instructors/${inst._id}` // Adjust as needed
+      link: `/instructor/${slugify(inst.name)}` // Dynamic slug
     }));
     setInstructors(mappedInstructors);
 
@@ -265,7 +266,6 @@ const Home = () => {
 
     // Blogs
     const mappedBlogs = (homeData.blogs || []).map(b => {
-      const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
       const slug = slugify(b.title);
       return {
         id: b._id,

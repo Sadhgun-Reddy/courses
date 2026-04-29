@@ -1,0 +1,251 @@
+.instructor-detail-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 60px;
+  font-family: 'Inter', sans-serif;
+}
+
+.instructor-header-section {
+  background-color: #111FA2;
+  color: white;
+  padding: 40px 0;
+  margin-bottom: 40px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.breadcrumb a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: #ff6b7a;
+}
+
+.breadcrumb .current {
+  font-weight: 600;
+  color: #ff6b7a;
+}
+
+.instructor-content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 992px) {
+  .instructor-content-wrapper {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+.instructor-card-profile {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: sticky;
+  top: 100px;
+}
+
+.instructor-image {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f1f5f9;
+  box-shadow: 0 8px 20px rgba(17, 31, 162, 0.1);
+}
+
+.instructor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.instructor-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.instructor-title {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0 0 24px 0;
+  font-weight: 500;
+}
+
+.instructor-contact {
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  margin-bottom: 24px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.contact-item svg {
+  color: #111FA2;
+}
+
+.contact-item a {
+  color: #475569;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-item a:hover {
+  color: #111FA2;
+}
+
+.instructor-socials {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.social-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background: #111FA2;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.social-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.instructor-main-content {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 24px 0;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 3px;
+  background-color: #ff6b7a;
+  border-radius: 2px;
+}
+
+.instructor-description {
+  color: #475569;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.instructor-description h2, 
+.instructor-description h3 {
+  color: #111FA2;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.instructor-description h2 { font-size: 22px; }
+.instructor-description h3 { font-size: 18px; }
+
+.instructor-description p {
+  margin-bottom: 16px;
+}
+
+.instructor-description ul {
+  padding-left: 20px;
+  margin-bottom: 24px;
+}
+
+.instructor-description li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.instructor-description strong {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.instructor-error-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+}
+
+.error-content {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.error-content h2 {
+  color: #ef4444;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.error-content p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #111FA2;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-back:hover {
+  background: #0d1780;
+}

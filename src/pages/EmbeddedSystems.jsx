@@ -492,7 +492,7 @@ export default function CourseDetail() {
         </h2>
         <p className="cd-instructor-line">
           INSTRUCTOR:{' '}
-          <Link to={`/instructors/${course.instructorSlug}`} className="cd-instructor-name">
+          <Link to={`/instructor/${(course.instructorSlug || course.instructor || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}`} className="cd-instructor-name">
             {course.instructor}
           </Link>
         </p>
@@ -563,7 +563,7 @@ export default function CourseDetail() {
               />
               <div className="cd-instructor-details">
                 <h4 className="cd-instructor-title">
-                  <Link to={`/instructors/${course.instructorSlug}`}>{course.instructor}</Link>
+                  <Link to={`/instructor/${(course.instructorSlug || course.instructor || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}`}>{course.instructor}</Link>
                 </h4>
                 <div className="cd-instructor-bio">
                   {course.instructorBio.split('\n').map((line, i) =>

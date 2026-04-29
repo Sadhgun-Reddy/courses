@@ -23,6 +23,7 @@ import PurchaseHistory from './pages/PurchaseHistory';
 import SupportTickets from './pages/SupportTickets';
 import Checkout from './pages/Checkout';
 import BlogDetail from './pages/BlogDetail';
+import InstructorDetail from './pages/InstructorDetail';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -47,6 +48,7 @@ function App() {
           <Route path="courses/:courseSlug" element={<CourseDetail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="instructors" element={<Instructors />} />
+          <Route path="instructor/:instructorSlug" element={<InstructorDetail />} />
           <Route path="blog" element={<Blog />} />
           <Route path="events" element={<Events />} />
           <Route path="resources" element={<Resources />} />

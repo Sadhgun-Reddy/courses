@@ -286,7 +286,7 @@ function InstructorEntry({ avatar, name, slug, bio }) {
       <img src={avatar} alt={name} className="cd-instructor-avatar" />
       <div className="cd-instructor-details">
         <h4 className="cd-instructor-title">
-          <Link to={`/instructors/${slug}`}>{name}</Link>
+          <Link to={`/instructor/${(slug || name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}`}>{name}</Link>
         </h4>
         <div className="cd-instructor-bio">
           {bio.split('\n').map((line, i) =>
@@ -565,7 +565,7 @@ export default function CourseDetail() {
               {allInstructors.map((instructor, index) => (
                 <span key={instructor.slug}>
                   {index > 0 && <span className="cd-instructor-separator">,&nbsp;</span>}
-                  <Link to={`/instructors/${instructor.slug}`} className="cd-instructor-name">
+                  <Link to={`/instructor/${(instructor.slug || instructor.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}`} className="cd-instructor-name">
                     {instructor.name}
                   </Link>
                 </span>
