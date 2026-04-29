@@ -26,7 +26,7 @@ export default function Checkout() {
     phone: user?.phone || '',
   });
 
-  const [selectedBatchId, setSelectedBatchId] = useState('');
+  const [selectedBatchId, setSelectedBatchId] = useState(location.state?.batchId || '');
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoMessage, setPromoMessage] = useState({ text: '', type: '' });
@@ -178,6 +178,7 @@ export default function Checkout() {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_signature: response.razorpay_signature,
+                  batchId: selectedBatchId,
                   status: paymentType === 'partial' ? 'partial' : 'completed'
                 })
               });

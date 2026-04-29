@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { URLS } from '../Url';
 import Loader from '../components/Loader';
 import './InstructorDetail.css';
@@ -20,6 +20,7 @@ const decodeHTMLEntities = (text) => {
 
 const InstructorDetail = () => {
   const { instructorSlug } = useParams();
+  const location = useLocation();
   const [instructor, setInstructor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,29 +28,47 @@ const InstructorDetail = () => {
   useEffect(() => {
     const fetchInstructor = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(URLS.GetHomePage, {
+        let targetId = location.state?.instructorId;
+
+        // Fallback: If no ID in state, find it from Home page data using slug
+        if (!targetId && instructorSlug) {
+          const homeResponse = await fetch(URLS.GetHomePage, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          if (homeResponse.ok) {
+            const homeJson = await homeResponse.json();
+            if (homeJson.success && homeJson.data?.instructors) {
+              const found = homeJson.data.instructors.find(
+                (inst) => slugify(inst.name) === instructorSlug
+              );
+              if (found) targetId = found._id;
+            }
+          }
+        }
+
+        if (!targetId) {
+          setError('Instructor ID not found.');
+          setLoading(false);
+          return;
+        }
+
+        // Fetch instructor by ID using the new API
+        const response = await fetch(URLS.getInstructorById, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
-          }
+          },
+          body: JSON.stringify({ id: targetId })
         });
 
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
         const json = await response.json();
 
-        if (json.success && json.data && json.data.instructors) {
-          const found = json.data.instructors.find(
-            (inst) => slugify(inst.name) === instructorSlug
-          );
-          if (found) {
-            setInstructor(found);
-          } else {
-            setError('Instructor not found.');
-          }
+        if (json.success && json.data) {
+          setInstructor(json.data);
         } else {
-          setError('Failed to load instructors data.');
+          setError('Failed to load instructor data.');
         }
       } catch (err) {
         console.error('Failed to fetch instructor:', err);
@@ -61,7 +80,7 @@ const InstructorDetail = () => {
 
     fetchInstructor();
     window.scrollTo(0, 0);
-  }, [instructorSlug]);
+  }, [instructorSlug, location.state?.instructorId]);
 
   if (loading) {
     return <Loader fullPage text="Loading instructor profile..." />;

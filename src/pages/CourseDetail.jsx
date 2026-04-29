@@ -26,7 +26,7 @@ function StarRating({ rating, size = 16 }) {
   );
 }
 
-function CourseSidebar({ course }) {
+function CourseSidebar({ course, selectedBatchId, setSelectedBatchId }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -111,9 +111,22 @@ function CourseSidebar({ course }) {
           <h5 className="cd-sidebar-heading">Batches &amp; Timing</h5>
           {course.batchDetails && course.batchDetails.length > 0 ? (
             course.batchDetails.map((batch, idx) => (
-              <div className="cd-batch-group" key={idx}>
-                <p className="cd-batch-label">
-                  {batch.batchName || (batch.type?.charAt(0).toUpperCase() + batch.type?.slice(1))} Batches: {formatDays(batch.days)}
+              <div 
+                className={`cd-batch-group ${selectedBatchId === batch._id ? 'selected' : ''}`} 
+                key={idx}
+                onClick={() => setSelectedBatchId(batch._id)}
+                style={{ 
+                  cursor: 'pointer', 
+                  padding: '10px', 
+                  borderRadius: '8px', 
+                  border: selectedBatchId === batch._id ? '2px solid #1f5bd6' : '1px solid #eee',
+                  marginBottom: '10px',
+                  background: selectedBatchId === batch._id ? '#f0f7ff' : 'transparent'
+                }}
+              >
+                <p className="cd-batch-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>{batch.batchName || (batch.type?.charAt(0).toUpperCase() + batch.type?.slice(1))} Batches: {formatDays(batch.days)}</span>
+                  {selectedBatchId === batch._id && <span style={{ color: '#1f5bd6', fontWeight: 'bold' }}>✓</span>}
                 </p>
                 <ul className="cd-batch-list">
                   {batch.slots && batch.slots.map((slot, sIdx) => (
@@ -230,23 +243,38 @@ export default function CourseDetail() {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showFloatingCard, setShowFloatingCard] = useState(true);
+  const [selectedBatchId, setSelectedBatchId] = useState('');
+  const [showFloatingCard, setShowFloatingCard] = useState(false);
   const headerRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { courseSlug } = useParams();
-
   const handleEnrollClick = () => {
     const userStr = localStorage.getItem('user');
     if (!userStr) {
       navigate('/login', { state: { from: `/course/${course?._id}` } });
       return;
     }
-    
+
     if (course) {
-      navigate('/checkout', { state: { course } });
+      navigate('/checkout', { state: { course, batchId: selectedBatchId } });
     }
   };
+
+  useEffect(() => {
+    if (loading) return;
+
+    const handleScroll = () => {
+      if (headerRef.current) {
+        const headerBottom = headerRef.current.getBoundingClientRect().bottom;
+        setShowFloatingCard(headerBottom < 0);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -337,21 +365,22 @@ export default function CourseDetail() {
   return (
     <div className="cd-page">
       {/* ── Floating Sticky Bottom Card ── */}
-      {showFloatingCard && (
-        <div className={`cd-floating-card ${showFloatingCard ? 'cd-floating-card--visible' : ''}`}>
-          <div className="cd-floating-card-inner">
-            <div className="cd-toast-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-            </div>
-            <div className="cd-floating-card-info">
-              <span className="cd-floating-card-title">{course.title}</span>
-              <div className="cd-floating-card-pricing">
-                <p className="cd-seat-message">{seatMessage.replace('🔥 ', '')}</p>
-              </div>
+      <div className={`cd-floating-card ${showFloatingCard ? 'cd-floating-card--visible' : ''}`}>
+        <div className="cd-floating-card-inner">
+          <div className="cd-toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          </div>
+          <div className="cd-floating-card-info">
+            <span className="cd-floating-card-title">{course.title}</span>
+            <div className="cd-floating-card-pricing">
+              <p className="cd-seat-message">{seatMessage.replace('🔥 ', '')}</p>
             </div>
           </div>
+          <button className="cd-enroll-btn cd-floating-enroll" onClick={handleEnrollClick}>
+            Enroll Now
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Rest of the component remains exactly the same */}
       <div className="cd-banner" ref={headerRef}>
@@ -374,7 +403,11 @@ export default function CourseDetail() {
             {instructor && (
               <p className="cd-instructor-line">
                 INSTRUCTOR:{' '}
-                <Link to={`/instructors/${instructor._id}`} className="cd-instructor-name">
+                <Link 
+                  to={`/instructor/${(instructor.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}`} 
+                  state={{ instructorId: instructor._id }}
+                  className="cd-instructor-name"
+                >
                   {instructor.name}
                 </Link>
               </p>
@@ -450,7 +483,12 @@ export default function CourseDetail() {
                 />
                 <div className="cd-instructor-details">
                   <h4 className="cd-instructor-title">
-                    <Link to={`/instructors/${instructor._id}`}>{instructor.name}</Link>
+                    <Link 
+                      to={`/instructor/${(instructor.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}`} 
+                      state={{ instructorId: instructor._id }}
+                    >
+                      {instructor.name}
+                    </Link>
                   </h4>
                   <p>VOLTEDZ</p>
                   <p className="cd-instructor-bio">
@@ -490,7 +528,11 @@ export default function CourseDetail() {
           </section>
         </div>
 
-        <CourseSidebar course={course} />
+        <CourseSidebar 
+          course={course} 
+          selectedBatchId={selectedBatchId} 
+          setSelectedBatchId={setSelectedBatchId} 
+        />
       </div>
     </div>
   );

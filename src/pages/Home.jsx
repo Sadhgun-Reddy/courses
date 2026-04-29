@@ -135,17 +135,17 @@ const InstructorCard = ({ instr }) => {
         <img src={instr.img} alt={instr.name} />
       </div>
       <div className="instr-name-bar">
-        <h4 className="instr-name-title"><Link to={instr.link}>{instr.name}</Link></h4>
+        <h4 className="instr-name-title"><Link to={instr.link} state={{ instructorId: instr.id }}>{instr.name}</Link></h4>
         <p className="instr-school-line">{instr.school}<br />Education: {instr.edu}</p>
       </div>
       <div className="instr-content-layer">
-        <h4 className="instr-name-title hover-name"><Link to={instr.link}>{instr.name}</Link></h4>
+        <h4 className="instr-name-title hover-name"><Link to={instr.link} state={{ instructorId: instr.id }}>{instr.name}</Link></h4>
         <div className="instr-school-block">
           <p>{instr.school}</p>
           <p>Education: {instr.edu}</p>
         </div>
         <p className="instr-bio-text">{instr.bio}</p>
-        <Link to={instr.link} className="instr-more-link">More info</Link>
+        <Link to={instr.link} state={{ instructorId: instr.id }} className="instr-more-link">More info</Link>
       </div>
     </div>
   );

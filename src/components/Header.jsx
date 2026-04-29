@@ -181,8 +181,8 @@ const Header = () => {
                               className="mega-img" 
                               onError={(e) => e.target.style.display = 'none'} 
                             />
-                            <h6 className="mega-card-title">{course.title}</h6>
-                            <span className="mega-link mt-1">View Course</span>
+                            <h5 className="mega-card-title">{course.title}</h5>
+                            {/* <span className="mega-link mt-1">View Course</span> */}
                           </Link>
                         </div>
                       </div>
