@@ -26,7 +26,14 @@ export default function Checkout() {
     phone: user?.phone || '',
   });
 
+  // Batch & slot selection from API
+  const [batches, setBatches] = useState([]);
+  const [batchesLoading, setBatchesLoading] = useState(true);
+  const [batchesError, setBatchesError] = useState('');
   const [selectedBatchId, setSelectedBatchId] = useState(location.state?.batchId || '');
+  const [selectedSlotId, setSelectedSlotId] = useState('');
+  const [selectedSlot, setSelectedSlot] = useState(null); // { startTime, endTime }
+
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoMessage, setPromoMessage] = useState({ text: '', type: '' });
@@ -46,6 +53,37 @@ export default function Checkout() {
       navigate('/courses');
     }
   }, [course, navigate]);
+
+  // Fetch batches from API
+  useEffect(() => {
+    if (!course?._id) return;
+    const fetchBatches = async () => {
+      setBatchesLoading(true);
+      setBatchesError('');
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(URLS.getBatchesByCourseId, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token ? `Bearer ${token}` : '',
+          },
+          body: JSON.stringify({ courseId: course._id }),
+        });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.data)) {
+          setBatches(data.data);
+        } else {
+          setBatchesError('Could not load batch information.');
+        }
+      } catch {
+        setBatchesError('Failed to fetch batches. Please try again.');
+      } finally {
+        setBatchesLoading(false);
+      }
+    };
+    fetchBatches();
+  }, [course?._id]);
 
   useEffect(() => {
     if (!razorpayScriptLoaded) {
@@ -69,12 +107,17 @@ export default function Checkout() {
   const minPartialAmount = Math.ceil(finalPriceValue * 0.5);
   const amountToPay = paymentType === 'partial' ? (Number(partialAmount) || 0) : finalPriceValue;
 
+  const handleSlotSelect = (batch, slot) => {
+    setSelectedBatchId(batch._id);
+    setSelectedSlotId(slot._id);
+    setSelectedSlot({ startTime: slot.startTime, endTime: slot.endTime });
+  };
+
   const handleApplyPromo = () => {
     if (!promoCode.trim()) {
       setPromoMessage({ text: 'Please enter a promo code.', type: 'error' });
       return;
     }
-
     if (promoCode.toUpperCase() === 'VOLTEDZ10') {
       setDiscountPercent(10);
       setPromoMessage({ text: 'Promo code applied! You got 10% off.', type: 'success' });
@@ -94,17 +137,16 @@ export default function Checkout() {
 
   const handlePayment = async () => {
     if (!formData.name || !formData.email || !formData.phone) {
-      alert("Please fill in your billing details");
+      alert('Please fill in your billing details');
       return;
     }
-    if (!selectedBatchId) {
-      alert("Please select a batch");
+    if (!selectedBatchId || !selectedSlotId) {
+      alert('Please select a batch and time slot');
       return;
     }
-
     if (paymentType === 'partial') {
       if (!partialAmount) {
-        setPartialError(`Please enter an amount.`);
+        setPartialError('Please enter an amount.');
         return;
       }
       if (Number(partialAmount) < minPartialAmount) {
@@ -121,31 +163,28 @@ export default function Checkout() {
       setIsProcessing(true);
       try {
         const token = localStorage.getItem('token');
-        const selectedBatch = course.batchDetails?.find(b => b._id === selectedBatchId);
-        const startTime = selectedBatch?.slots?.[0]?.startTime || "";
-        const endTime = selectedBatch?.slots?.[0]?.endTime || "";
 
         const response = await fetch(URLS.createOrder, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             courseId: course._id,
             paymentType: paymentType,
             paidAmount: Number(amountToPay),
             batchId: selectedBatchId,
-            startTime: startTime,
-            endTime: endTime
-          })
+            startTime: selectedSlot?.startTime || '',
+            endTime: selectedSlot?.endTime || '',
+          }),
         });
 
         const data = await response.json();
 
         if (!data.success) {
           setIsProcessing(false);
-          alert(data.message || "Failed to create order on server");
+          alert(data.message || 'Failed to create order on server');
           return;
         }
 
@@ -158,20 +197,12 @@ export default function Checkout() {
           image: course.thumbnail ? `${URLS.base_url}${course.thumbnail}` : '/logo.png',
           order_id: data.orderId,
           handler: async function (response) {
-            console.log("=== PAYMENT COMPLETED SUCCESSFULLY ===");
-            console.log("Razorpay Response:", response);
-            console.log("razorpay_payment_id:", response.razorpay_payment_id);
-            console.log("razorpay_order_id:", response.razorpay_order_id);
-            console.log("razorpay_signature:", response.razorpay_signature);
-            console.log("DB Order ID:", data.dbOrderId);
-            console.log("======================================");
-
             try {
               const verifyResponse = await fetch(URLS.updateTransaction, {
                 method: 'POST',
                 headers: {
                   'Authorization': `Bearer ${token}`,
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                   orderId: data.dbOrderId,
@@ -179,33 +210,25 @@ export default function Checkout() {
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_signature: response.razorpay_signature,
                   batchId: selectedBatchId,
-                  status: paymentType === 'partial' ? 'partial' : 'completed'
-                })
+                  status: paymentType === 'partial' ? 'partial' : 'completed',
+                }),
               });
-
               const verifyData = await verifyResponse.json();
-
               if (verifyData.success) {
-                if (verifyData.data && verifyData.data.invoiceUrl) {
-                  setInvoiceUrl(verifyData.data.invoiceUrl);
-                }
+                if (verifyData.data?.invoiceUrl) setInvoiceUrl(verifyData.data.invoiceUrl);
                 setPaymentSuccess(true);
               } else {
                 alert(verifyData.message || 'Payment verification failed on server.');
               }
             } catch (error) {
-              console.error("Error verifying payment:", error);
+              console.error('Error verifying payment:', error);
               alert('An error occurred during payment verification.');
             } finally {
               setIsProcessing(false);
             }
           },
-          prefill: {
-            name: formData.name,
-            email: formData.email,
-            contact: formData.phone
-          },
-          theme: { color: '#1f5bd6' }
+          prefill: { name: formData.name, email: formData.email, contact: formData.phone },
+          theme: { color: '#1f5bd6' },
         };
         const rzp1 = new window.Razorpay(options);
         rzp1.on('payment.failed', function (response) {
@@ -215,8 +238,8 @@ export default function Checkout() {
         rzp1.open();
       } catch (error) {
         setIsProcessing(false);
-        console.error("Order creation error:", error);
-        alert("An error occurred during checkout setup.");
+        console.error('Order creation error:', error);
+        alert('An error occurred during checkout setup.');
       }
     }
   };
@@ -248,6 +271,22 @@ export default function Checkout() {
     );
   }
 
+  // Helper: days short label
+  const formatDays = (days = []) => {
+    if (!days.length) return '';
+    if (days.length >= 5 && days.includes('Monday') && days.includes('Friday')) return 'Mon – Fri';
+    if (days.length === 2 && days.includes('Saturday') && days.includes('Sunday')) return 'Sat & Sun';
+    return days.map(d => d.slice(0, 3)).join(', ');
+  };
+
+  const getBatchLabel = (batch) => {
+    if (batch.batchName) return batch.batchName;
+    const typeMap = { regular: 'Regular Batch', online: 'Online Batch', custom: 'Special Batch' };
+    return typeMap[batch.type] || batch.type.charAt(0).toUpperCase() + batch.type.slice(1);
+  };
+
+  const getAvailableSeats = (slot) => slot.memberLimit - slot.currentMembers;
+
   return (
     <div className="checkout-page page-padding">
       <div className="cd-banner">
@@ -261,63 +300,126 @@ export default function Checkout() {
       </div>
 
       <div className="checkout-container">
+        {/* ── LEFT: Billing + Batch ── */}
         <div className="checkout-left">
           <h2 className="checkout-section-title">Billing Details</h2>
           <div className="checkout-card billing-form">
             <div className="form-group">
               <label>Full Name *</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="John Doe"
-                required
-              />
+              <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="John Doe" required />
             </div>
             <div className="form-group">
               <label>Email Address *</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="john@example.com"
-                required
-              />
+              <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="john@example.com" required />
             </div>
             <div className="form-group">
               <label>Phone Number *</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="+91 9000000000"
-                required
-              />
+              <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="+91 9000000000" required />
             </div>
+          </div>
 
-            {/* Batch Selection */}
-            <div className="form-group">
-              <label>Select Batch *</label>
-              <select
-                value={selectedBatchId}
-                onChange={(e) => setSelectedBatchId(e.target.value)}
-                required
-                className="batch-select"
-              >
-                <option value="">-- Choose a batch --</option>
-                {course.batchDetails && course.batchDetails.map((batch) => (
-                  <option key={batch._id} value={batch._id}>
-                    {batch.batchName || batch.type} ({batch.days?.join(', ')}) - {batch.slots?.[0]?.startTime} to {batch.slots?.[0]?.endTime}
-                  </option>
+          {/* ── Batch & Slot Selection ── */}
+          <h2 className="checkout-section-title" style={{ marginTop: '30px' }}>Select Batch & Time Slot</h2>
+          <div className="checkout-card">
+            {batchesLoading ? (
+              <div className="batch-loading">
+                <div className="batch-loading-spinner"></div>
+                <p>Loading available batches…</p>
+              </div>
+            ) : batchesError ? (
+              <p className="batch-error-msg">{batchesError}</p>
+            ) : batches.length === 0 ? (
+              <p className="batch-error-msg">No batches available for this course currently.</p>
+            ) : (
+              <div className="batch-list">
+                {batches.map((batch) => (
+                  <div
+                    key={batch._id}
+                    className={`batch-card ${selectedBatchId === batch._id ? 'batch-card--active' : ''}`}
+                  >
+                    {/* Batch header */}
+                    <div className="batch-card-header">
+                      <div className="batch-card-title-row">
+                        <span className="batch-name">{getBatchLabel(batch)}</span>
+                        <span className={`batch-type-pill batch-type-pill--${batch.type}`}>
+                          {batch.type.charAt(0).toUpperCase() + batch.type.slice(1)}
+                        </span>
+                      </div>
+                      <div className="batch-days">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        {formatDays(batch.days)}
+                      </div>
+                    </div>
+
+                    {/* Slots */}
+                    <div className="slot-list">
+                      <p className="slot-list-label">Available Time Slots:</p>
+                      {batch.slots && batch.slots.length > 0 ? batch.slots.map((slot) => {
+                        const avail = getAvailableSeats(slot);
+                        const isFull = avail <= 0;
+                        const isSelected = selectedSlotId === slot._id;
+                        return (
+                          <button
+                            key={slot._id}
+                            type="button"
+                            disabled={isFull}
+                            onClick={() => handleSlotSelect(batch, slot)}
+                            className={`slot-card ${isSelected ? 'slot-card--selected' : ''} ${isFull ? 'slot-card--full' : ''}`}
+                          >
+                            <div className="slot-time">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                              </svg>
+                              <strong>{slot.startTime}</strong>
+                              <span className="slot-dash">–</span>
+                              <strong>{slot.endTime}</strong>
+                            </div>
+                            <div className="slot-seats">
+                              {isFull ? (
+                                <span className="seat-tag seat-tag--full">Full</span>
+                              ) : (
+                                <span className={`seat-tag ${avail <= 5 ? 'seat-tag--low' : 'seat-tag--ok'}`}>
+                                  {avail} seat{avail !== 1 ? 's' : ''} left
+                                </span>
+                              )}
+                            </div>
+                            {isSelected && (
+                              <div className="slot-check">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                  <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                              </div>
+                            )}
+                          </button>
+                        );
+                      }) : (
+                        <p className="slot-list-label" style={{ color: '#aaa' }}>No slots configured.</p>
+                      )}
+                    </div>
+                  </div>
                 ))}
-              </select>
-            </div>
+              </div>
+            )}
+
+            {/* Selected slot summary */}
+            {selectedSlot && (
+              <div className="selected-slot-summary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5bd6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>
+                  Selected: <strong>{batches.find(b => b._id === selectedBatchId) ? getBatchLabel(batches.find(b => b._id === selectedBatchId)) : ''}</strong>
+                  {' '}·{' '}
+                  <strong>{selectedSlot.startTime} – {selectedSlot.endTime}</strong>
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
+        {/* ── RIGHT: Order Summary ── */}
         <div className="checkout-right">
           <h2 className="checkout-section-title">Order Summary</h2>
           <div className="checkout-card order-summary-card">
@@ -348,9 +450,7 @@ export default function Checkout() {
                 <button type="button" onClick={handleApplyPromo} className="apply-btn">Apply</button>
               </div>
               {promoMessage.text && (
-                <div className={`promo-message ${promoMessage.type}`}>
-                  {promoMessage.text}
-                </div>
+                <div className={`promo-message ${promoMessage.type}`}>{promoMessage.text}</div>
               )}
             </div>
 
@@ -381,10 +481,7 @@ export default function Checkout() {
                   <button
                     type="button"
                     className={`type-btn ${paymentType === 'full' ? 'active' : ''}`}
-                    onClick={() => {
-                      setPaymentType('full');
-                      setPartialError('');
-                    }}
+                    onClick={() => { setPaymentType('full'); setPartialError(''); }}
                   >
                     Full Payment
                   </button>
@@ -405,10 +502,7 @@ export default function Checkout() {
                       <input
                         type="number"
                         value={partialAmount}
-                        onChange={(e) => {
-                          setPartialAmount(e.target.value);
-                          setPartialError('');
-                        }}
+                        onChange={(e) => { setPartialAmount(e.target.value); setPartialError(''); }}
                         placeholder={`Min: ₹${minPartialAmount}`}
                       />
                     </div>

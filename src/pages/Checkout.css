@@ -386,3 +386,263 @@
     position: static;
   }
 }
+
+/* ══════════════════════════════════
+   BATCH & SLOT SELECTOR
+══════════════════════════════════ */
+.batch-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+  gap: 14px;
+  color: #777;
+  font-size: 14px;
+}
+
+.batch-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0e7ff;
+  border-top-color: #1f5bd6;
+  border-radius: 50%;
+  animation: batch-spin 0.7s linear infinite;
+}
+
+@keyframes batch-spin {
+  to { transform: rotate(360deg); }
+}
+
+.batch-error-msg {
+  color: #dc3545;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.batch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual batch card */
+.batch-card {
+  border: 1.5px solid #e5e9f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.batch-card--active {
+  border-color: #1f5bd6;
+  box-shadow: 0 0 0 3px rgba(31, 91, 214, 0.08);
+}
+
+.batch-card-header {
+  background: #f8f9fd;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e9f0;
+}
+
+.batch-card--active .batch-card-header {
+  background: #eef2fd;
+  border-bottom-color: #d0dbf7;
+}
+
+.batch-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.batch-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.batch-type-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
+
+.batch-type-pill--regular {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.batch-type-pill--online {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.batch-type-pill--custom {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.batch-days {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Slot list inside batch card */
+.slot-list {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slot-list-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 4px;
+}
+
+/* Individual slot button */
+.slot-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e9f0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+  position: relative;
+}
+
+.slot-card:hover:not(:disabled) {
+  border-color: #1f5bd6;
+  background: #f5f8ff;
+}
+
+.slot-card--selected {
+  border-color: #1f5bd6;
+  background: #eef2fd;
+}
+
+.slot-card--full {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #fafafa;
+}
+
+.slot-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+}
+
+.slot-time svg {
+  flex-shrink: 0;
+  color: #888;
+}
+
+.slot-time strong {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.slot-dash {
+  color: #bbb;
+  font-weight: 400;
+  margin: 0 1px;
+}
+
+.slot-seats {
+  flex-shrink: 0;
+}
+
+.seat-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.seat-tag--ok {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.seat-tag--low {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.seat-tag--full {
+  background: #fce4e4;
+  color: #c62828;
+}
+
+.slot-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #1f5bd6;
+  border-radius: 50%;
+  flex-shrink: 0;
+  color: white;
+}
+
+/* Selected summary bar */
+.selected-slot-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: #eef2fd;
+  border: 1px solid #d0dbf7;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #333;
+}
+
+.selected-slot-summary strong {
+  color: #1f5bd6;
+}
+
+.batch-select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  appearance: auto;
+}
+
+.batch-select:focus {
+  outline: none;
+  border-color: #1f5bd6;
+  box-shadow: 0 0 0 3px rgba(31, 91, 214, 0.1);
+}
+
