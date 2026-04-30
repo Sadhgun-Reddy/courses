@@ -231,10 +231,10 @@ export default function Checkout() {
           <p>We've sent a receipt and further instructions to <strong>{formData.email}</strong>.</p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '20px' }}>
             {invoiceUrl && (
-              <a 
-                href={invoiceUrl.startsWith('http') ? invoiceUrl : `${URLS.base_url}${invoiceUrl.startsWith('/') ? invoiceUrl.slice(1) : invoiceUrl}`} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={invoiceUrl.startsWith('http') ? invoiceUrl : `${URLS.base_url}${invoiceUrl.startsWith('/') ? invoiceUrl.slice(1) : invoiceUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="checkout-btn secondary-btn"
                 style={{ background: '#f4f4f4', color: '#333', textDecoration: 'none', border: '1px solid #ccc' }}
               >
