@@ -389,9 +389,9 @@ export default function CourseDetail() {
               <p className="cd-seat-message">{seatMessage.replace('🔥 ', '')}</p>
             </div>
           </div>
-          <button className="cd-enroll-btn cd-floating-enroll" onClick={handleEnrollClick}>
+          {/* <button className="cd-enroll-btn cd-floating-enroll" onClick={handleEnrollClick}>
             Enroll Now
-          </button>
+          </button> */}
         </div>
       </div>
 
