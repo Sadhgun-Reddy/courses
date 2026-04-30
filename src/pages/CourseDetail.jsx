@@ -262,19 +262,34 @@ export default function CourseDetail() {
   };
 
   useEffect(() => {
-    if (loading) return;
+    if (!course) return;
+
+    // Scroll to top first, then set up the scroll listener after DOM paints
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     const handleScroll = () => {
       if (headerRef.current) {
         const headerBottom = headerRef.current.getBoundingClientRect().bottom;
-        setShowFloatingCard(headerBottom < 0);
+        const isPageScrollable = document.documentElement.scrollHeight > window.innerHeight + 100;
+        
+        // Show if scrolled past header OR if page is too short to scroll
+        setShowFloatingCard(headerBottom < 0 || !isPageScrollable);
       }
     };
 
-    handleScroll();
+    // Use requestAnimationFrame to ensure the DOM has painted before first check
+    const rafId = requestAnimationFrame(() => {
+      handleScroll();
+    });
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading]);
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [course]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -285,12 +300,15 @@ export default function CourseDetail() {
            const homeRes = await fetch(URLS.GetHomePage);
            const homeData = await homeRes.json();
            if (homeData.success && homeData.data && homeData.data.courses) {
-             const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-             const matchedCourse = homeData.data.courses.find(c => slugify(c.title) === courseSlug);
-             if (matchedCourse) {
-               targetCourseId = matchedCourse._id;
-             }
-           }
+            const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+            const matchedCourse = homeData.data.courses.find(c => {
+              const s = slugify(c.title);
+              return s === courseSlug || s.includes(courseSlug) || courseSlug.includes(s);
+            });
+            if (matchedCourse) {
+              targetCourseId = matchedCourse._id;
+            }
+          }
         }
 
         if (!targetCourseId) {
@@ -327,12 +345,7 @@ export default function CourseDetail() {
     fetchDetails();
   }, [location.state?.courseId, courseSlug]);
 
-  // Ensure page scrolls to top after data loads
-  useEffect(() => {
-    if (!loading && course) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    }
-  }, [loading, course]);
+  // Scroll-to-top is handled in the scroll listener effect above
 
   if (loading) {
     return <Loader fullPage text="Loading course details..." />;
