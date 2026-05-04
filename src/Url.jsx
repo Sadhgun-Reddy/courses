@@ -27,4 +27,6 @@ export const URLS = {
     getBlogById: base_url + "/v1/voltedzApi/admin/blog/getById",
     getInstructorById: base_url + "/v1/voltedzApi/user/userInstructor/getInstructorById",
     getBatchesByCourseId: base_url + "v1/voltedzApi/user/order/usergetBatchesByCourseId",
+    ChatbotStartChat: base_url + "v1/voltedzApi/admin/chatFlow/startChat",
+    ChatbotSendMessage: base_url + "v1/voltedzApi/admin/chatFlow/sendMessage",
 }
