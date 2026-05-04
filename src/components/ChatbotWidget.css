@@ -223,3 +223,95 @@
     transform: scale(1);
   }
 }
+
+/* Course Recommendation Card (Step 5) */
+.chatbot-course-card {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background-color: #eff2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chatbot-course-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4338ca;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chatbot-course-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e1b4b;
+}
+
+.chatbot-course-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #0b1460;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.chatbot-course-link:hover {
+  color: #4338ca;
+  text-decoration: underline;
+}
+
+/* Mobile Number Input (Step 7) */
+.chatbot-mobile-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.chatbot-mobile-input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: white;
+}
+
+.chatbot-mobile-input:focus {
+  border-color: #0b1460;
+  box-shadow: 0 0 0 2px rgba(11, 20, 96, 0.12);
+}
+
+.chatbot-mobile-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0b1460;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.chatbot-mobile-send-btn:hover:not(:disabled) {
+  background-color: #080f4a;
+  transform: scale(1.05);
+}
+
+.chatbot-mobile-send-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
