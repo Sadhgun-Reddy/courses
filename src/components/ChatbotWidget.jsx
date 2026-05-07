@@ -14,8 +14,8 @@ const ChatbotWidget = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState('');
-  const [mobileInput, setMobileInput] = useState('');
-  const [showMobileInput, setShowMobileInput] = useState(false);
+  const [userInput, setUserInput] = useState('');
+  const [showTextInput, setShowTextInput] = useState(false);
 
   const messagesEndRef = useRef(null);
 
@@ -34,10 +34,10 @@ const ChatbotWidget = () => {
         const parsed = JSON.parse(savedMessages);
         if (parsed && parsed.length > 0) {
           setMessages(parsed);
-          // Restore mobile input visibility if last bot message had no options
+          // Restore input visibility if last bot message was waiting for text
           const lastMsg = parsed[parsed.length - 1];
-          if (lastMsg && lastMsg.sender === 'bot' && lastMsg.awaitsMobile) {
-            setShowMobileInput(true);
+          if (lastMsg && lastMsg.sender === 'bot' && lastMsg.awaitsText) {
+            setShowTextInput(true);
           }
         }
       } catch (e) {
@@ -58,7 +58,7 @@ const ChatbotWidget = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, isOpen, loading, showMobileInput]);
+  }, [messages, isOpen, loading, showTextInput]);
 
   // Start chat if no messages exist
   useEffect(() => {
@@ -82,6 +82,8 @@ const ChatbotWidget = () => {
 
       if (data.success && data.data) {
         processBotResponse(data.data);
+      } else {
+        processBotResponse(data);
       }
     } catch (error) {
       console.error("Error starting chat", error);
@@ -99,24 +101,28 @@ const ChatbotWidget = () => {
 
   /**
    * Processes the bot response data object and appends the bot message.
-   * Handles: course + redirectUrl, empty options (mobile input), normal options.
+   * Handles: course + redirectUrl, empty options (text input), normal options.
    */
   const processBotResponse = (responseData, isFirst = false) => {
-    const { message, options = [], course, redirectUrl } = responseData;
+    const { message = "I'm sorry, something went wrong. Please try again.", options = [], course, redirectUrl } = responseData || {};
 
+    // Check if flow is completed (e.g. Step 9: OTP Verified)
+    const lowerMessage = message.toLowerCase();
+    const isCompleted = lowerMessage.includes('verified') || lowerMessage.includes('thank you');
+    
     // Step has a course recommendation
     const hasCourse = !!(course && course.trim());
 
-    // Step expects mobile number input (no options returned)
-    const awaitsMobile = !hasCourse && Array.isArray(options) && options.length === 0;
+    // Step expects text input if no options and not completed
+    const awaitsText = !hasCourse && Array.isArray(options) && options.length === 0 && !isCompleted;
 
     const botMessage = {
       sender: 'bot',
       text: message,
-      options,
+      options: options || [],
       course: course || null,
       redirectUrl: redirectUrl || null,
-      awaitsMobile,
+      awaitsText,
     };
 
     if (isFirst) {
@@ -125,11 +131,7 @@ const ChatbotWidget = () => {
       setMessages((prev) => [...prev, botMessage]);
     }
 
-    if (awaitsMobile) {
-      setShowMobileInput(true);
-    } else {
-      setShowMobileInput(false);
-    }
+    setShowTextInput(awaitsText);
   };
 
   const handleSendOption = async (option) => {
@@ -140,7 +142,7 @@ const ChatbotWidget = () => {
     ];
     setMessages(newMessages);
     setLoading(true);
-    setShowMobileInput(false);
+    setShowTextInput(false);
 
     try {
       const response = await fetch(URLS.ChatbotSendMessage, {
@@ -157,6 +159,9 @@ const ChatbotWidget = () => {
 
       if (data.success && data.data) {
         processBotResponse(data.data);
+      } else {
+        // Handle error case (e.g. invalid mobile number)
+        processBotResponse(data);
       }
     } catch (error) {
       console.error("Error sending message", error);
@@ -173,11 +178,11 @@ const ChatbotWidget = () => {
     }
   };
 
-  const handleMobileSubmit = async () => {
-    const trimmed = mobileInput.trim();
+  const handleTextSubmit = async () => {
+    const trimmed = userInput.trim();
     if (!trimmed) return;
 
-    setMobileInput('');
+    setUserInput('');
     await handleSendOption(trimmed);
   };
 
@@ -185,8 +190,8 @@ const ChatbotWidget = () => {
     localStorage.removeItem('chatbot_session_id_public');
     localStorage.removeItem('chatbot_messages_public');
     setMessages([]);
-    setShowMobileInput(false);
-    setMobileInput('');
+    setShowTextInput(false);
+    setUserInput('');
     const newSessionId = generateSessionId();
     setSessionId(newSessionId);
     localStorage.setItem('chatbot_session_id_public', newSessionId);
@@ -317,25 +322,24 @@ const ChatbotWidget = () => {
               </div>
             )}
 
-            {/* Mobile Number Input — shown when API returns empty options */}
-            {showMobileInput && !loading && (
+            {/* Text Input — shown for Mobile/OTP when API returns empty options */}
+            {showTextInput && !loading && (
               <div className="chatbot-mobile-input-row">
                 <input
-                  type="tel"
+                  type="text"
                   className="chatbot-mobile-input"
-                  placeholder="Enter your mobile number"
-                  value={mobileInput}
-                  maxLength={15}
-                  onChange={(e) => setMobileInput(e.target.value)}
+                  placeholder="Type your response..."
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleMobileSubmit();
+                    if (e.key === 'Enter') handleTextSubmit();
                   }}
                   autoFocus
                 />
                 <button
                   className="chatbot-mobile-send-btn"
-                  onClick={handleMobileSubmit}
-                  disabled={!mobileInput.trim()}
+                  onClick={handleTextSubmit}
+                  disabled={!userInput.trim()}
                   title="Send"
                 >
                   <svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
